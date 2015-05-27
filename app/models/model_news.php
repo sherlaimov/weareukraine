@@ -29,7 +29,6 @@ class Model_News extends Model {
     public function get_one_news(){
         $conn = $this->DB();
         $id = $_GET['article_id'];
-        //var_dump($id);
         $res = $conn->query("SELECT * FROM news WHERE id ='$id' LIMIT 1 ");
         return $res;
     }
@@ -54,11 +53,10 @@ class Model_News extends Model {
 
     public function selectOneNews($id){
         $conn = $this->DB();
-        //var_dump($id);
         $res = $conn->query("SELECT * FROM news WHERE id ='$id' LIMIT 1 ");
         // echo '<pr>' . print_r($res) . '</pr>';
-        $belgo = $res->fetch_assoc();
-        return $belgo;
+        return  $res->fetch_assoc();
+
     }
 
     public function editNews($id){

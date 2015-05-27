@@ -20,45 +20,52 @@ class Route
     public function start()
 	{
             
-            $url = $this->parseUrl();
+        $url = $this->parseUrl();
 
-            if(isset($url[0])){
+            if ( isset($url[0]) ) {
+
                 $controller_name = 'controller_' . $url[0];
+                unset($url[0]);
 
             } else {
+
                 $controller_name = 'controller_' . $this->controller;
+
             }
-            
 
-        if(file_exists('app/controllers/' . $controller_name . '.php'))
+
+
+        if ( ! file_exists(FS_CONTROLLERS . $controller_name . '.php'))
         {
-                $this->controller = $controller_name;
-                //var_dump($this->controller);
-            //1. Initiate controller, main by default
+            $controller_name = 'controller_404';
 
-            unset($url[0]); //why removing it from the array?
-
-        } else {
-            $this->controller = 'controller_' . $this->controller;
         }
 
-        require_once 'app/controllers/' . $this->controller . '.php';
-
-        $this->controller = new $this->controller();
+        require_once FS_CONTROLLERS . $controller_name . '.php';
+        //$this->controller = new $this->controller();
        // echo $this->controller;
 
 //            $this->controller->index();
 
-        if(isset($url[1])){
-            if(method_exists($this->controller, $url[1])){
+        if ( isset($url[1]) ) {
+
+            if(method_exists($controller_name, $url[1])){
                 //$this->controller->method();????
                 $this->method = $url[1];
+
                 unset($url[1]);
+
+                //echo "exists";
 
                 //print_r($this->controller);
                 //$this->controller->$url[1]();
+            } else {
+                $controller_name = 'controller_404';
+                require_once FS_CONTROLLERS . $controller_name .'.php';
             }
         }
+
+        $this->controller = new $controller_name();
 
         $this->params = $url ? array_values($url) : [];
 
@@ -79,13 +86,6 @@ class Route
 	       //
 	}
 
-	public function ErrorPage404()
-	{
-        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-        header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		header('Location:'.$host.'404');
-    }
     
 }
 

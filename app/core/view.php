@@ -59,6 +59,7 @@ class View
     }
 
     public function transferNews($news){
+        //var_dump($news);
         $this->data = $news;
 
     }

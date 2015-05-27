@@ -1,16 +1,20 @@
+<?php
+    require_once('libs/htmlelements.php');
+
+?>
+
 <form class="form-horizontal" method="post" action="<?php echo URL;?>news/editSave/<?php echo $data['id'];?>">
     <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Title</label>
         <div class="col-sm-10">
-            <input value="<?php echo $data['title'];?>" type="text" class="form-control"  name="title" id="title" placeholder="Title">
+            <?php echo html_input('title', $data['title']) ?>
+
         </div>
     </div>
     <div class="form-group">
         <label for="body" class="col-sm-2 control-label">Body</label>
         <div class="col-sm-10">
-            <textarea class="form-control" name="body" rows="3">
-                <?php echo $data['body'];?>
-            </textarea>
+        <?php echo html_textarea('body', $data['body'], 'test') ?>
         </div>
     </div>
     <div class="form-group">
@@ -27,6 +31,7 @@
             <button type="submit" class="btn btn-default delete">Post News</button>
         </div>
     </div>
+
 </form>
 
 

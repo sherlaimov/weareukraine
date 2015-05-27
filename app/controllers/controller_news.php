@@ -5,6 +5,7 @@ class Controller_News extends Controller {
     function init() {
      
         $this->model = $this->load_model('news');
+
         //$this->model = new Model_News();
 //        if(Session::get('loggedIn') || Session::get('role') == 'default'){
 //            header('Location: ' . URL . 'news');
@@ -230,7 +231,7 @@ class Controller_News extends Controller {
             //narrower
 
             //determine scale factor
-            $scale = $width / $size[0];
+            $scale = $width / $size[0]; //desired thumbnail width divided by actual width
             $new_size = array($width, $width / $src_aspect);
             $src_pos = array(0, ($size[1] * $scale - $height) / $scale / 2); //x and y axis
 
