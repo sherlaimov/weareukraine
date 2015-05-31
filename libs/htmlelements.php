@@ -3,13 +3,7 @@ function html_input($name, $value, $param = array() ) {
 
     $html = ''; // implode(' ', $param);
 
-    if ($name === 'title') {
-        $param = array(
-            'class' => 'form-control',
-            'type' => 'text',
-            'id' => 'title',
-            'placeholder' => 'Title');
-    } else {
+    if ( is_array($param) && count($param) ) {
         $param = array(
             'class' => 'form-control'
         );
@@ -23,6 +17,17 @@ function html_input($name, $value, $param = array() ) {
     $html = '<input name="' . $name . '" value="' . $value . '" '.$attr.'>';
     //echo $html;
     return $html;
+}
+
+function html_element() {
+
+}
+
+function html_input_title($name, $value){
+    return html_input($name, $value, $param = array('class' => 'form-control',
+                                             'type' => 'text',
+                                             'id' => 'title',
+                                             'placeholder' => 'Title') );
 }
 
 function html_textarea($name, $data, $param){

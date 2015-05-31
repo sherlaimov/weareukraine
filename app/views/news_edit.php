@@ -2,12 +2,16 @@
     require_once('libs/htmlelements.php');
 
 ?>
-
-<form class="form-horizontal" method="post" action="<?php echo URL;?>news/editSave/<?php echo $data['id'];?>">
+<form class="form-horizontal" method="post" action="<?php echo URL;?>news/edit/<?php echo $data['id'];?>">
     <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Title</label>
         <div class="col-sm-10">
-            <?php echo html_input('title', $data['title']) ?>
+            <?php
+
+            echo html_input_title('title', $data['title']);
+
+
+            ?>
 
         </div>
     </div>

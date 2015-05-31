@@ -18,6 +18,6 @@ function __autoload($class){
 
 //require_once 'core/route.php';
 //Route::start(); // запускаем маршрутизатор
-$route = new Route();
+$route = Route::getInstance();
 //$route->parseUrl();
 $route->start(); //HOW TO DO IT WITH A STATIC METHOD?

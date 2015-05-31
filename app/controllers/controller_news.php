@@ -54,10 +54,16 @@ class Controller_News extends Controller {
     public function delete($id){
         $this->model->deleteNews($id);
         header('Location: ' . URL . 'news');
+        exit;
 
     }
 
-    public function edit($id){
+    public function edit($id) {
+
+        if (count($_POST)) {
+           $this->editSave($id);
+        }
+
         $news = $this->model->selectOneNews($id);
         $this->view->transferNews($news);
         $this->view->generate_view();
@@ -66,16 +72,27 @@ class Controller_News extends Controller {
     public function editSave($id){
         $data = array();
         $data['id'] = $id;
-        $data['title'] = trim($_POST['title']);
-        $data['body'] = trim($_POST['body']);
-        $this->model->editSaveNews($data);
-        header('Location: ' . URL . 'news');
+        if ($_POST{'title'} && $_POST['body']) {
+            $data['title'] = trim($_POST['title']);
+            $data['body'] = trim($_POST['body']);
+            $this->model->editSaveNews($data);
+            header('Location: ' . URL . 'news');
+            exit;
+        } else {
+            Message::add('Both body and title must be filled', Message::STATUS_ERROR);
+            //header('Location: ' . URL . 'news/edit/' . $id);
+            exit;
+        }
+
+
+
     }
 
-    public function addNewsPage(){
-        //$this->view->generate_view();
-
+    public function add(){
+        $this->view->generate_view();
     }
+
+
     public function addNews(){
         $data = array(
             'title' => trim($_POST['title']),

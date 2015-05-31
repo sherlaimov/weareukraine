@@ -5,13 +5,14 @@ class Controller_404 extends Controller
 	
 	function index()
 	{
-		die('404');
+
 		//$host = 'http://'.$_SERVER['HTTP_HOST'].'/';
 		header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		//header('Location:'.$host.'404');
+		//header("Status: 404 Not Found");
+		//header('Location: ' . URL . '404/index');
+echo '404<br/>';
 
-		$this->generate('404_view.php', 'template_view.php');
+		$this->view->generate_view();
 	}
 
 }

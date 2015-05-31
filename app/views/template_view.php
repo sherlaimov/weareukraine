@@ -80,11 +80,11 @@ echo isset($_POST['action']) ? 'post action ' . $_POST['action'] : null . '<br/>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="/main">@WeAreUkraine</a>
+                            <a class="navbar-brand" href="/">@WeAreUkraine</a>
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li class="<?php echo $_GET['url'] == 'main' ? 'active' : null; ?>"><a href="/main">Home</a></li>
+                                <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a href="/">Home</a></li>
                                 <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a href="/news">News</a></li>
                                 <li><a href="/rules">Ground Rules</a></li>
                                 <li><a href="/contacts">Contacts</a></li>

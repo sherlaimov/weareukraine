@@ -22,7 +22,9 @@ class View
             $url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : null;
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
-
+            print_r($url);
+            echo '<br/>';
+           /*
             if (! empty($url[0])) {
                 $content_view = $url[0].'_';
 
@@ -32,17 +34,23 @@ class View
                     $content_view .= 'index';
                 }
 
+
+
             } else {
                 $content_view = 'main_index';
             }
+           */
 
-            $content_view .= '.php';
+            $oRoute = Route::getInstance();
+
+
+            $content_view = $oRoute->getControllerName().'_'.$oRoute->getActionName().'.php';
 
             //echo '<h1>'. $content_view . '</h1>';
 
-            if(! file_exists(VIEWS . $content_view)){
+            if ( ! file_exists(VIEWS . $content_view)){
                //echo 'BELGO file doesnt exist ' . '<br/>';
-                header('Location: ' . URL);
+                header('Location: ' . URL ); //sends to index_index.php
             }
 
         } else {

@@ -2,10 +2,37 @@
 
 class Route
 {
-    public $controller = 'main';
+    public $controller = 'index';
+    protected $_controllerName = false;
     protected $method = 'index';
+    protected $_prefix = '';
     protected $params = [];
-    
+    static protected $_instance = null;
+
+    protected function __construct() {
+
+    }
+
+    public function getControllerName() {
+        return $this->_controllerName;
+    }
+
+    public function getActionName() {
+        return $this->method;
+    }
+
+    private function __clone(){
+
+    }
+
+    static public function getInstance() {
+        if (self::$_instance === null) {
+           self::$_instance = new static;
+        }
+        return self::$_instance;
+    }
+
+
     public function parseUrl(){        
         if(isset($_GET['url'])){
 
@@ -17,31 +44,33 @@ class Route
             return $url;
         }
     }
+
     public function start()
 	{
-            
+        $this->_prefix = 'controller_';
+
         $url = $this->parseUrl();
 
             if ( isset($url[0]) ) {
 
-                $controller_name = 'controller_' . $url[0];
+                $controller_name =  $url[0];
                 unset($url[0]);
 
             } else {
 
-                $controller_name = 'controller_' . $this->controller;
+                $controller_name =  $this->controller;
 
             }
 
 
 
-        if ( ! file_exists(FS_CONTROLLERS . $controller_name . '.php'))
+        if ( ! file_exists(FS_CONTROLLERS . $this->_prefix  . $controller_name . '.php'))
         {
-            $controller_name = 'controller_404';
+            $controller_name = '404';
 
         }
 
-        require_once FS_CONTROLLERS . $controller_name . '.php';
+        require_once FS_CONTROLLERS . $this->_prefix  . $controller_name . '.php';
         //$this->controller = new $this->controller();
        // echo $this->controller;
 
@@ -49,7 +78,7 @@ class Route
 
         if ( isset($url[1]) ) {
 
-            if(method_exists($controller_name, $url[1])){
+            if(method_exists( $this->_prefix  . $controller_name, $url[1])){
                 //$this->controller->method();????
                 $this->method = $url[1];
 
@@ -60,12 +89,15 @@ class Route
                 //print_r($this->controller);
                 //$this->controller->$url[1]();
             } else {
-                $controller_name = 'controller_404';
-                require_once FS_CONTROLLERS . $controller_name .'.php';
+                $controller_name = '404';
+                require_once FS_CONTROLLERS . $this->_prefix  . $controller_name .'.php';
             }
         }
 
-        $this->controller = new $controller_name();
+        $this->_controllerName = $controller_name;
+
+        $className = $this->_prefix . $controller_name;
+        $this->controller = new $className();
 
         $this->params = $url ? array_values($url) : [];
 
