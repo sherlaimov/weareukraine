@@ -22,8 +22,7 @@ class View
             $url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : null;
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
-            print_r($url);
-            echo '<br/>';
+
            /*
             if (! empty($url[0])) {
                 $content_view = $url[0].'_';
@@ -61,6 +60,8 @@ class View
 
         //extract($this->data);
        $data = $this->data;
+        //print_r($data);
+        echo '<br/>';
         //var_dump($data);
         include 'app/views/' . $this->layout . '.php';
 
@@ -74,7 +75,12 @@ class View
 
     public function setData($name, $value) {
 
-        $this->data[] = $this->data[$name] = $value;
+        //$this->data[] = $this->data[$name] = $value;
+        $this->data[$name] = $value;
+    }
+
+    public function setArr(array $value) {
+        $this->data = $value;
     }
 
 

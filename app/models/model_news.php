@@ -91,8 +91,6 @@ class Model_News extends Model {
         {
             $conn->query(" INSERT INTO news (title, body, image_name, thumb)
                           VALUES ('$title', '$body', '" . $data['image_name'] . "', '" . $data['thumb'] . "' )") or die($conn->error);
-//            $lastid = mysqli_insert_id($conn);
-//            printf($lastid);
         }
     }
 

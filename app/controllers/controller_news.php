@@ -3,7 +3,7 @@
 class Controller_News extends Controller {
 
     function init() {
-     
+
         $this->model = $this->load_model('news');
 
         //$this->model = new Model_News();
@@ -15,7 +15,7 @@ class Controller_News extends Controller {
 
 
     }
-    
+
     function index(){
         $news = $this->model->get_news();
         //var_dump($news);
@@ -32,7 +32,7 @@ class Controller_News extends Controller {
 
         $this->view->generate_view();
     }
-    
+
     function one_news(){
         $news = $this->model->get_one_news();
         $this->view->transferNews($news);
@@ -47,7 +47,7 @@ class Controller_News extends Controller {
 
         $this->model->updateNews($data);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-       // header('Location: ' . URL . 'news');
+        // header('Location: ' . URL . 'news');
 
     }
 
@@ -60,19 +60,23 @@ class Controller_News extends Controller {
 
     public function edit($id) {
 
-        if (count($_POST)) {
-           $this->editSave($id);
+        if ($this->isPost()) {
+            $this->editSave($id);
         }
 
         $news = $this->model->selectOneNews($id);
-        $this->view->transferNews($news);
+        //$this->view->transferNews($news);
+
+        //print_r($news);
+        $this->view->setData('news', $news);
+
         $this->view->generate_view();
     }
 
     public function editSave($id){
         $data = array();
         $data['id'] = $id;
-        if ($_POST{'title'} && $_POST['body']) {
+        if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
             $this->model->editSaveNews($data);
@@ -80,134 +84,112 @@ class Controller_News extends Controller {
             exit;
         } else {
             Message::add('Both body and title must be filled', Message::STATUS_ERROR);
+            if (count($_POST)) {
+                $data = array(
+                    'title' => trim($_POST['title']),
+                    'body' => trim($_POST['body']),
+                    'id'   => trim($id));
+            }
+            $this->view->setData('data', $data);
             //header('Location: ' . URL . 'news/edit/' . $id);
+            //exit;
+        }
+    }
+
+    public function add() {
+
+        if (Session::get('loggedIn') == FALSE || Session::get('role') == 'default') {
+            Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
+            header('Location: ' . URL . 'login/');
             exit;
         }
 
+        if ($_POST) {
+           $this->addNews();
+        }
 
-
-    }
-
-    public function add(){
         $this->view->generate_view();
     }
 
 
-    public function addNews(){
+    public function addNews() {
+
         $data = array(
             'title' => trim($_POST['title']),
             'body' => trim($_POST['body'])
         );
 
-        //print_r ($_FILES);
-
-        if (empty($data['title']))
-        {
-            Message::add('Please enter title. ', Message::STATUS_WARNING);
-            header('Location: ' . URL . 'news/add');
-        }
-
-        if (empty($data['body']))
-        {
-            Message::add('Please enter body. ', Message::STATUS_WARNING);
-            header('Location: ' . URL . 'news/add');
-        }
-
-
-
         $tmp_name = $_FILES['upload']['tmp_name'];
-        if (empty($tmp_name))
-        {
-           // echo 'not set FILES upload';
-            Message::add('Please select an image', Message::STATUS_WARNING);
-            header('Location: ' . URL . 'news/add');
+
+        if ( empty($data['title']) || empty($data['body']) || empty($tmp_name)) {
+            Message::add('All fields are required to be filled out', Message::STATUS_WARNING);
+            if( count($_POST)) {
+                $this->view->setData('post', $data);
+               /// header('Location: ' . URL . 'news/add');
+            }
         }
         else
         {
-            /*echo '<br/>' . $_FILES['upload']['name'];
-            echo '<br/>' . $_FILES['upload']['tmp_name'];*/
-
-            $file = $_FILES['upload'];
-            $image_name = $_FILES['upload']['name'];
-            $image_type = $file['type'];
-            $image_size = $_FILES['upload']['size'];
-            $tmp_name = $_FILES['upload']['tmp_name'];
-            $error = $_FILES['upload']['error'];
-
-            $fileInfo = pathinfo($image_name);
-            //print_r($fileInfo);
-            //echo '<br/>';
-//            $ext = strrpos($image_name, '.');
-//            $ext = substr($image_name, $ext+1);
-//            print_r($ext);
-            $file_ext = explode('.', $image_name);
-            $file_ext = strtolower(end($file_ext));
-
-            //print_r($_FILES['upload']);
-
-            //$temp_name = '/var/www/weareukraine/images' . $temp;
-           // echo '<br/>' . $temp_name . '<br/>';
-
-            //WHY NOT getimagesize WORKING??
-//            $image_size = getimagesize($file['size']);
-            if($image_size == FALSE)
-            {
-                Message::add('That is not an image', Message::STATUS_WARNING);
-            }
-
-//            $image = addslashes(file_get_contents($temp));
-//            $this->model->addNews($data, $image);
-            //header('Location: ' . URL . 'news');
-            $allowed = array('jpg', 'jpeg', 'png', 'gif');
-            if (in_array($file_ext, $allowed))
-            {
-                if ($error > 0)
-                {
-                    die("Error uploading file! Code $error.");
-                }
-                else
-                {
-                    //move_uploaded_file( $_FILES['upload']['tmp_name'], 'images/' . $_FILES['upload']['name']);
-                    $file_name_tmp = md5( $fileInfo['filename'] . rand(0, 10000)); //uniqid('', true);
-                    $file_name_new = $file_name_tmp . '.' . $file_ext;
-
-                    $file_destination = FS_IMAGES . $file_name_new;
-                    if (move_uploaded_file($tmp_name, $file_destination))
-                    {
-                        $data['image_name'] = $file_name_new;
-                        $data['file_path'] = $file_destination;
-
-                        if (isset($_POST['width']))
-                        {
-                            $width = $_POST['width'];
-                            $height = $width;
-                        } else {
-                            $width = 150;
-                            $height = 150;
-                        }
+            $data = array_merge($data, $this->get_image_info());
+            $this->model->addNews($data);
+            header('Location: ' . URL . 'news');
+            exit;
+        }
+    }
 
 
+    function get_image_info()
+    {
+        $file = $_FILES['upload'];
+        $image_name = $_FILES['upload']['name'];
+        $image_type = $file['type'];
+        $image_size = $_FILES['upload']['size'];
+        $tmp_name = $_FILES['upload']['tmp_name'];
+        $error = $_FILES['upload']['error'];
 
-                        $thumbnailName = $file_name_tmp .'_'.$width.'_'.$height.'.jpg';
-                        $data['thumb'] = $thumbnailName;
-                        //echo $data['thumb']; die;
-                        $bitmap = $this->create_thumbnail($file_destination, false, $width, $height);
-                        imagejpeg($bitmap, FS_IMAGES . 'thumb'. DS . $thumbnailName);
+        $fileInfo = pathinfo($image_name);
 
-                        $this->model->addNews($data);
-                        $this->view->setData('news', $data);
-                        header('Location: ' . URL . 'news');
-                        exit;
-                    }
-
-                }
-
-            }
+        $file_ext = explode('.', $image_name);
+        $file_ext = strtolower(end($file_ext));
 
 
+        if ($image_size == FALSE) {
+            Message::add('That is not an image', Message::STATUS_WARNING);
         }
 
+        $allowed = array('jpg', 'jpeg', 'png', 'gif');
+        if (in_array($file_ext, $allowed)) {
+            if ($error > 0) {
+                die("Error uploading file! Code $error.");
+            } else {
+                //move_uploaded_file( $_FILES['upload']['tmp_name'], 'images/' . $_FILES['upload']['name']);
+                $file_name_tmp = md5($fileInfo['filename'] . rand(0, 10000)); //uniqid('', true);
+                $file_name_new = $file_name_tmp . '.' . $file_ext;
+
+                $file_destination = FS_IMAGES . $file_name_new;
+                if (move_uploaded_file($tmp_name, $file_destination)) {
+                    $data['image_name'] = $file_name_new;
+                    $data['file_path'] = $file_destination;
+
+                    if (isset($_POST['width'])) {
+                        $width = $_POST['width'];
+                        $height = $width;
+                    } else {
+                        $width = 150;
+                        $height = 150;
+                    }
+
+                    $thumbnailName = $file_name_tmp . '_' . $width . '_' . $height . '.jpg';
+                    $data['thumb'] = $thumbnailName;
+                    //echo $data['thumb']; die;
+                    $bitmap = $this->create_thumbnail($file_destination, false, $width, $height);
+                    imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $thumbnailName);
+                    return $data;
+                }
+            }
+        }
     }
+
 
     public function create_thumbnail($path, $save, $width, $height)
     {
@@ -272,14 +254,7 @@ class Controller_News extends Controller {
         imagecopyresampled($thumb,$src, 0, 0, $src_pos[0], $src_pos[1], $new_size[0], $new_size[1], $size[0], $size[1]);
 
         return $thumb;
-        /*
-        if ($save === false)
-        {
-            return imagepng($thumb);
-        } else {
-            return imagepng($thumb, $save);
-        }*/
-    }
 
+    }
 
 }

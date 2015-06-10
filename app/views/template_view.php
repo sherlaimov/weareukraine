@@ -5,9 +5,6 @@ echo '$_GET[url] ';
 print_r($_GET['url']); echo '<br/>';
 echo '$_POST ';
 print_r($_POST);
-$login = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-//echo $_SERVER['HTTP_REFERER'];
-echo isset($_POST['action']) ? 'post action ' . $_POST['action'] : null . '<br/>';
 
 
 ?>

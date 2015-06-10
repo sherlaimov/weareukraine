@@ -1,14 +1,29 @@
-<form class="form-horizontal" action="<?php echo URL;?>news/addNews" method="POST" enctype="multipart/form-data">
+<?php
+print_r($data);
+print_r($_POST);
+require_once('libs/htmlelements.php')
+?>
+
+<form class="form-horizontal" action="<?php echo URL;?>news/add" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Title</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control"  name="title" id="title" placeholder="Title">
+            <?php
+            echo html_input('title', '', array(
+                'class' => 'form-control',
+                'type' => 'text',
+                'id' => 'title',
+                'placeholder' => 'Title'
+            ));
+            ?>
+
         </div>
     </div>
     <div class="form-group">
         <label for="body" class="col-sm-2 control-label">Body</label>
         <div class="col-sm-10">
-            <textarea class="form-control" name="body" rows="3"></textarea>
+
+            <?= html_textarea('body', ''); ?>
         </div>
     </div>
     <div class="form-group">
@@ -35,7 +50,7 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default delete" value="upload">Post News</button>
+            <button type="submit" name="submit" class="btn btn-default delete" value="upload">Post News</button>
         </div>
     </div>
     

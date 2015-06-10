@@ -30,11 +30,24 @@ class Controller {
         $model_file = strtolower($model_name) . '.php';
         if (file_exists('app/models/' . $model_file)) {
             //var_dump($model_file); die();
-            include 'app/models/' . $model_file;
+            include FS_APP . 'models/' . $model_file;
             return new $model_name;
         } else {
             return false;
         }
+    }
+
+    public function isPost() {
+        return $_SERVER["REQUEST_METHOD"] == 'POST' ? true : false;
+    }
+
+    public function isAjax()
+    {
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                return true;
+            }
+
+        return false;
     }
 
 
