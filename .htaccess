@@ -1,0 +1,16 @@
+#Options -Indexes +FollowSymLinks -Multiviews
+
+RewriteEngine On
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+#RewriteRule ^(.*)$ /mvc.co/index.php?url=$1 [L]
+
+#RewriteRule ^(.*)$ index.php [L,QSA]
+#RewriteRule .* index.php [L]
+#RewriteRule ^public$ public.php [L,QSA]
+#RewriteRule ^(.*)$ index.php [L,QSA]

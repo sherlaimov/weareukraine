@@ -1,0 +1,11 @@
+.idea/
+
+logs/
+
+.DS_Store
+
+*.zip
+
+*.gz
+
+images/
