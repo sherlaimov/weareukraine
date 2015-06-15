@@ -20,6 +20,7 @@ class Controller_Login extends Controller {
             $password = Hash::create_hash('md5', $password, HASH_KEY );
 
 
+
             if ( empty($login) || empty($password) ) {
 
 

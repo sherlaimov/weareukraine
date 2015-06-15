@@ -3,22 +3,36 @@
 class Controller_News extends Controller {
 
     function init() {
-     
+
         $this->model = $this->load_model('news');
 
+        //$this->model = new Model_News();
+//        if(Session::get('loggedIn') || Session::get('role') == 'default'){
+//            header('Location: ' . URL . 'news');
+//            exit;
+//        }
+
+
+
     }
-    
+
     function index(){
         $news = $this->model->get_news();
         //var_dump($news);
-        $this->view->setData('news', $news);
-        $this->view->title = 'News thread | We are Ukraine';
-        //$this->view->transferNews($news);
+        //$this->view->setData('news', $news);
+        $this->view->transferNews($news);
 
+
+//        while($news = $data->fetch_assoc()){
+//            $this->view->setData('id', $news['id']);
+//            $this->view->setData('title', $news['title']);
+//            $this->view->setData('body', $news['body']);
+//        };
+        //var_dump($data); die;
 
         $this->view->generate_view();
     }
-    
+
     function one_news(){
         $news = $this->model->get_one_news();
         $this->view->transferNews($news);
@@ -33,7 +47,7 @@ class Controller_News extends Controller {
 
         $this->model->updateNews($data);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
-       // header('Location: ' . URL . 'news');
+        // header('Location: ' . URL . 'news');
 
     }
 
@@ -46,8 +60,8 @@ class Controller_News extends Controller {
 
     public function edit($id) {
 
-        if (count($_POST)) {
-           $this->editSave($id);
+        if ($this->isPost()) {
+            $this->editSave($id);
         }
 
         $news = $this->model->selectOneNews($id);
@@ -62,7 +76,7 @@ class Controller_News extends Controller {
     public function editSave($id){
         $data = array();
         $data['id'] = $id;
-        if ($_POST{'title'} && $_POST['body']) {
+        if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
             $this->model->editSaveNews($data);
@@ -82,66 +96,45 @@ class Controller_News extends Controller {
         }
     }
 
-    public function add(){
+    public function add() {
+
         if (Session::get('loggedIn') == FALSE || Session::get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
             header('Location: ' . URL . 'login/');
             exit;
         }
 
+        if ($_POST) {
+           $this->addNews();
+        }
+
         $this->view->generate_view();
     }
 
 
-    public function addNews(){
+    public function addNews() {
+
         $data = array(
             'title' => trim($_POST['title']),
             'body' => trim($_POST['body'])
         );
 
-        //print_r ($_FILES);
-
-//        if (empty($data['title']))
-//        {
-//            Message::add('Please enter title. ', Message::STATUS_WARNING);
-//            $this->view->setData('post', $data);
-//           header('Location: ' . URL . 'news/add');
-//           exit;
-//        }
-//
-//        if (empty($data['body']))
-//        {
-//            Message::add('Please enter body. ', Message::STATUS_WARNING);
-//            $this->view->setData('post', $data);
-//
-//            header('Location: ' . URL . 'news/add');
-//            exit;
-//        }
-//
-//        $tmp_name = $_FILES['upload']['tmp_name'];
-//        if (empty($tmp_name))
-//        {
-//            Message::add('Please select an image', Message::STATUS_WARNING);
-//            $this->view->setData('post', $data);
-//            header('Location: ' . URL . 'news/add');
-//            exit;
-//        }
         $tmp_name = $_FILES['upload']['tmp_name'];
 
-        if ( !$data['title'] || !$data['body'] || !$tmp_name) {
+        if ( empty($data['title']) || empty($data['body']) || empty($tmp_name)) {
             Message::add('All fields are required to be filled out', Message::STATUS_WARNING);
             if( count($_POST)) {
                 $this->view->setData('post', $data);
-                header('Location: ' . URL . 'news/add');
+               /// header('Location: ' . URL . 'news/add');
             }
         }
         else
-            {
-                $data = array_merge($data, $this->get_image_info());
-                $this->model->addNews($data);
-                header('Location: ' . URL . 'news');
-                exit;
-            }
+        {
+            $data = array_merge($data, $this->get_image_info());
+            $this->model->addNews($data);
+            header('Location: ' . URL . 'news');
+            exit;
+        }
     }
 
 

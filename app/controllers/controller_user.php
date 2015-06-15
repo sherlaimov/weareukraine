@@ -10,7 +10,6 @@ class Controller_User extends Controller{
         $role = Session::get('role');
         if($logged == false || $role == 'default'){
            // Session::end();
-            Message::add('You have to be authorized to access user directory', Message::STATUS_WARNING);
             header('Location: ' . URL . 'login');
             exit;
         }

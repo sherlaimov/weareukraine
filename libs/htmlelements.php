@@ -1,8 +1,6 @@
 <?php
 function html_input($name, $value, $param = array() ) {
 
-    $html = ''; // implode(' ', $param);
-
     if ( is_array($param) && count($param) ) {
         $param = array(
             'class' => 'form-control'
@@ -14,12 +12,19 @@ function html_input($name, $value, $param = array() ) {
         $attr .= $k.'="'.$v.'" ';
     }
 
+    if (isset($_REQUEST[$name])) {
+        $value = $_REQUEST[$name];
+    }
+
+
     $html = '<input name="' . $name . '" value="' . $value . '" '.$attr.'>';
     //echo $html;
     return $html;
 }
 
-function html_element() {
+function html_element($name, $value, $type, $param) {
+
+
 
 }
 
@@ -30,18 +35,28 @@ function html_input_title($name, $value){
                                              'placeholder' => 'Title') );
 }
 
-function html_textarea($name, $data, $param){
+function html_textarea($name, $data, $param = array() ){
 //если кастомные задать в функции?
 
+    if ( ! is_array($param)) {
+       return false;
+    }
+
     //$param['class'] = ('form-control');
-    $param = array('class' => "form-control ". "$param");
+    if ( is_array($param) && !$param ) {
+        $param = array('class' => "form-control");
+    }
     //print_r($param);
     $attr = '';
     foreach($param as $k => $v) {
         $attr .= $k .'="'. $v .'" ';
     }
 
-    $html = '<textarea name ="' . $name .'" ' .  $attr . '>' . "$data" . '</textarea>';
+    if (isset($_REQUEST[$name])) {
+        $data = $_REQUEST[$name];
+    }
+
+    $html = '<textarea name ="' . $name .'" ' .  $attr . '>' . $data . '</textarea>';
     return $html;
 
 }

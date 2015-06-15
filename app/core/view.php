@@ -61,7 +61,7 @@ class View
         //extract($this->data);
        $data = $this->data;
         //print_r($data);
-
+        echo '<br/>';
         //var_dump($data);
         include 'app/views/' . $this->layout . '.php';
 
@@ -70,11 +70,17 @@ class View
     public function transferNews($news){
         //var_dump($news);
         $this->data = $news;
+
     }
 
     public function setData($name, $value) {
 
-        $this->data[] = $this->data[$name] = $value;
+        //$this->data[] = $this->data[$name] = $value;
+        $this->data[$name] = $value;
+    }
+
+    public function setArr(array $value) {
+        $this->data = $value;
     }
 
 

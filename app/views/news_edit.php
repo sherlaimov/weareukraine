@@ -1,17 +1,29 @@
 <?php
     require_once('libs/htmlelements.php');
 //print_r($_POST);
-
+//echo '<br/>';
+//print_r($data);
 foreach ($data['news'] as $k => $v) {
+
     $news[$k] = $v;
 }
+//echo count($data['news']);
+//for ( $i = 0; $i < count($data['news']); $i++ ) {
+//    $n = $data['news'][$i];
+//}
+//print_r($n);  ЧТО ЗА ОФФСЕТЫ?
 
 if (isset($data['data'])){
     foreach ($data['data'] as $k => $v) {
-        $post[$k] = $v;
+
+        $data[$k] = $v;
     }
+    //print_r($data[$k]); Что это за цифра тут?
+    //print_r($data['data']);
 }
 
+
+//echo empty($data['body']) ? $news['body'] : $data['body'] ;
 
 ?>
 <form class="form-horizontal" method="post" action="<?php echo URL;?>news/edit/<?php echo $news['id'];?>">
@@ -20,11 +32,8 @@ if (isset($data['data'])){
         <div class="col-sm-10">
             <?php
 
-        if (empty($post['title'])) {
-            echo html_input_title('title', $news['title']);
-        } else {
-            echo html_input_title('title', $post['title']);
-        }
+
+                echo html_input_title('title', $news['title']);
 
             ?>
 
@@ -35,11 +44,9 @@ if (isset($data['data'])){
         <div class="col-sm-10">
 
         <?php
-        if (empty($post['body'])) {
+
             echo html_textarea('body', $news['body'], 'test');
-        } else {
-            echo html_input_title('title', $post['body']);
-        }
+
 
         ?>
         </div>
@@ -55,13 +62,8 @@ if (isset($data['data'])){
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default delete">Post News</button>
+            <button type="submit" name="submit" class="btn btn-default delete">Post News</button>
         </div>
     </div>
 
 </form>
-
-
-
-
-<?php
