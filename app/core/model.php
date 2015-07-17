@@ -35,7 +35,7 @@ class Model
         return $results;
     }
 
-    function insret($table, $insertData)
+    function insert($table, $insertData)
     {
         $this->_query = "INSERT INTO $table";
         //var_dump($insertData); die;

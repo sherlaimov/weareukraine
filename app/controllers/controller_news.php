@@ -32,11 +32,12 @@ class Controller_News extends Controller {
 
     public function postNews(){
 
+
         $data = array();
         $data['title'] = trim($_POST['title']);
         $data['body'] = trim($_POST['body']);
 
-        $this->model->updateNews($data);
+        $this->model->insertNews($data);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         // header('Location: ' . URL . 'news');
 
@@ -70,7 +71,7 @@ class Controller_News extends Controller {
         if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
-            $this->model->editSaveNews($data);
+            $this->model->updateNews($data);
             header('Location: ' . URL . 'news');
             exit;
         } else {

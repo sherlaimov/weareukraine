@@ -1,29 +1,7 @@
 <?php
     require_once('libs/htmlelements.php');
-//print_r($_POST);
-//echo '<br/>';
-//print_r($data);
-foreach ($data['news'] as $k => $v) {
 
-    $news[$k] = $v;
-}
-//echo count($data['news']);
-//for ( $i = 0; $i < count($data['news']); $i++ ) {
-//    $n = $data['news'][$i];
-//}
-//print_r($n);  ЧТО ЗА ОФФСЕТЫ?
-
-if (isset($data['data'])){
-    foreach ($data['data'] as $k => $v) {
-
-        $data[$k] = $v;
-    }
-    //print_r($data[$k]); Что это за цифра тут?
-    //print_r($data['data']);
-}
-
-
-//echo empty($data['body']) ? $news['body'] : $data['body'] ;
+$news = array_shift($data['news']);
 
 ?>
 <form class="form-horizontal" method="post" action="<?php echo URL;?>news/edit/<?php echo $news['id'];?>">
@@ -45,7 +23,7 @@ if (isset($data['data'])){
 
         <?php
 
-            echo html_textarea('body', $news['body'], 'test');
+            echo html_textarea('body', $news['body']);
 
 
         ?>

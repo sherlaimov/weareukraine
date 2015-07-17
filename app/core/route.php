@@ -62,12 +62,9 @@ class Route
 
             }
 
-
-
         if ( ! file_exists(FS_CONTROLLERS . $this->_prefix  . $controller_name . '.php'))
         {
             $controller_name = '404';
-
         }
 
         require_once FS_CONTROLLERS . $this->_prefix  . $controller_name . '.php';
@@ -98,7 +95,7 @@ class Route
 
         $className = $this->_prefix . $controller_name;
         $this->controller = new $className();
-
+        //print_r($url); die;
         $this->params = $url ? array_values($url) : [];
 
         /*

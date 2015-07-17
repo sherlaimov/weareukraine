@@ -57,6 +57,7 @@ function html_textarea($name, $data, $param = array() ){
     }
 
     $html = '<textarea name ="' . $name .'" ' .  $attr . '>' . $data . '</textarea>';
+
     return $html;
 
 }
