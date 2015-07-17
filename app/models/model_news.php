@@ -3,59 +3,33 @@
 class Model_News extends Model {
 
     public function get_news(){
-        $conn = $this->DB();
-        //var_dump($conn); die();
-        if($res = $conn->query("SELECT * FROM news ORDER BY id DESC LIMIT 10")){
-            if($count = $res->num_rows){
-               // echo '<h1>'. $count . '</h1>';
-                $rows = $res->fetch_all(MYSQLI_ASSOC);
-               //echo '<pre>', print_r($res), '</pre>';
-                $res->free();
-                return $rows;
-
-
-            } else {
-                return false;
-            }
-        }
-
-        //var_dump($res->fetch_all()); die;
-        //var_dump($res->fetch_object()); die;
-        //$res = $res->fetch_object();
-
-
+      return $res = $this->get('news');
     }
     
     public function get_one_news(){
-        $conn = $this->DB();
-        $id = $_GET['article_id'];
-        $res = $conn->query("SELECT * FROM news WHERE id ='$id' LIMIT 1 ");
+        $this->where('id', $_GET['article_id']);
+        $res = $this->get('news');
         return $res;
     }
 
     public function updateNews($news){
-        $conn = $this->DB();
-        $title = $news['title'];
-        $body = $conn->real_escape_string($news['body']);
-        //$conn->prepare("INSERT INTO news (title, body) VALUES (:title, :body)");
-//        $conn->mysqli_stmt_bind_param(array(
-//           ':title' => $news['title'],
-//            ':body' => $news['body']
-//        ));
-        $conn->query(" INSERT INTO news (title, body) VALUES ('$title', '$body' )") or die($conn->error);
 
+        $updateData = array(
+            'title' => $news['title'],
+            'body'  => $news['body']
+        );
+        return ($this->insret('news', $updateData)) ? true : false;
     }
 
+
     public function deleteNews($id){
-        $STH = $this->DB();
-        $STH->query("DELETE FROM news WHERE id = '$id' LIMIT 1");
+        $this->where('id', $id);
+        return $this->delete('news');
     }
 
     public function selectOneNews($id){
-        $conn = $this->DB();
-        $res = $conn->query("SELECT * FROM news WHERE id ='$id' LIMIT 1 ");
-        // echo '<pr>' . print_r($res) . '</pr>';
-        return  $res->fetch_assoc();
+        $this->where('id', $id);
+        return  $this->get('news', 1);
 
     }
 

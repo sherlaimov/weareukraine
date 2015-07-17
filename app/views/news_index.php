@@ -17,7 +17,7 @@ if ( Session::get('loggedIn') && Session::get('role') === 'owner' || Session::ge
 
 <?php
 //print_r($data);
-foreach($data as $news) {
+foreach($data['news'] as $news) {
 
     echo '<h1>' . '<a href="/news/one_news?article_id=' . $news['id'] . '">' . $news['title'] . '</a>' . '</h1>';
     echo '<p>' . $news['body'] . '</p>';

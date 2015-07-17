@@ -27,6 +27,6 @@ define('VIEWS', FS_APP. 'views' . DS);
 define('FS_CONTROLLERS', FS_APP . 'controllers' . DS );
 //DB constants
 define('DB_USER', 'root');
-define('DB_PSWD', 'secret');
+define('DB_PSWD', '');
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'news');
+define('DB_NAME', 'mvc');

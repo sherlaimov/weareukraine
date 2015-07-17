@@ -19,23 +19,14 @@ class Controller_News extends Controller {
     function index(){
         $news = $this->model->get_news();
         //var_dump($news);
-        //$this->view->setData('news', $news);
-        $this->view->transferNews($news);
-
-
-//        while($news = $data->fetch_assoc()){
-//            $this->view->setData('id', $news['id']);
-//            $this->view->setData('title', $news['title']);
-//            $this->view->setData('body', $news['body']);
-//        };
-        //var_dump($data); die;
-
+        $this->view->setData('news', $news);
         $this->view->generate_view();
     }
 
     function one_news(){
         $news = $this->model->get_one_news();
-        $this->view->transferNews($news);
+        //print_r($news); die;
+        $this->view->setData('news', $news);
         $this->view->generate_view();
     }
 
