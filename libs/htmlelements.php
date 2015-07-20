@@ -1,4 +1,5 @@
 <?php
+//print_r($_REQUEST);
 function html_input($name, $value, $param = array() ) {
 
     if ( is_array($param) && count($param) ) {

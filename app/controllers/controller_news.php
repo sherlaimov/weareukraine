@@ -6,14 +6,6 @@ class Controller_News extends Controller {
 
         $this->model = $this->load_model('news');
 
-        //$this->model = new Model_News();
-//        if(Session::get('loggedIn') || Session::get('role') == 'default'){
-//            header('Location: ' . URL . 'news');
-//            exit;
-//        }
-
-
-
     }
 
     function index(){
@@ -28,19 +20,6 @@ class Controller_News extends Controller {
         //print_r($news); die;
         $this->view->setData('news', $news);
         $this->view->generate_view();
-    }
-
-    public function postNews(){
-
-
-        $data = array();
-        $data['title'] = trim($_POST['title']);
-        $data['body'] = trim($_POST['body']);
-
-        $this->model->insertNews($data);
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        // header('Location: ' . URL . 'news');
-
     }
 
     public function delete($id){

@@ -1,14 +1,15 @@
-<h1>Edit <?php echo $this->user['login']; ?> </h1>
-
 <?php
 //print_r($this->user);
+$user = array_shift($this->user);
 
 ?>
+<h1>Edit <?php echo $user['login']; ?> </h1>
 
-<form action="<?php echo URL;?>user/editSave/<?php echo $this->user['id'];?>" method="post" class="form-inline">
+
+<form action="<?php echo URL;?>user/editSave/<?php echo $user['user_id'];?>" method="post" class="form-inline">
     <div class="form-group col-md-offset-1">
         <label for="login" class="control-label">Login</label>
-        <input type="text" name="login" id="login" value="<?php echo $this->user['login'];?>"/>
+        <input type="text" name="login" id="login" value="<?php echo $user['login'];?>"/>
 
         <label for="password" class="control-label">Password</label>
         <input type="password" name="password" id="password"/>
@@ -16,9 +17,9 @@
     <div class="form-group ">
         <label for="role" class="control-label">Role</label>
         <select name="role">
-            <option value="default" <?php if($this->user['role'] == 'default') echo 'selected' ;?>>Default</option>
-            <option value="admin" <?php if($this->user['role'] == 'admin') echo 'selected' ;?>>Admin</option>
-            <option value="owner" <?php if($this->user['role'] == 'owner') echo 'selected' ;?>>Owner</option>
+            <option value="default" <?php if($user['role'] == 'default') echo 'selected' ;?>>Default</option>
+            <option value="admin" <?php if($user['role'] == 'admin') echo 'selected' ;?>>Admin</option>
+            <option value="owner" <?php if($user['role'] == 'owner') echo 'selected' ;?>>Owner</option>
         </select>
     </div>
 

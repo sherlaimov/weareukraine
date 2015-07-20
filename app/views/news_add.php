@@ -1,6 +1,5 @@
 <?php
-print_r($data);
-print_r($_POST);
+
 require_once('libs/htmlelements.php')
 ?>
 

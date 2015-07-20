@@ -2,64 +2,56 @@
 
 class Model_User extends Model {
 
-    public function userList(){
-        $STH = $this->DB();
+    public function getUsers(){
 
-        $STH = $STH->query("SELECT user_id, login, role FROM users");
-        return $STH->fetch_all(MYSQLI_ASSOC);
+       return $this->query("SELECT user_id, login, role FROM user");
+
     }
 
 
     public function insertUser($data)
     {
-        $STH = $this->DB();
-        extract($data);
-        $STH->query("INSERT INTO users (login, password, role)
-          VALUES ('$login', '$password', '$role')
-          ");
-//        $STH->prepare("INSERT INTO users
-//          (login, password, role)
-//          VALUES (:username, :password, :role)
-//          ");
-//        $STH::execute(array(
-//            ':login' => $data['login'],
-//            ':password' => Hash::create_hash('md5', $data['password'], HASH_KEY),
-//            ':role' => $data['role'],
-//        ));
+        $insertData = array(
+            'login' => $data['login'],
+            'password' => $data['password'],
+            'role' => $data['role']
+        );
+
+       return ($this->insert('user', $insertData)) ? TRUE : FALSE;
+
     }
 
-    public function singleUserList($id)
+    public function getUserById($id)
     {
+        $this->where('user_id', $id);
+        return $this->get('user');
+       // $STH = $STH->query("SELECT user_id, login, role FROM users WHERE user_id = '$id'");
 
-        $STH = $this->DB();
-        $STH = $STH->query("SELECT user_id, login, role FROM users WHERE user_id = '$id'");
-        return $STH->fetch_assoc();
 
     }
 
     public function editUser($data)
     {
-        extract($data);
-        $STH = $this->DB();
-        $STH = $STH->query("UPDATE users
-         SET
-             login = '$login',
-             password = '$password',
-             role = '$role'
-             WHERE user_id = '$id'");
+        $updateData = array(
+            'login' => $data['login'],
+            'password' => $data['password'],
+            'role' => $data['role']
+        );
+        $this->where('user_id', $data['user_id']);
+        return ($this->update('user', $updateData)) ? TRUE : FALSE;
 
     }
 
     public function deleteUser($id)
     {
-        $STH = $this->DB();
-        $STH = $STH->query("SELECT role from users WHERE user_id = '$id'");
-        $res = $STH->fetch_assoc();
+
+       $res = $this->query("SELECT role FROM user WHERE user_id = $id");
+       $res = array_shift($res);
         if($res['role'] == 'owner') {
             return false;
         } else {
-            $STH = $this->DB();
-            $STH->query("DELETE from users WHERE user_id = '$id'");
+            $this->where('user_id', $id);
+            return ($this->delete('user')) ? true : false;
 
         }
 

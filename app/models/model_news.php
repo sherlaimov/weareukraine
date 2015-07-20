@@ -5,7 +5,7 @@ class Model_News extends Model
 
     public function get_news()
     {
-        return $res = $this->get('news');
+        return $res = $this->get('news', 7, 'ORDER BY id DESC');
     }
 
     public function get_one_news()
@@ -15,14 +15,18 @@ class Model_News extends Model
         return $res;
     }
 
-    public function insertNews($news)
+    public function addNews($data, $image = NULL)
     {
-
         $insertData = array(
-            'title' => $news['title'],
-            'body' => $news['body']
+            'title' => $data['title'],
+            'body' => $data['body'],
+            'image_name' => $data['image_name'],
+            'thumb' => $data['thumb']
         );
-        return ($this->insret('news', $insertData)) ? true : false;
+
+        //print_r($insertData); die;
+        return $this->insert('news', $insertData);
+
     }
 
 
@@ -49,17 +53,5 @@ class Model_News extends Model
         return $this->update('news', $updateData);
     }
 
-    public function addNews($data, $image = NULL)
-    {
-        $insertData = array(
-            'title' => $data['title'],
-            'body' => $data['body'],
-            'image_name' => $data['image_name'],
-            'thumb' => $data['thumb']
-        );
 
-        //print_r($insertData); die;
-        return $this->insert('news', $insertData);
-
-    }
 }

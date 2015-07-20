@@ -17,7 +17,7 @@ class Controller_User extends Controller{
     }
 
     public function index(){
-        $this->view->userList = $this->model->userList();
+        $this->view->userList = $this->model->getUsers();
 
         $this->view->generate_view();
     }
@@ -37,15 +37,14 @@ class Controller_User extends Controller{
     public function edit($id)
     {
         //fetch individual user
-        $this->view->user = $this->model->singleUserList($id);
-        //var_dump($this->view->user);
+        $user = $this->view->user = $this->model->getUserById($id);
         $this->view->generate_view();
     }
 
     public function editSave($id){
 
         $data = array();
-        $data['id'] = $id;
+        $data['user_id'] = $id;
         $data['login'] = trim($_POST['login']);
         $data['password'] = Hash::create_hash('md5',(trim($_POST['password'])), HASH_KEY );
         $data['role'] = trim($_POST['role']);
