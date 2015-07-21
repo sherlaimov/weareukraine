@@ -8,8 +8,6 @@ class Controller_Login extends Controller {
         //parent::__construct();
         $this->model = $this->load_model('login');
         //$this->login();
-
-
     }
 
     function index() {
@@ -22,7 +20,6 @@ class Controller_Login extends Controller {
 
 
             if ( empty($login) || empty($password) ) {
-
 
                 Session::set('loginFail', true);
 
@@ -39,14 +36,14 @@ class Controller_Login extends Controller {
 
 
             } else {
-
-                $data = $this->model->getUserByLogin($login);
+               // $fountUser = User::authenticate($login, $password);
+                $data = $this->model->authenticate($login, $password);
                 //var_dump($data);
 
                 if ( is_array($data)  && $password == $data['password'] ) {
 
                     //LOGIN + SET SESSION
-                    Session::set('loggedIn', true);
+                    Session::login($data);
                     Session::set('user', $login);
                     Session::set('role', $data['role']);
 
@@ -75,6 +72,7 @@ class Controller_Login extends Controller {
         //echo '<h1>belgo</h1>';die;
         //Session::end();
         Session::set('loggedIn', false);
+//        Session::logout();
         Session::end();
         //unset($_SESSION);
         //$_SESSION = array();

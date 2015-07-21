@@ -17,11 +17,12 @@ class Model_News extends Model
 
     public function addNews($data, $image = NULL)
     {
+
         $insertData = array(
             'title' => $data['title'],
             'body' => $data['body'],
             'image_name' => $data['image_name'],
-            'thumb' => $data['thumb']
+            'thumb' => $data['thumb_name']
         );
 
         //print_r($insertData); die;
@@ -46,10 +47,20 @@ class Model_News extends Model
     public function updateNews($data)
     {
         $this->where('id', $data['id']);
-        $updateData = array(
-            'title' => $data['title'],
-            'body' => $data['body']
-        );
+
+        if ($data['image_name']) {
+            $updateData = array(
+                'title' => $data['title'],
+                'body' => $data['body'],
+                'image_name' => $data['image_name'],
+                'thumb' => $data['thumb_name']
+            );
+        } else {
+            $updateData = array(
+                'title' => $data['title'],
+                'body' => $data['body']);
+        }
+
         return $this->update('news', $updateData);
     }
 

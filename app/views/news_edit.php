@@ -10,7 +10,6 @@ $news = array_shift($data['news']);
         <div class="col-sm-10">
             <?php
 
-
                 echo html_input_title('title', $news['title']);
 
             ?>

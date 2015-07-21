@@ -62,3 +62,13 @@ function html_textarea($name, $data, $param = array() ){
     return $html;
 
 }
+
+function image_thumb($name) {
+    return '<img src="' . WS_IMAGES . 'thumb/' . $name .'">';
+}
+
+function html_get_thumbnail($filename, $width, $height, $style = '') {
+    $fileInfo = pathinfo($filename);
+
+    return '<img src="'.WS_IMAGES .'thumb/'. $fileInfo['filename'] .'_'.$width.'_'.$height.'.jpg'.'" class="news-image">';
+}

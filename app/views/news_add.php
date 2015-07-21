@@ -1,19 +1,19 @@
 <?php
 
-require_once('libs/htmlelements.php')
+require_once('libs/htmlelements.php');
+
+//var_dump($data);
+$news = isset($data['news']) ? array_shift($data['news'] ) : null;
+//print_r($news);
+
 ?>
 
-<form class="form-horizontal" action="<?php echo URL;?>news/add" method="POST" enctype="multipart/form-data">
+<form class="form-horizontal" action="<?php echo URL;?>news/add/<?php echo isset($news['id']) ? $news['id'] : null;?>" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Title</label>
         <div class="col-sm-10">
             <?php
-            echo html_input('title', '', array(
-                'class' => 'form-control',
-                'type' => 'text',
-                'id' => 'title',
-                'placeholder' => 'Title'
-            ));
+            echo html_input_title('title', $news['title']);
             ?>
 
         </div>
@@ -22,7 +22,7 @@ require_once('libs/htmlelements.php')
         <label for="body" class="col-sm-2 control-label">Body</label>
         <div class="col-sm-10">
 
-            <?= html_textarea('body', ''); ?>
+            <?= html_textarea('body', $news['body']); ?>
         </div>
     </div>
     <div class="form-group">
@@ -35,7 +35,7 @@ require_once('libs/htmlelements.php')
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <img class="featurette-image img-responsive" data-src="holder.js/50x50/auto" alt="Generic placeholder image">
+            <?php echo isset($news['thumb']) ? image_thumb($news['thumb']) : null; ?>
         </div>
     </div>
     <div class="form-group col-sm-offset-2 col-md-2 ">
@@ -54,8 +54,6 @@ require_once('libs/htmlelements.php')
     </div>
     
 </form>
-
-
 
 
 <?php

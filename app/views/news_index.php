@@ -25,16 +25,10 @@ foreach($data['news'] as $news) {
 
     if(Session::get('loggedIn') && Session::get('role') == 'owner' || Session::get('role') == 'admin') {
         echo '<p><a href="'. URL . 'news/delete/' . $news['id'] .'" class="btn btn-danger pull-right">Delete</a></p>';
-        echo '<p><a href="'. URL . 'news/edit/' . $news['id'] .'" class="btn btn-warning">Edit</a></p>';
+        echo '<p><a href="'. URL . 'news/add/' . $news['id'] .'" class="btn btn-warning">Edit</a></p>';
     }
 }
 
-
-function html_get_thumbnail($filename, $width, $height, $style = '') {
-    $fileInfo = pathinfo($filename);
-
-    return '<img src="'.WS_IMAGES .'thumb/'. $fileInfo['filename'] .'_'.$width.'_'.$height.'.jpg'.'" class="news-image">';
-}
 
 
 ?>

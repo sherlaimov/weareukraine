@@ -36,20 +36,26 @@ class Controller_News extends Controller {
         }
 
         $news = $this->model->selectOneNews($id);
-        //$this->view->transferNews($news);
-
-        //print_r($news);
         $this->view->setData('news', $news);
-
         $this->view->generate_view();
     }
 
     public function editSave($id){
         $data = array();
         $data['id'] = $id;
+
         if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
+            if ($_FILES['upload']) {
+                //echo 'BELGO'; die; CHUDESA BLYAD!
+                $imageData = $this->get_image_info();
+                $data = array_merge($data, $imageData);
+
+                $bitmap = $this->create_thumbnail($imageData['file_destination'], false, $imageData['width'], $imageData['height']);
+                imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $imageData['thumb_name']);
+            }
+
             $this->model->updateNews($data);
             header('Location: ' . URL . 'news');
             exit;
@@ -67,18 +73,24 @@ class Controller_News extends Controller {
         }
     }
 
-    public function add() {
+    public function add($id = null) {
 
         if (Session::get('loggedIn') == FALSE || Session::get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
             header('Location: ' . URL . 'login/');
             exit;
         }
-
+        if (isset($id)) {
+            if ($this->isPost()) {
+                $this->editSave($id);
+            }
+            $news = $this->model->selectOneNews($id);
+            $this->view->setData('news', $news);
+            $this->view->generate_view();
+        }
         if ($_POST) {
            $this->addNews();
         }
-
         $this->view->generate_view();
     }
 
@@ -90,10 +102,8 @@ class Controller_News extends Controller {
             'body' => trim($_POST['body'])
         );
 
-        $tmp_name = $_FILES['upload']['tmp_name'];
-
-        if ( empty($data['title']) || empty($data['body']) || empty($tmp_name)) {
-            Message::add('All fields are required to be filled out', Message::STATUS_WARNING);
+        if ( empty($data['title']) || empty($data['body'])) {
+            Message::add('Title and body can not be empty', Message::STATUS_WARNING);
             if( count($_POST)) {
                 $this->view->setData('post', $data);
                /// header('Location: ' . URL . 'news/add');
@@ -101,7 +111,15 @@ class Controller_News extends Controller {
         }
         else
         {
-            $data = array_merge($data, $this->get_image_info());
+            if ($_FILES['upload']) {
+                $imageData = $this->get_image_info();
+                $data = array_merge($data, $imageData);
+                //print_r($data); die;
+                $bitmap = $this->create_thumbnail($imageData['file_destination'], false, $imageData['width'], $imageData['height']);
+                imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $imageData['thumb_name']);
+                //$data = array_merge($data, $this->get_image_info());
+            }
+
             $this->model->addNews($data);
             header('Location: ' . URL . 'news');
             exit;
@@ -130,31 +148,33 @@ class Controller_News extends Controller {
 
         $allowed = array('jpg', 'jpeg', 'png', 'gif');
         if (in_array($file_ext, $allowed)) {
+
             if ($error > 0) {
                 die("Error uploading file! Code $error.");
             } else {
-                //move_uploaded_file( $_FILES['upload']['tmp_name'], 'images/' . $_FILES['upload']['name']);
+
                 $file_name_tmp = md5($fileInfo['filename'] . rand(0, 10000)); //uniqid('', true);
                 $file_name_new = $file_name_tmp . '.' . $file_ext;
 
-                $file_destination = FS_IMAGES . $file_name_new;
+                $data['file_destination'] = $file_destination = FS_IMAGES . $file_name_new;
+
                 if (move_uploaded_file($tmp_name, $file_destination)) {
                     $data['image_name'] = $file_name_new;
                     $data['file_path'] = $file_destination;
 
                     if (isset($_POST['width'])) {
-                        $width = $_POST['width'];
-                        $height = $width;
+                        $data['width'] = $_POST['width'];
+                        $data['height'] = $data['width'];
                     } else {
-                        $width = 150;
-                        $height = 150;
+                        $data['width'] = 150;
+                        $data['height'] = 150;
                     }
 
-                    $thumbnailName = $file_name_tmp . '_' . $width . '_' . $height . '.jpg';
-                    $data['thumb'] = $thumbnailName;
+                    $thumbnailName = $file_name_tmp . '_' . $data['width'] . '_' . $data['height'] . '.jpg';
+                    $data['thumb_name'] = $thumbnailName;
                     //echo $data['thumb']; die;
-                    $bitmap = $this->create_thumbnail($file_destination, false, $width, $height);
-                    imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $thumbnailName);
+                    //$bitmap = $this->create_thumbnail($file_destination, false, $data['width'], $data['height']);
+                    //imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $thumbnailName);
                     return $data;
                 }
             }
