@@ -1,5 +1,11 @@
 <?php
 
+//DB constants
+define('DB_USER', 'root');
+define('DB_PSWD', '');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'mvc');
+
 
 defined('PUBLIC_URL')
 || define('PUBLIC_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ?
@@ -25,8 +31,5 @@ define('WS_IMAGES', URL . 'images/');
 define('VIEWS', FS_APP. 'views' . DS);
 
 define('FS_CONTROLLERS', FS_APP . 'controllers' . DS );
-//DB constants
-define('DB_USER', 'root');
-define('DB_PSWD', '');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'mvc');
+
+require_once('libs/functions.php');

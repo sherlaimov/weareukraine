@@ -7,6 +7,11 @@
 
 <?php
 
+var_dump($allNews);
+var_dump($data['news']['totalNewsCount']);
+
+
+
 if ( Session::get('loggedIn') && Session::get('role') === 'owner' || Session::get('role') === 'admin') {
     echo '<p><a href="'. URL . 'news/add" class="btn btn-success pull-right">Add News</a></p>';
 }

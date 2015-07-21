@@ -64,5 +64,17 @@ class Model_News extends Model
         return $this->update('news', $updateData);
     }
 
+    public function countAll(){
+
+       $res = $this->query("SELECT COUNT(*) FROM news");
+        $res = array_shift($res);
+        $count = array_values($res)[0];
+        return $count;
+
+    }
+
+    public function getPagedNews() {
+
+    }
 
 }
