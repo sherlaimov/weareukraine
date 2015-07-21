@@ -4,3 +4,4 @@ logs/
 *.zip
 *.gz
 images/
+nbproject/
