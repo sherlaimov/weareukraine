@@ -2,8 +2,6 @@
 
 class Controller_News extends Controller {
 
-    public $totalNewsCount = int;
-
     function init() {
 
         $this->model = $this->load_model('news');
@@ -14,12 +12,11 @@ class Controller_News extends Controller {
         //$news = $this->model->get_news();
         //$this->view->allNews = $this->model->countAll();
 
-        //1. the current page number
-        $page = ! empty($_GET['page']) ? (int)$_GET['page'] : 1;
-        $pagination = new Pagination(1, 2);
+        $pagination = new Pagination(1, 3);
+        //var_dump($pagination);
         $news = $pagination->findByOffset();
-
         $this->view->setData('news', $news);
+        $this->view->setData('pagination', $pagination);
         $this->view->generate_view();
     }
 
@@ -254,10 +251,6 @@ class Controller_News extends Controller {
 
         return $thumb;
 
-    }
-
-    public function totalNewsCount(){
-        return $this->totalNewsCount;
     }
 
 }
