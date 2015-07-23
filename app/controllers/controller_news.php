@@ -5,7 +5,7 @@ class Controller_News extends Controller {
     function init() {
 
         $this->model = $this->load_model('news');
-        //$this->totalNewsCount = $this->model->countAll();
+
     }
 
     function index(){
@@ -13,6 +13,7 @@ class Controller_News extends Controller {
         //$this->view->allNews = $this->model->countAll();
 
         $pagination = new Pagination(1, 3);
+        $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
         //var_dump($pagination);
         $news = $pagination->findByOffset();
         $this->view->setData('news', $news);
@@ -126,8 +127,7 @@ class Controller_News extends Controller {
             }
 
             $this->model->addNews($data);
-            header('Location: ' . URL . 'news');
-            exit;
+            redirect_to(URL . 'news');
         }
     }
 

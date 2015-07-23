@@ -73,8 +73,4 @@ class Model_News extends Model
 
     }
 
-    public function getPagedNews() {
-
-    }
-
 }

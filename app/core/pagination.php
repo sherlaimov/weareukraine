@@ -15,7 +15,6 @@ class Pagination extends Model_News {
 
     public function offset(){
         //page 2 has an offset of 20 (2-1) * 20
-
         return ($this->current_page - 1) * $this->per_page;
     }
 
@@ -41,7 +40,7 @@ class Pagination extends Model_News {
     }
 
     public function findByOffset(){
-        return $this->query("SELECT * FROM news LIMIT $this->per_page OFFSET {$this->offset()}");
+        return $this->query("SELECT * FROM news ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
     }
 
 }

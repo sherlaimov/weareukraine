@@ -22,7 +22,8 @@ class Session {
 
     public static function login($userData) {
         if($userData) {
-            self::$userId = $_SESSION['user_id'] = $userData['user_id']; //no User class here but in login.php there IS!
+            $_SESSION['user_id'] = $userData['user_id']; //no User class here but in login.php there IS!
+            self::$userId = $userData['user_id'];
             self::$loggedIn = $_SESSION['loggedIn'] = true;
         }
     }
@@ -52,6 +53,16 @@ class Session {
 
     public static function isLoggedIn() {
         return self::$loggedIn;
+    }
+
+    public static function isAuthorized(){
+        //echo (self::get('loggedIn', TRUE)) ? 'BELGO' : null;
+        //var_dump(self::$userId);
+        if (self::get('loggedIn') == true && self::get('role') === 'admin' || self::get('role') === 'owner'){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
