@@ -46,7 +46,6 @@ class Session {
 
 
     public static function end() {
-
         session_unset();
         //diff between session_destroy?
     }

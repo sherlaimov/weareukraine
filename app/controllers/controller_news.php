@@ -9,8 +9,6 @@ class Controller_News extends Controller {
     }
 
     function index(){
-        //$news = $this->model->get_news();
-        //$this->view->allNews = $this->model->countAll();
 
         $pagination = new Pagination(1, 3);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -50,11 +48,13 @@ class Controller_News extends Controller {
         $data = array();
         $data['id'] = $id;
 
+        //var_dump($_FILES);die;
+
         if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
-            if ($_FILES['upload']) {
-                //echo 'BELGO'; die; CHUDESA BLYAD!
+            if (isset($_FILES['upload']) && ! empty($_FILES['upload']['name'])) {
+                //echo 'BELGO'; die;
                 $imageData = $this->get_image_info();
                 $data = array_merge($data, $imageData);
 

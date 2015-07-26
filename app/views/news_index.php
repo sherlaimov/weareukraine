@@ -7,7 +7,7 @@
 
 <?php
 
-var_dump($allNews);
+//var_dump($this->allNews);
 $pagination = $data['pagination'];
 
 
