@@ -219,7 +219,7 @@ class Model
         return $stmt;
     }
     function __destruct(){
-        $this->_mysql->close();
+        //$this->_mysql->close();
     }
 
 }

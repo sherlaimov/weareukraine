@@ -4,7 +4,8 @@ class Controller_User extends Controller{
 
     function init() {
 
-        $this->model = $this->load_model('user');
+        $this->model = new Model_User();
+        $this->view->setLayout('admin_view');
 
         $logged = Session::get('loggedIn');
         $role = Session::get('role');
@@ -16,7 +17,8 @@ class Controller_User extends Controller{
 
     }
 
-    public function index(){
+    public function index() {
+
         $this->view->userList = $this->model->getUsers();
 
         $this->view->generate_view();

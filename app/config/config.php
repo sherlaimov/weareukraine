@@ -23,13 +23,13 @@ define('FS_APP', ROOT. 'app' . DS);
 
 define('CORE', 'core/'); //how do I define this correctly?
 
-define('FS_IMAGES', ROOT . 'images' . DS);
+define('FS_IMAGES', ROOT . 'public/images' . DS);
 
-define('WS_IMAGES', URL . 'images/');
+define('WS_IMAGES', URL . 'public/images/');
 
 
 define('VIEWS', FS_APP. 'views' . DS);
 
 define('FS_CONTROLLERS', FS_APP . 'controllers' . DS );
 
-require_once('libs/functions.php');
+require_once('app/libs/functions.php');

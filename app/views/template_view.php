@@ -1,10 +1,10 @@
 <?php
-echo '$_SESSION ';
-print_r($_SESSION);echo '<br/>';
-echo '$_GET[url] ';
-print_r($_GET['url']); echo '<br/>';
-echo '$_POST ';
-print_r($_POST);
+//echo '$_SESSION ';
+//print_r($_SESSION);echo '<br/>';
+//echo '$_GET[url] ';
+//print_r($_GET['url']); echo '<br/>';
+//echo '$_POST ';
+//print_r($_POST);
 
 
 ?>
@@ -22,8 +22,8 @@ print_r($_POST);
         <title>We Are Ukraine Project</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="<?php echo URL; ?>css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="<?php echo URL; ?>css/style.css">
+        <link href="<?php echo URL; ?>public/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
@@ -31,8 +31,8 @@ print_r($_POST);
         <!--[if lt IE 9]>
         <script src="<?php echo URL; ?>assets/js/ie8-responsive-file-warning.js"></script>
         <![endif]-->
-        <script src="<?php echo URL; ?>js/ie-emulation-modes-warning.js"></script>
-        <script src="<?php echo URL; ?>js/custom.js"></script>
+        <script src="<?php echo URL; ?>public/js/ie-emulation-modes-warning.js"></script>
+        <script src="<?php echo URL; ?>public/js/custom.js"></script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -195,9 +195,9 @@ print_r($_POST);
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="<?php echo URL; ?>js/bootstrap.min.js"></script>
-        <script src="<?php echo URL; ?>js/docs.min.js"></script>
+        <script src="<?php echo URL; ?>public/js/bootstrap.min.js"></script>
+        <script src="<?php echo URL; ?>public/js/docs.min.js"></script>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="<?php echo URL; ?>js/ie10-viewport-bug-workaround.js"></script>
+        <script src="<?php echo URL; ?>public/js/ie10-viewport-bug-workaround.js"></script>
     </body>
 </html>

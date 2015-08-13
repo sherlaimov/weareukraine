@@ -4,8 +4,15 @@
 
 require_once 'config/config.php';
 
-function __autoload($class){
-	require_once CORE . strtolower($class) . '.php';
+function __autoload($class) {
+
+    $classExp = explode('_', $class);
+
+    if ( count($classExp) > 1 ) {
+        require_once FS_APP. strtolower($classExp[0]) . DS . strtolower($classExp[0]).'_'.strtolower($classExp[1]) . '.php';
+    } else {
+        require_once CORE . strtolower($class) . '.php';
+    }
 }
 
 

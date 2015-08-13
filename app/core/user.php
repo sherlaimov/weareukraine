@@ -1,36 +1,43 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: ES
+ * Date: 14.08.2015
+ * Time: 0:07
+ */
 
-class User extends Model {
-    protected static $table_name = 'user';
-    protected static $db_fields = array('user_id', 'login', 'password', 'role', 'first_name', 'last_name');
-    public $user_id;
-    public $login;
-    public $password;
-    public $first_name;
-    public $last_name;
+class User {
+    protected $_data = array();
+    protected $_model = null;
 
-    public function full_name(){
-        if(isset($this->first_name) && isset($this->last_name)){
-            return $this->first_name . ' ' . $this->last_name;
-        } else {
-            return 'First and last names are not set';
+    public function __construct($id) {
+
+        $this->_model = new Model_User();
+
+        if ((int) $id ) {
+           $this->_data = $this->_model->getUserById($id);
         }
     }
 
+    public function get($key, $defVAlue = '') {
 
-    public static function authenticate($username='', $password=''){
-        $res = self::query("SELECT * FROM user WHERE login = '$username' AND
-                            password = '$password' LIMIT 1");
+        if ( isset($this->_data[$key]) ) {
+            return $this->_data[$key];
+        }
 
-//        $sql = "SELECT * FROM user ";
-//        $sql .= "WHERE login = '$username' ";
-//        $sql .= "AND password = '$password' ";
-//        $sql .= "LIMIT 1";
-//        $result_array = self::find_by_sql($sql); //returns OBJECT
-        // var_dump($result_array); die();
-        print_r($res); die;
-        return !empty($result_array) ? array_shift($result_array): false; //WHY DO ARRAY_SHIFT?
+        return $defVAlue;
     }
 
+    public function fullName() {
+        return $this->get('first_name').' '. $this->get('last_name');
+    }
 
+    public function isUserLoaded() {
+
+        if ( $this->get('user_id') ) {
+            return true;
+        }
+
+        return false;
+    }
 }

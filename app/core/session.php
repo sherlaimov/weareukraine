@@ -20,12 +20,8 @@ class Session {
         }
     }
 
-    public static function login($userData) {
-        if($userData) {
-            $_SESSION['user_id'] = $userData['user_id']; //no User class here but in login.php there IS!
-            self::$userId = $userData['user_id'];
-            self::$loggedIn = $_SESSION['loggedIn'] = true;
-        }
+    public static function login($flag = true) {
+        $_SESSION['loggedIn'] = $flag;
     }
 
     private function check_login(){
@@ -41,7 +37,7 @@ class Session {
     public static function logout(){
         unset($_SESSION['user_id']);
         unset(self::$userId);
-        self::$loggedIn = $_SESSION['loggedIn'] = false;
+        $_SESSION['loggedIn'] = false;
     }
 
 
@@ -51,7 +47,12 @@ class Session {
     }
 
     public static function isLoggedIn() {
-        return self::$loggedIn;
+
+        if (isset($_SESSION['loggedIn'])) {
+            return $_SESSION['loggedIn'];
+        }
+
+        return false;
     }
 
     public static function isAuthorized(){

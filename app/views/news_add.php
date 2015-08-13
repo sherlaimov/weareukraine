@@ -1,6 +1,5 @@
 <?php
 
-require_once('libs/htmlelements.php');
 
 //var_dump($data);
 $news = isset($data['news']) ? array_shift($data['news'] ) : null;

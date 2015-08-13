@@ -39,7 +39,7 @@ class View
 
         //extract($this->data);
        $data = $this->data;
-        //print_r($data);
+        //print_r($this->data); die;
 
         include 'app/views/' . $this->layout . '.php';
 
@@ -53,6 +53,10 @@ class View
 
     public function setArr(array $value) {
         $this->data = $value;
+    }
+
+    public function getArr() {
+        return $this->data;
     }
 
 

@@ -80,7 +80,7 @@ class Controller_News extends Controller {
     }
 
     public function add($id = null) {
-
+        require_once('app/libs/htmlelements.php');
         if (Session::get('loggedIn') == FALSE || Session::get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
             header('Location: ' . URL . 'login/');
@@ -118,7 +118,11 @@ class Controller_News extends Controller {
         else
         {
             if ($_FILES['upload']) {
+                $file = new File($_FILES['upload']);
+
+                //var_dump($file->getImageInfo());die;
                 $imageData = $this->get_image_info();
+                //var_dump($imageData); die;
                 $data = array_merge($data, $imageData);
                 //print_r($data); die;
                 $bitmap = $this->create_thumbnail($imageData['file_destination'], false, $imageData['width'], $imageData['height']);
@@ -144,14 +148,15 @@ class Controller_News extends Controller {
         $fileInfo = pathinfo($image_name);
 
         $file_ext = explode('.', $image_name);
-        $file_ext = strtolower(end($file_ext));
-
-
+        //var_dump($file_ext); die;
+        //$file_ext = strtolower(end($file_ext));
+        $file_ext = File::extension($image_name);
+        //var_dump($file_ext); die;
         if ($image_size == FALSE) {
             Message::add('That is not an image', Message::STATUS_WARNING);
         }
 
-        $allowed = array('jpg', 'jpeg', 'png', 'gif');
+        $allowed = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
         if (in_array($file_ext, $allowed)) {
 
             if ($error > 0) {

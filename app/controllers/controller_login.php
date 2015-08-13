@@ -38,18 +38,22 @@ class Controller_Login extends Controller
             } else {
                 // $fountUser = User::authenticate($login, $password);
                 $data = $this->model->authenticate($login, $password);
-                //var_dump($data);
 
-                if (is_array($data) && $password == $data['password']) {
+
+                if (is_array($data) && isset($data['user_id']) ) {
 
                     //LOGIN + SET SESSION
-                    Session::login($data);
-                    Session::set('user', $login);
+                    Session::set('user_id', $data['user_id']);
+                    Session::login();
+               /*
                     Session::set('role', $data['role']);
-
+                    $user = new User($login, $data['password']);
+                    Session::set('userObj', $user);
+                */
                     if (isset($_SERVER['HTTP_REFERER'])) {
                         redirect_to($_SERVER['HTTP_REFERER']);
                     }
+
 
                 } else {
                     Message::add('No such user found', Message::STATUS_WARNING);
@@ -60,6 +64,7 @@ class Controller_Login extends Controller
             }
 
         }
+
 
         $this->view->generate_view();
 
