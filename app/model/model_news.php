@@ -17,14 +17,14 @@ class Model_News extends Model
 
     public function addNews($data, $image = NULL)
     {
-
+        //var_dump($data);die;
         $insertData = array(
             'title' => $data['title'],
             'body' => $data['body'],
             'image_name' => $data['image_name'],
             'thumb' => $data['thumb_name']
         );
-
+        //var_dump($insertData); die;
         //print_r($insertData); die;
         return $this->insert('news', $insertData);
 

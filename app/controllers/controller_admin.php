@@ -2,7 +2,7 @@
 class Controller_Admin extends Controller
 {
     function init(){
-        $this->model = $this->load_model('admin');
+        $this->model = new Model_Admin();
         $this->view->setLayout('admin_view');
     }
 

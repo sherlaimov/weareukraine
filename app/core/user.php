@@ -16,6 +16,7 @@ class User {
 
         if ((int) $id ) {
            $this->_data = $this->_model->getUserById($id);
+            $this->_data = array_shift($this->_data);
         }
     }
 
@@ -29,7 +30,8 @@ class User {
     }
 
     public function fullName() {
-        return $this->get('first_name').' '. $this->get('last_name');
+        //echo 'BELGO';
+        return $this->get('first_name') . ' ' . $this->get('last_name');
     }
 
     public function isUserLoaded() {
@@ -37,7 +39,6 @@ class User {
         if ( $this->get('user_id') ) {
             return true;
         }
-
         return false;
     }
 }

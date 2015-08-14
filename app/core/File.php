@@ -6,8 +6,11 @@ class File {
     public $type;
     public $size;
     public $extension;
-    private $temp_path;
-    protected $uploadDir = 'img';
+    private $temp_path; //nah nuzhen? Мы хватаем файл отсюда в итоге?
+    private $filePath;
+    private $tempName;
+    public $thumbName;
+    //protected $uploadDir = 'img';
     protected $allowedExt = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
     public $errors = array();
     protected $upload_errors = array(
@@ -35,6 +38,8 @@ class File {
         $this->type = $file['type'];
         $this->size = $file['size'];
         $this->extension = static::extension($file['name']);
+        $this->tempName = $this->tempName();
+        $this->filePath = $this->filePath();
 //        $this->uploadDir = FS_IMAGES . $file_name_new;
 
         return true; //why returning true here?
@@ -53,18 +58,45 @@ class File {
 
 //        $fileInfo = pathinfo($image_name);
 //        $file_ext = File::extension($image_name);
+
         $data = array(
-            'name' => $this->filename,
+            'image_name' => $this->tempName,
+            'tmp_name' => $this->temp_path,
             'type' => $this->type,
             'extension' => $this->extension,
+            'file_path' => $this->filePath,
              );
         return $data;
 
-
+    }
+    public function tempName()
+    {
+        $file_name_tmp = md5($this->filename . rand(0, 10000)) . '.'. $this->extension;
+        return $file_name_tmp;
     }
 
-    public function createThumbnail($path, $save, $width, $height)
+    public function thumbName($width, $height)
     {
+        return $this->tempName . '_' . $width . '_' . $height . 'jpg';
+    }
+    public function filePath()
+    {
+        $fileNameNew = $this->tempName() . '.' . $this->extension;
+        return $filePath = FS_IMAGES . $fileNameNew;
+    }
+
+    public function createThumb($width, $height)
+    {
+        $filePath = $this->filePath;
+        $this->thumbName = $this->tempName . '_' . $width . '_' . $height . 'jpg';
+        $bitmap = $this->createThumbBitmap($filePath, false, $width, $height);
+        return imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $this->thumbName);
+    }
+
+
+    public function createThumbBitmap($path, $save, $width, $height)
+    {
+        //var_dump($path);
         $info = getimagesize($path);
 //        echo $path . '<br/>';
 //        print_r($info);

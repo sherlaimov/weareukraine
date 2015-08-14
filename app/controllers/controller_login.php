@@ -8,8 +8,8 @@ class Controller_Login extends Controller
     function init()
     {
         //parent::__construct();
-        $this->model = $this->load_model('login');
-        //$this->login();
+        //$this->model = $this->load_model('login');
+        $this->model = new Model_User();
     }
 
     function index()

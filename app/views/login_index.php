@@ -1,10 +1,10 @@
 
 <?php
-$user = Session::get('userObj');
-var_dump($user);
+//$user = Session::get('userObj');
+//var_dump($user);
 
     if (Session::get('loggedIn') === TRUE) : ?>
-    <h2>Welcome back <?php echo $user->fullName(); ?>!</h2>
+    <h2>Welcome back <?php var_dump($this->user->fullName()); //echo $this->user->fullName(); ?>!</h2>
 <?php else : ?>
         <form class="form-signin" action="<?php echo URL;?>login" method="post">
             <h2 class="form-signin-heading">Please sign in</h2>

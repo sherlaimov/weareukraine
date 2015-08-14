@@ -7,7 +7,7 @@ require_once 'config/config.php';
 function __autoload($class) {
 
     $classExp = explode('_', $class);
-
+    //var_dump($classExp);die;
     if ( count($classExp) > 1 ) {
         require_once FS_APP. strtolower($classExp[0]) . DS . strtolower($classExp[0]).'_'.strtolower($classExp[1]) . '.php';
     } else {

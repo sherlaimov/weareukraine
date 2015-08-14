@@ -6,7 +6,6 @@
 //echo '$_POST ';
 //print_r($_POST);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +95,7 @@
                                     <?php endif;?>
                                         <li><a href="/login/logout" class="btn btn-danger logout navbar-btn">Logout</a></li>
                                     </ul>
-                                    <span class="session"><?php echo isset($_SESSION['user']) ? "you're logged in as " . $_SESSION['user'] . ', your role is ' . $_SESSION['role']: 'no session login'; ?></span>
+                                    <span class="session"><?php echo isset($this->user) ? "You're logged in as " . $this->user->get('login') . ', your role is ' . $this->user->get('role') : 'no session login'; ?></span>
 
                                 </div>
                             <?php else : ?>

@@ -42,21 +42,13 @@ class Model_User extends Model {
 
 
     public function authenticate($username='', $password=''){
-        $this->where($username, 'username');
-        $this->where($password, 'passwod');
-        return $this->get('user', 1);
+        $this->where('login', $username);
+        $this->where('password', $password);
+        $result =  $this->get('user', 1);
 
 //        $res = self::query('SELECT * FROM user WHERE login = '.$username.' AND
 //                            password = '.$password.' LIMIT 1');
-
-//        $sql = "SELECT * FROM user ";
-//        $sql .= "WHERE login = '$username' ";
-//        $sql .= "AND password = '$password' ";
-//        $sql .= "LIMIT 1";
-//        $result_array = self::find_by_sql($sql); //returns OBJECT
-        // var_dump($result_array); die();
-        print_r($res); die;
-        return !empty($result_array) ? array_shift($result_array): false; //WHY DO ARRAY_SHIFT?
+        return isset($result) ? (array_shift($result)) : FALSE;
     }
 
     public function getUsers(){
