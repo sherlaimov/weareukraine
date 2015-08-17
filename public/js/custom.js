@@ -30,3 +30,7 @@ $(document).ready(function () {
     })
 
 })();
+
+$(document).ready(function () {
+   $('#mainMessage').fadeOut(7000);
+});

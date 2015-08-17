@@ -11,7 +11,7 @@ class File {
     private $tempName;
     public $thumbName;
     //protected $uploadDir = 'img';
-    protected $allowedExt = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+    protected $allowedImages = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
     public $errors = array();
     protected $upload_errors = array(
         UPLOAD_ERR_OK   =>  'No errors',
@@ -30,6 +30,7 @@ class File {
             $this->errors[] = 'No file was uploaded';
         } elseif($file['error'] !=0) {
             $this->errors[] = $this->upload_errors[$file['error']];
+            print_r($this->errors);
             return false;
         }
         //set object attributes to the form parameters
@@ -49,15 +50,6 @@ class File {
     public function getImageInfo()
     {
         $data = array();
-//        $file = $_FILES['upload'];
-//        $image_name = $_FILES['upload']['name'];
-//        $image_type = $file['type'];
-//        $image_size = $_FILES['upload']['size'];
-//        $tmp_name = $_FILES['upload']['tmp_name'];
-//        $error = $_FILES['upload']['error'];
-
-//        $fileInfo = pathinfo($image_name);
-//        $file_ext = File::extension($image_name);
 
         $data = array(
             'image_name' => $this->tempName,
@@ -81,16 +73,24 @@ class File {
     }
     public function filePath()
     {
-        $fileNameNew = $this->tempName() . '.' . $this->extension;
-        return $filePath = FS_IMAGES . $fileNameNew;
+        return $filePath = FS_IMAGES . $this->tempName;
     }
 
     public function createThumb($width, $height)
     {
-        $filePath = $this->filePath;
-        $this->thumbName = $this->tempName . '_' . $width . '_' . $height . 'jpg';
-        $bitmap = $this->createThumbBitmap($filePath, false, $width, $height);
-        return imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $this->thumbName);
+        $ext = $this->extension;
+
+        if (in_array($ext, $this->allowedImages)) {
+            $filePath = $this->filePath;
+            $this->thumbName = $this->tempName . '_' . $width . '_' . $height . 'jpg';
+            $bitmap = $this->createThumbBitmap($filePath, false, $width, $height);
+            return imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $this->thumbName);
+        } else {
+            Message::add('File extension must be either of these extensions: ' . join(', ', $this->allowedImages), Message::STATUS_ERROR);
+            return false;
+        }
+
+
     }
 
 

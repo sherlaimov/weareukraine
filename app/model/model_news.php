@@ -22,7 +22,10 @@ class Model_News extends Model
             'title' => $data['title'],
             'body' => $data['body'],
             'image_name' => $data['image_name'],
-            'thumb' => $data['thumb_name']
+            'thumb' => $data['thumb_name'],
+            'user_id' => $data['user_id'],
+            'created' => $data['created']
+
         );
         //var_dump($insertData); die;
         //print_r($insertData); die;
@@ -53,12 +56,16 @@ class Model_News extends Model
                 'title' => $data['title'],
                 'body' => $data['body'],
                 'image_name' => $data['image_name'],
-                'thumb' => $data['thumb_name']
+                'thumb' => $data['thumb_name'],
+                'created' => $data['created']
             );
         } else {
             $updateData = array(
                 'title' => $data['title'],
-                'body' => $data['body']);
+                'body' => $data['body'],
+                'created' => $data['created']
+
+            );
         }
 
         return $this->update('news', $updateData);

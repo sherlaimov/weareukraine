@@ -14,7 +14,11 @@ class Controller_News extends Controller {
         $pagination = new Pagination(1, 3);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
         //var_dump($pagination);
-        $news = $pagination->findByOffset();
+        if(isset($this->user) && Session::isLoggedIn()){
+            $news = $pagination->findByOffsetandUser();
+        } else {
+            $news = $pagination->findByOffset();
+        }
         $this->view->setData('news', $news);
         $this->view->setData('pagination', $pagination);
         $this->view->generate_view();
@@ -54,6 +58,7 @@ class Controller_News extends Controller {
         if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
+            $data['created'] = strftime("%Y-%m-%d %H:%M:%S", time());
             if (isset($_FILES['upload']) && ! empty($_FILES['upload']['name'])) {
                 //echo 'BELGO'; die;
                 $imageData = $this->get_image_info();
@@ -82,7 +87,7 @@ class Controller_News extends Controller {
 
     public function add($id = null) {
         require_once('app/libs/htmlelements.php');
-        if (Session::get('loggedIn') == FALSE || Session::get('role') == 'default') {
+        if (Session::get('loggedIn') == FALSE || $this->user->get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
             header('Location: ' . URL . 'login/');
             exit;
@@ -103,10 +108,13 @@ class Controller_News extends Controller {
 
 
     public function addNews() {
-
+//var_dump($this->user->get('user_id')); die;
         $data = array(
             'title' => trim($_POST['title']),
-            'body' => trim($_POST['body'])
+            'body' => trim($_POST['body']),
+            'user_id' => $this->user->get('user_id'),
+            'created' => strftime("%Y-%m-%d %H:%M:%S", time())
+
         );
 
         if ( empty($data['title']) || empty($data['body'])) {
@@ -124,13 +132,18 @@ class Controller_News extends Controller {
                 $imageData = $file->getImageInfo();
                 //var_dump($imageData); die;
                 $data = array_merge($data, $imageData);
-                //print_r($data); die;
+                //print_r($data);
                 if (move_uploaded_file($data['tmp_name'], $data['file_path'])) {
                     //echo 'BELGO'; die;
                     if (isset($_POST['width'])) {
                         $value = $_POST['width'];
-                        $file->createThumb($value, $value);
-                        $data['thumb_name'] = $file->thumbName;
+                        if($file->createThumb($value, $value)){
+                            $data['thumb_name'] = $file->thumbName;
+
+                        } else {
+                            return false;
+                        }
+
                     } else {
                         $file->createThumb(150, 150);
                         $data['thumb_name'] = $file->thumbName;

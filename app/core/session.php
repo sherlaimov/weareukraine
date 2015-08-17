@@ -25,16 +25,6 @@ class Session {
         $_SESSION['loggedIn'] = $flag;
     }
 
-    private function check_login(){
-        if(isset($_SESSION['user_id'])){ //WHERE DO WE SET THE $_SESSION VALUE?
-            $this->user_id = $_SESSION['user_id'];
-            $this->logged_in = true;
-        } else {
-            unset($this->user_id);
-            $this->logged_in = false;
-        }
-    }
-
     public static function logout(){
         unset($_SESSION['user_id']);
         unset(self::$userId);

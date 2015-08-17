@@ -45,11 +45,7 @@ class Controller_Login extends Controller
                     //LOGIN + SET SESSION
                     Session::set('user_id', $data['user_id']);
                     Session::login();
-               /*
-                    Session::set('role', $data['role']);
-                    $user = new User($login, $data['password']);
-                    Session::set('userObj', $user);
-                */
+
                     if (isset($_SERVER['HTTP_REFERER'])) {
                         redirect_to($_SERVER['HTTP_REFERER']);
                     }
