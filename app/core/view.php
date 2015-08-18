@@ -22,7 +22,6 @@ class View
 
             $oRoute = Route::getInstance();
 
-
             $content_view = $oRoute->getControllerName().'_'.$oRoute->getActionName().'.php';
 
 

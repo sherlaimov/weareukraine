@@ -1,20 +1,23 @@
 <?php
 
-class Controller_News extends Controller {
+class Controller_News extends Controller
+{
 
-    function init() {
+    function init()
+    {
 
         //$this->model = $this->load_model('news');
         $this->model = new Model_News();
 
     }
 
-    function index(){
+    function index()
+    {
 
-        $pagination = new Pagination(1, 3);
+        $pagination = new Pagination(1, 5);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
         //var_dump($pagination);
-        if(isset($this->user) && Session::isLoggedIn()){
+        if (isset($this->user) && Session::isLoggedIn()) {
             $news = $pagination->findByOffsetandUser();
         } else {
             $news = $pagination->findByOffset();
@@ -24,21 +27,24 @@ class Controller_News extends Controller {
         $this->view->generate_view();
     }
 
-    function one_news(){
+    function one_news()
+    {
         $news = $this->model->get_one_news();
         //print_r($news); die;
         $this->view->setData('news', $news);
         $this->view->generate_view();
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $this->model->deleteNews($id);
         header('Location: ' . URL . 'news');
         exit;
 
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
 
         if ($this->isPost()) {
             $this->editSave($id);
@@ -49,23 +55,36 @@ class Controller_News extends Controller {
         $this->view->generate_view();
     }
 
-    public function editSave($id){
+    public function editSave($id)
+    {
         $data = array();
         $data['id'] = $id;
 
         //var_dump($_FILES);die;
 
-        if ( ! empty($_POST['title']) && ! empty ($_POST['body'])) {
+        if (!empty($_POST['title']) && !empty ($_POST['body'])) {
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
             $data['created'] = strftime("%Y-%m-%d %H:%M:%S", time());
-            if (isset($_FILES['upload']) && ! empty($_FILES['upload']['name'])) {
-                //echo 'BELGO'; die;
-                $imageData = $this->get_image_info();
+            if (isset($_FILES['upload']) && !empty($_FILES['upload']['name'])) {
+                $file = new File($_FILES['upload']);
+                $imageData = $file->getImageInfo();
                 $data = array_merge($data, $imageData);
 
-                $bitmap = $this->create_thumbnail($imageData['file_destination'], false, $imageData['width'], $imageData['height']);
-                imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $imageData['thumb_name']);
+                if (move_uploaded_file($data['tmp_name'], $data['file_path'])) {
+                    //echo 'BELGO'; die;
+                    if (isset($_POST['width'])) {
+                        $value = $_POST['width'];
+                        if ($file->createThumb($value, $value)) {
+                            $data['thumb_name'] = $file->thumbName;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        $file->createThumb(150, 150);
+                        $data['thumb_name'] = $file->thumbName;
+                    }
+                }
             }
 
             $this->model->updateNews($data);
@@ -77,7 +96,7 @@ class Controller_News extends Controller {
                 $data = array(
                     'title' => trim($_POST['title']),
                     'body' => trim($_POST['body']),
-                    'id'   => trim($id));
+                    'id' => trim($id));
             }
             $this->view->setData('data', $data);
             //header('Location: ' . URL . 'news/edit/' . $id);
@@ -85,7 +104,8 @@ class Controller_News extends Controller {
         }
     }
 
-    public function add($id = null) {
+    public function add($id = null)
+    {
         require_once('app/libs/htmlelements.php');
         if (Session::get('loggedIn') == FALSE || $this->user->get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
@@ -101,14 +121,15 @@ class Controller_News extends Controller {
             $this->view->generate_view();
         }
         if ($_POST) {
-           $this->addNews();
+            $this->addNews();
         }
         $this->view->generate_view();
     }
 
 
-    public function addNews() {
-//var_dump($this->user->get('user_id')); die;
+    public function addNews()
+    {
+
         $data = array(
             'title' => trim($_POST['title']),
             'body' => trim($_POST['body']),
@@ -117,15 +138,13 @@ class Controller_News extends Controller {
 
         );
 
-        if ( empty($data['title']) || empty($data['body'])) {
+        if (empty($data['title']) || empty($data['body'])) {
             Message::add('Title and body can not be empty', Message::STATUS_WARNING);
-            if( count($_POST)) {
+            if (count($_POST)) {
                 $this->view->setData('post', $data);
-               /// header('Location: ' . URL . 'news/add');
+                /// header('Location: ' . URL . 'news/add');
             }
-        }
-        else
-        {
+        } else {
             if ($_FILES['upload']) {
                 $file = new File($_FILES['upload']);
 
@@ -137,7 +156,7 @@ class Controller_News extends Controller {
                     //echo 'BELGO'; die;
                     if (isset($_POST['width'])) {
                         $value = $_POST['width'];
-                        if($file->createThumb($value, $value)){
+                        if ($file->createThumb($value, $value)) {
                             $data['thumb_name'] = $file->thumbName;
 
                         } else {
@@ -155,8 +174,6 @@ class Controller_News extends Controller {
             redirect_to(URL . 'news');
         }
     }
-
-
 
 
 }

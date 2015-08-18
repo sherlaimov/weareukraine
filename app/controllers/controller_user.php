@@ -8,9 +8,7 @@ class Controller_User extends Controller{
         $this->view->setLayout('admin_view');
 
         $logged = Session::get('loggedIn');
-        $role = Session::get('role');
-        if($logged == false || $role == 'default'){
-           // Session::end();
+        if($logged == false || $this->user->get('role') == 'default'){
             header('Location: ' . URL . 'login');
             exit;
         }
