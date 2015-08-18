@@ -3,8 +3,6 @@
 class Controller_Login extends Controller
 {
 
-    public $output = array();
-
     function init()
     {
         //parent::__construct();

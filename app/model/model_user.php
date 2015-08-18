@@ -15,21 +15,7 @@ class Model_User extends Model {
     public function __construct() {
 
         parent::__construct();
-       /*
-        $this->where('login', $login);
-        $this->where('password', $password);
-        $user = $this->get('user');
 
-        foreach($user as $v) {
-            $this->user_id = $v['user_id'];
-            $this->login = $v['login'];
-            $this->password = $v['password'];
-            $this->role = $v['role'];
-            $this->first_name = $v['first_name'];
-            $this->last_name = $v['last_name'];
-            $this->comment_id = $v['comment_id'];
-        }
-       */
     }
 
     public function fullName(){
@@ -49,6 +35,17 @@ class Model_User extends Model {
 //        $res = self::query('SELECT * FROM user WHERE login = '.$username.' AND
 //                            password = '.$password.' LIMIT 1');
         return isset($result) ? (array_shift($result)) : FALSE;
+    }
+
+    public function registerUser($data = array()){
+        $insertData = array(
+            'login' => $data['login'],
+            'password' => $data['password'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name']
+        );
+        $this->insert('user', $insertData);
+        return true;
     }
 
     public function getUsers(){
@@ -73,9 +70,14 @@ class Model_User extends Model {
     public function getUserById($id)
     {
         $this->where('user_id', $id);
-        return $this->get('user');
-       // $STH = $STH->query("SELECT user_id, login, role FROM users WHERE user_id = '$id'");
+        $user = $this->get('user');
 
+        if (is_array($user) && isset($user[0])) {
+            return $user[0];
+        }
+        return false;
+
+       // $STH = $STH->query("SELECT user_id, login, role FROM users WHERE user_id = '$id'")
 
     }
 

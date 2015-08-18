@@ -16,7 +16,6 @@ class User {
 
         if ((int) $id ) {
            $this->_data = $this->_model->getUserById($id);
-            $this->_data = array_shift($this->_data);
         }
     }
 

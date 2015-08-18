@@ -1,10 +1,10 @@
 
 <?php
 //$user = Session::get('userObj');
-//var_dump($user);
+var_dump($this->user);
 
     if (Session::get('loggedIn') === TRUE) : ?>
-    <h2>Welcome back <?php var_dump($this->user->fullName()); //echo $this->user->fullName(); ?>!</h2>
+    <h2>Welcome back <?php echo $this->user->fullName(); //echo $this->user->fullName(); ?>!</h2>
 <?php else : ?>
         <form class="form-signin" action="<?php echo URL;?>login" method="post">
             <h2 class="form-signin-heading">Please sign in</h2>
@@ -17,7 +17,10 @@
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="loginForm">Sign in</button>
+              <button class="btn btn-lg btn-primary btn-block" type="submit" name="loginForm">Sign in</button>
         </form>
+
+            <a class="btn btn-default" href="<?php echo URL; ?>register">Registration</a>
+
 
 <?php endif; ?>
