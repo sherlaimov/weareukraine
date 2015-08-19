@@ -27,14 +27,17 @@ class Model_User extends Model {
     }
 
 
-    public function authenticate($username='', $password=''){
-        $this->where('login', $username);
-        $this->where('password', $password);
-        $result =  $this->get('user', 1);
+    public function authenticate($login='', $password=''){
+        //$this->where('password ', $password);
+        $this->where('login', $login);
+        $res =  $this->get('user', 1);
 
-//        $res = self::query('SELECT * FROM user WHERE login = '.$username.' AND
+//        $res = $this->query('SELECT * FROM user WHERE login = '.$username.' AND
 //                            password = '.$password.' LIMIT 1');
-        return isset($result) ? (array_shift($result)) : FALSE;
+//        $res = $this->query("SELECT first_name, last_name FROM user WHERE login = " . "'$login'");
+//        echo 'belgo';
+//        var_dump($res); die;
+        return isset($res) ? (array_shift($res)) : FALSE;
     }
 
     public function registerUser($data = array()){

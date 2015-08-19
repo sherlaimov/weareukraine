@@ -80,21 +80,21 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a href="/">Home</a></li>
-                        <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a href="/news">News</a>
+                        <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a href="<?php echo URL; ?>">Home</a></li>
+                        <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a href="<?php echo URL; ?>news">News</a>
                         </li>
-                        <li><a href="/rules">Ground Rules</a></li>
-                        <li><a href="/contacts">Contacts</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li><a href="<?php echo URL; ?>rules">Ground Rules</a></li>
+                        <li><a href="<?php echo URL; ?>contacts">Contacts</a></li>
+                        <li><a href="<?php echo URL; ?>login">Login</a></li>
                     </ul>
                     <?php if (Session::get('loggedIn') == TRUE) : ?>
 
                         <div class="nav navbar-right">
                             <ul class="nav navbar-nav">
                                 <?php if (Session::get('role') == 'admin' || Session::get('role') == 'owner') : ?>
-                                    <li><a href="/user">User</a></li>
+                                    <li><a href="<?php echo URL; ?>user">User</a></li>
                                 <?php endif; ?>
-                                <li><a href="/login/logout" class="btn btn-danger logout navbar-btn">Logout</a></li>
+                                <li><a href="<?php echo URL; ?>login/logout" class="btn btn-danger logout navbar-btn">Logout</a></li>
                             </ul>
                             <span
                                 class="session"><?php echo isset($this->user) ? "You're logged in as " . $this->user->get('login') . ', your role is ' . $this->user->get('role') : 'no session login'; ?></span>

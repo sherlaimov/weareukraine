@@ -1,7 +1,6 @@
 
 <?php
 //$user = Session::get('userObj');
-var_dump($this->user);
 
     if (Session::get('loggedIn') === TRUE) : ?>
     <h2>Welcome back <?php echo $this->user->fullName(); //echo $this->user->fullName(); ?>!</h2>
