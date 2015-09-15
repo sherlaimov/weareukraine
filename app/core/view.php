@@ -18,7 +18,6 @@ class View
 
     function generate_view($fileName = '')
     {
-//        var_dump($this->layout);die;
         if ($fileName == '') {
             $oRoute = Route::getInstance();
 

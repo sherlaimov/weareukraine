@@ -78,7 +78,6 @@ class Route
             $this->_module = 'frontend';
         }
 
-
             if ( isset($url[0]) ) {
 
                 $controller_name =  $url[0];
@@ -89,7 +88,6 @@ class Route
                 $controller_name =  $this->controller;
 
             }
-
 
         if ( ! file_exists(FS_CONTROLLERS . $this->getModulePrefix() .  $this->_prefix  . $controller_name . '.php'))
         {
