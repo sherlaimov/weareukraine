@@ -21,11 +21,7 @@ class Controller_Login extends Controller
 
             if (empty($login) || empty($password)) {
 
-                Session::set('loginFail', true);
-
-                if ($_SESSION['loginFail'] == true) {
-                    Message::add('Please, enter login and pass', Message::STATUS_ERROR);
-                }
+                Message::add('Please, enter login and pass', Message::STATUS_ERROR);
 
                 if (isset($_SERVER['HTTP_REFERER'])) {
                     redirect_to($_SERVER['HTTP_REFERER']);

@@ -1,5 +1,5 @@
 <?php
-class Controller_Admin extends Controller
+class Controller_News extends ControllerBackend
 {
     function init(){
 //        var_dump($this->user);

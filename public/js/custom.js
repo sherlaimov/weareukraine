@@ -30,7 +30,7 @@ $(document).ready(function () {
     })
 
 })();
-
-$(document).ready(function () {
-   $('#mainMessage').fadeOut(7000);
-});
+//
+//$(document).ready(function () {
+//   $('#mainMessage').fadeOut(7000);
+//});

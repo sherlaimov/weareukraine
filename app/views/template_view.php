@@ -112,8 +112,13 @@
                         </form>
                     <?php endif; ?>
                 </div>
+                <?php
+                $v = Message::getMessages();
+                var_dump($v);
+                ?>
                 <div class="<?php
-                if ($message = Session::get('message')) {
+                    if ($message = Session::get('message')) {
+
                     if (isset($message) && is_array($message) && count($message)) {
                         foreach ($message as $text => $type) {
                             echo $type['type'];

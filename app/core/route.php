@@ -5,8 +5,10 @@ class Route
     public $controller = 'index';
     protected $_controllerName = false;
     protected $method = 'index';
+    protected $_module = '';
     protected $_prefix = '';
     protected $params = [];
+    protected $_moduleList = array('admin' => ['prefix' => 'admin', 'enable' => true ], 'frontend' => ['prefix' => '', 'enable' => false]);
     static protected $_instance = null;
 
     protected function __construct() {
@@ -19,6 +21,24 @@ class Route
 
     public function getActionName() {
         return $this->method;
+    }
+
+    public function getModuleName() {
+        return $this->_module;
+    }
+
+    public function isFrontend() {
+        return $this->_module == 'frontend' ? true : false;
+    }
+
+    public function getModulePrefix() {
+
+
+            if ( ! empty($this->_moduleList[$this->_module]['prefix'] ) ) {
+                return $this->_moduleList[$this->_module]['prefix'] . DS;
+            }
+
+        return '';
     }
 
     private function __clone(){
@@ -51,6 +71,14 @@ class Route
 
         $url = $this->parseUrl();
 
+        if ( isset( $this->_moduleList[ $url[0] ]) && $this->_moduleList[ $url[0] ]['enable'] ) {
+            $this->_module = $url[0];
+            array_shift($url);
+        } else {
+            $this->_module = 'frontend';
+        }
+
+
             if ( isset($url[0]) ) {
 
                 $controller_name =  $url[0];
@@ -62,29 +90,22 @@ class Route
 
             }
 
-        if ( ! file_exists(FS_CONTROLLERS . $this->_prefix  . $controller_name . '.php'))
+
+        if ( ! file_exists(FS_CONTROLLERS . $this->getModulePrefix() .  $this->_prefix  . $controller_name . '.php'))
         {
             $controller_name = '404';
         }
 
-        require_once FS_CONTROLLERS . $this->_prefix  . $controller_name . '.php';
-        //$this->controller = new $this->controller();
-       // echo $this->controller;
-
-//            $this->controller->index();
+        require_once FS_CONTROLLERS .  $this->getModulePrefix() .  $this->_prefix  . $controller_name . '.php';
 
         if ( isset($url[1]) ) {
 
             if(method_exists( $this->_prefix  . $controller_name, $url[1])){
-                //$this->controller->method();????
+
                 $this->method = $url[1];
 
                 unset($url[1]);
 
-                //echo "exists";
-
-                //print_r($this->controller);
-                //$this->controller->$url[1]();
             } else {
                 $controller_name = '404';
                 require_once FS_CONTROLLERS . $this->_prefix  . $controller_name .'.php';
@@ -98,16 +119,6 @@ class Route
         //print_r($url); die;
         $this->params = $url ? array_values($url) : [];
 
-        /*
-            if(isset($url[2])){
-                if(method_exists($this->controller, $url[1])){
-                // echo '<h1> BELGOGOGOGO </h1>';die;
-                //$this->method = $url[1];
-                $this->controller->$url[1]($url[2]);
-                }
-            }
-        */
-            //var_dump($this->params);
             //MAGIC TAKES PLACE HERE!!
 
             call_user_func_array(array($this->controller, $this->method), $this->params);

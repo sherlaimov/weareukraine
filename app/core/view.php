@@ -18,11 +18,13 @@ class View
 
     function generate_view($fileName = '')
     {
+//        var_dump($this->layout);die;
         if ($fileName == '') {
-
             $oRoute = Route::getInstance();
 
-            $content_view = $oRoute->getControllerName().'_'.$oRoute->getActionName().'.php';
+
+//            var_dump($oRoute->getControllerName()); die;
+            $content_view = $oRoute->getModulePrefix() . $oRoute->getControllerName().'_'.$oRoute->getActionName().'.php';
 
 
             if ( ! file_exists(VIEWS . $content_view)){
@@ -44,6 +46,10 @@ class View
 
     }
 
+    public function setTemplate($template)
+    {
+
+    }
 
     public function setData($name, $value) {
 

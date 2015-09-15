@@ -29,15 +29,20 @@ class Model_User extends Model {
 
     public function authenticate($login='', $password=''){
         //$this->where('password ', $password);
-        $this->where('login', $login);
-        $res =  $this->get('user', 1);
-
-//        $res = $this->query('SELECT * FROM user WHERE login = '.$username.' AND
-//                            password = '.$password.' LIMIT 1');
+//        $this->where('login', $login);
+//        $res =  $this->get('user', 1);
+        $sql = 'SELECT * FROM user WHERE login=' . "'$login' " . 'AND password=' . "'$password'" . ' LIMIT 1';
+        try {
+            $sth = $this->_mysql->query($sql);
+            $row = $sth->fetch_array(MYSQL_ASSOC);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+//        $res = $this->query($sql);
 //        $res = $this->query("SELECT first_name, last_name FROM user WHERE login = " . "'$login'");
 //        echo 'belgo';
-//        var_dump($res); die;
-        return isset($res) ? (array_shift($res)) : FALSE;
+//        var_dump($row); die;
+        return isset($row) ? $row : FALSE;
     }
 
     public function registerUser($data = array()){

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ES
- * Date: 14.08.2015
- * Time: 0:07
- */
 
 class User {
     protected $_data = array();
@@ -22,6 +16,7 @@ class User {
     public function get($key, $defVAlue = '') {
 
         if ( isset($this->_data[$key]) ) {
+//            var_dump($this->_data[$key]);
             return $this->_data[$key];
         }
 
@@ -29,7 +24,7 @@ class User {
     }
 
     public function fullName() {
-        //echo 'BELGO';
+//        echo 'BELGO';
         return $this->get('first_name') . ' ' . $this->get('last_name');
     }
 

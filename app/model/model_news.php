@@ -3,7 +3,7 @@
 class Model_News extends Model
 {
 
-    public function get_news()
+    public function getNews()
     {
         return $res = $this->get('news', 7, 'ORDER BY id DESC');
     }

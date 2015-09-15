@@ -3,7 +3,7 @@
 $user = array_shift($this->user);
 //var_dump($user); die;
 ?>
-<h1>Edit <?php echo $user['login']; ?> </h1>
+<h1>Admin Edit <?php echo $user['login']; ?> </h1>
 
 
 <form action="<?php echo URL;?>user/editSave/<?php echo $user['user_id'];?>" method="post" class="form-inline">
