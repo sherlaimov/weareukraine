@@ -1,11 +1,12 @@
 <?php
 
-class Controller_Index extends Controller
+class Controller_Index extends ControllerBackend
 {
 
     function index()
     {
-        $this->view->setLayout('admin_view');
+        echo 'belgo';
+//        $this->view->setLayout('admin_view');
         $this->view->generate_view();
     }
 }

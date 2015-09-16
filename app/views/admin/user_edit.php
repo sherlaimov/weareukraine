@@ -1,15 +1,15 @@
 <?php
-//print_r($this->user);
-$user = array_shift($this->user);
-
+print_r($this->user);
+//$user = array_shift($this->user);
+//var_dump($user);
 ?>
-<h1>Edit <?php echo $user['login']; ?> </h1>
+<h1>Edit <?php echo $this->user['login']; ?> </h1>
 
 
-<form action="<?php echo URL;?>user/editSave/<?php echo $user['user_id'];?>" method="post" class="form-inline">
+<form action="<?php echo URL;?>user/editSave/<?php echo $this->user['user_id'];?>" method="post" class="form-inline">
     <div class="form-group col-md-offset-1">
         <label for="login" class="control-label">Login</label>
-        <input type="text" name="login" id="login" value="<?php echo $user['login'];?>"/>
+        <input type="text" name="login" id="login" value="<?php echo $this->user['login'];?>"/>
 
         <label for="password" class="control-label">Password</label>
         <input type="password" name="password" id="password"/>

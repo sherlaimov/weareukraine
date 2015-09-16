@@ -21,9 +21,10 @@ class ControllerBackend {
             $this->view->user = $this->user;
         } else {
             $this->user = $this->view->user = new User(0);
+            redirect_to('login');
         }
-
-        $this->view->setLayout('template_view');
+//var_dump($this->user);
+        $this->view->setLayout('admin_view');
 
         //$this->login();
 

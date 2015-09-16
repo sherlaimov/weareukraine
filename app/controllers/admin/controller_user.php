@@ -1,6 +1,6 @@
 <?php
 
-class Controller_User extends ControllerBackend{
+class Controller_User extends ControllerBackend {
 
     function init() {
 
@@ -36,10 +36,11 @@ class Controller_User extends ControllerBackend{
 
     public function edit($id)
     {
+//        die('works');
         //fetch individual user
-        var_dump($this->user);die;
-
+//        var_dump($this->user);die;
         $user = $this->view->user = $this->model->getUserById($id);
+//        var_dump($user);
         $this->view->generate_view();
     }
 

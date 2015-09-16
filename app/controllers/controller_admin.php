@@ -1,15 +1,15 @@
 <?php
-class Controller_Admin extends Controller
+class Controller_Admin extends ControllerBackend
 {
     function init(){
 //        var_dump($this->user);
 //        $this->model = new Model_Admin();
 //        var_dump($this->user->get('role') != 'admin');die;
+        echo 'belgo';
         if( ! Session::isLoggedIn() || $this->user->get('role') == 'default') {
             Message::add('You must be authorized to enter Admin area', Message::STATUS_ERROR);
             redirect_to('login');
         }
-        $this->view->setLayout('admin_view');
     }
 
     public function index(){

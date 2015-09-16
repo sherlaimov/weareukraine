@@ -36,8 +36,8 @@
         $cnt++;
 
         if(Session::get('loggedIn') && Session::get('role') !== 'default') {
-            echo '<td> <a href="' . URL . 'user/edit/' . $value['user_id'] . '" class="btn btn-warning">Edit</a></td>';
-            echo '<td> <a href="' . URL . 'user/delete/' . $value['user_id'] . '" class="btn btn-danger">Delete</a></td>';
+            echo '<td> <a href="' . URL . 'admin/user/edit/' . $value['user_id'] . '" class="btn btn-warning">Edit</a></td>';
+            echo '<td> <a href="' . URL . 'admin/user/delete/' . $value['user_id'] . '" class="btn btn-danger">Delete</a></td>';
         }
 
         echo '</tr>';

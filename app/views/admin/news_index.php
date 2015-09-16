@@ -1,4 +1,4 @@
-<?php die(__FILE__); ?>
+<?php //die(__FILE__); ?>
 <h1>News</h1>
 <p>
     This is our brand-new epic news section;
