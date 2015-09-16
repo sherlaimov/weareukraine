@@ -20,6 +20,4 @@
         </form>
 
             <a class="btn btn-default" href="<?php echo URL; ?>register">Registration</a>
-
-
 <?php endif; ?>

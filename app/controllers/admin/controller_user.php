@@ -9,7 +9,7 @@ class Controller_User extends ControllerBackend {
 
         $logged = Session::get('loggedIn');
         if($logged == false || $this->user->get('role') == 'default'){
-            header('Location: ' . URL . 'login');
+            header('Location: ' . URL . 'admin/login');
             exit;
         }
 

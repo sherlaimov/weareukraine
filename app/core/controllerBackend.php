@@ -21,7 +21,7 @@ class ControllerBackend {
             $this->view->user = $this->user;
         } else {
             $this->user = $this->view->user = new User(0);
-            redirect_to('login');
+//            redirect_to('login');
         }
 //var_dump($this->user);
         $this->view->setLayout('admin_view');
@@ -40,9 +40,9 @@ class ControllerBackend {
         //1. Initiate the model if exists
         $model_name = 'Model_' . $name;
         $model_file = strtolower($model_name) . '.php';
-        if (file_exists('app/models/' . $model_file)) {
-            //var_dump($model_file); die();
-            include FS_APP . 'models/' . $model_file;
+        if (file_exists('app/model/' . $model_file)) {
+//            var_dump($model_file); die();
+            include FS_APP . 'model/' . $model_file;
             return new $model_name;
         } else {
             return false;

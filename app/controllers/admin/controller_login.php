@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Login extends Controller
+class Controller_Login extends ControllerBackend
 {
 
     function init()
@@ -17,6 +17,8 @@ class Controller_Login extends Controller
             $login = trim($_POST['login']);
             $password = trim($_POST['password']);
             $password = Hash::create_hash('md5', $password, HASH_KEY);
+
+
             if (empty($login) || empty($password)) {
 
                 Message::add('Please, enter login and pass', Message::STATUS_ERROR);
@@ -36,10 +38,11 @@ class Controller_Login extends Controller
                     //LOGIN + SET SESSION
                     Session::set('user_id', $data['user_id']);
                     Session::login();
+                    redirect_to('index');
 
-                    if (isset($_SERVER['HTTP_REFERER'])) {
-                        redirect_to($_SERVER['HTTP_REFERER']);
-                    }
+//                    if (isset($_SERVER['HTTP_REFERER'])) {
+//                        redirect_to($_SERVER['HTTP_REFERER']);
+//                    }
 
 
                 } else {

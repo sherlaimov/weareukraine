@@ -10,6 +10,7 @@ class Controller_News extends ControllerBackend
             Message::add('You must be authorized to enter Admin area', Message::STATUS_ERROR);
             redirect_to('login');
         }
+        $this->model = new Model_News();
         $this->view->setLayout('admin_view');
     }
 
@@ -17,19 +18,22 @@ class Controller_News extends ControllerBackend
     {
         $pagination = new Pagination(1, 5);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-        //var_dump($pagination);
+
         if (isset($this->user) && Session::isLoggedIn()) {
             $news = $pagination->findByOffsetandUser();
         } else {
             $news = $pagination->findByOffset();
         }
+        $news = $pagination->findByOffset();
+//        $news = $this->model->get('news');
         $this->view->setData('news', $news);
         $this->view->setData('pagination', $pagination);
         $this->view->generate_view();
     }
 
-    function one_news()
+    public function one_news()
     {
+
         $news = $this->model->get_one_news();
         //print_r($news); die;
         $this->view->setData('news', $news);
@@ -117,6 +121,8 @@ class Controller_News extends ControllerBackend
             if ($this->isPost()) {
                 $this->editSave($id);
             }
+//            $this->model = $this->load_model('news');
+//            var_dump($this->model); die;
             $news = $this->model->selectOneNews($id);
             $this->view->setData('news', $news);
             $this->view->generate_view();
