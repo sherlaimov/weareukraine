@@ -74,11 +74,7 @@ class Controller_Login extends ControllerBackend
         //unset($_SESSION);
         //$_SESSION = array();
 
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            redirect_to($_SERVER['HTTP_REFERER']);
-        } else {
-            redirect_to(' /');
-        }
+       redirect_to('admin/login');
 
     }
 

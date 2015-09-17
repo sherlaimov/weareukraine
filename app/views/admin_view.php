@@ -42,11 +42,15 @@
                     IN+
                 </div>
             </li>
-            <li class="active">
+            <li <?php echo $_GET['url'] == 'admin' || $_GET['url'] == 'admin/index' ? 'class="active"' : null; ?>>
+                <a href="<?php echo URL . 'admin';?>"><i class="fa fa-server"></i> <span class="nav-label">Dashboard</span></span></a>
+
+            </li>
+            <li <?php echo $_GET['url'] == 'admin/news' ? 'class="active"' : null; ?>>
                 <a href="<?php echo URL; ?>admin/news"><i class="fa fa-th-large"></i> <span class="nav-label">News</span> <span class="fa arrow"></span></a>
 
             </li>
-            <li>
+            <li <?php echo $_GET['url'] == 'admin/user' ? 'class="active"' : null; ?>>
                 <a href="<?php echo URL; ?>admin/user"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
 
             </li>

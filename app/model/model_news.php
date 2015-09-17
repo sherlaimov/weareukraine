@@ -8,6 +8,19 @@ class Model_News extends Model
         return $res = $this->get('news', 7, 'ORDER BY id DESC');
     }
 
+    public function getNewsWithAuthor()
+    {
+        $sql = 'SELECT news.user_id, news.title, news.body, news.created, user.first_name, user.last_name FROM news, user
+WHERE news.user_id = user.user_id ORDER BY news.id';
+        try {
+            $sth = $this->_mysql->query($sql);
+            $row = $sth->fetch_all(MYSQL_ASSOC);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return isset($row) ? $row : FALSE;
+    }
+
     public function get_one_news()
     {
         $this->where('id', $_GET['article_id']);

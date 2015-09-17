@@ -40,6 +40,7 @@ class Controller_News extends ControllerBackend
         $this->view->generate_view();
     }
 
+
     public function delete($id)
     {
         $this->model->deleteNews($id);
@@ -127,10 +128,13 @@ class Controller_News extends ControllerBackend
             $this->view->setData('news', $news);
             $this->view->generate_view();
         }
-        if ($_POST) {
-            $this->addNews();
+        else {
+            if ($_POST) {
+                $this->addNews();
+            }
+            $this->view->generate_view();
         }
-        $this->view->generate_view();
+
     }
 
 
