@@ -13,14 +13,14 @@ class User {
         }
     }
 
-    public function get($key, $defVAlue = '') {
+    public function get($key, $defValue = '') {
 
         if ( isset($this->_data[$key]) ) {
 //            var_dump($this->_data[$key]);
             return $this->_data[$key];
         }
 
-        return $defVAlue;
+        return $defValue;
     }
 
     public function fullName() {

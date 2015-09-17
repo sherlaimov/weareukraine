@@ -7,6 +7,10 @@ class Controller_Login extends ControllerBackend
     {
         //parent::__construct();
         //$this->model = $this->load_model('login');
+        if( ! Session::isLoggedIn() || $this->user->get('role') == 'default') {
+            Message::add('You must be either admin or owner to enter the admin area', Message::STATUS_ERROR);
+//            redirect_to('login');
+        }
         $this->model = new Model_User();
     }
 

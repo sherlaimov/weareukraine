@@ -1,8 +1,8 @@
 <h1>Admin/index_index.php</h1>
 <?php
 
-//var_dump($this->allNews);
-
+var_dump($this->user);
+var_dump($this->data);
 
 
 //var_dump(Session::isAuthorized());
@@ -157,12 +157,14 @@ echo Session::isAuthorized() ? '<p><a href="'. URL . 'news/add" class="btn btn-s
         <div class="ibox-content">
             <div class="feed-activity-list">
                     <?php
+
                     $news = $this->data['news'];
                     foreach ($news as $k => $v) {
+//                        echo $this->authorName($v['user_id']);
                         echo '<div class="feed-element">
                     <div>';
                         echo ' <small class="pull-right text-navy">1m ago</small>';
-                        echo '<p><strong>User ID '. $v['user_id'] . '</strong></p>';
+                        echo '<p><strong>User ID '. $v['user_id'] . ' ' . $this->user->get('role') . ' ' . $this->user->fullName() . '</strong></p>';
                         echo '<h5>' .$v['title'] . '<h5/>';
                         echo '<p>' . $v['body'] . '</p>';
                         echo '<small class="text-muted">'. $v['created'] . '</small></div></div>';

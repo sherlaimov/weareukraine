@@ -10,7 +10,7 @@ class Controller_Login extends Controller
         $this->model = new Model_User();
     }
 
-    function index()
+    public function index()
     {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -44,6 +44,7 @@ class Controller_Login extends Controller
 
                 } else {
                     Message::add('No such user found', Message::STATUS_WARNING);
+//                    var_dump(Message::getMessages());die;
                     if (isset($_SERVER['HTTP_REFERER'])) {
                         redirect_to($_SERVER['HTTP_REFERER']);
                     }

@@ -181,4 +181,6 @@ class Controller_News extends ControllerBackend
             redirect_to(URL . 'news');
         }
     }
+
+
 }

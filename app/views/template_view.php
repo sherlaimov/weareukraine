@@ -128,8 +128,7 @@
                 } ?>" id="mainMessage">
 
                     <?php
-                    $v = Message::getMessages();
-                    var_dump($v);
+//                    var_dump(Message::getMessages());die;
                     if ($message = Session::get('message')) {
                         if (isset($message) && is_array($message) && count($message)) {
                             foreach ($message as $text => $type) {

@@ -31,7 +31,7 @@
                             <img alt="image" class="img-circle" src="<?php echo URL; ?>public/inspinia/img/profile_small.jpg" />
                              </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo URL . 'admin';?>">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php /*echo $this->user->fullName() ? $this->user->fullName() : null;*/ ?></strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $this->user->fullName() ? $this->user->fullName() : null; ?></strong>
                              </span> <span class="text-muted text-xs block">Business Development Director <b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu m-t-xs">
                            <li class="divider"></li>
@@ -72,7 +72,7 @@
                 <span class="m-r-sm text-muted welcome-message">Welcome to the best CMS for News Publishing</span>
             </li>
             <li>
-                <a href="<?php echo URL; ?>login/logout">
+                <a href="<?php echo URL; ?>admin/login/logout">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
