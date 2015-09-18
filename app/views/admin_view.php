@@ -95,21 +95,20 @@
 
             </nav>
         </div>
-        <div class="row border-bottom">
-            <div class="ibox-content">
-                <?php
-                echo '<div class=" ';
-                if ($message = Session::get('message')) {
 
+                <?php
+
+                if ($message = Session::get('message')) {
+                    echo '<div class="row border-bottom"><div class="ibox-content"><div class=" ';
                     if (isset($message) && is_array($message) && count($message)) {
                         foreach ($message as $text => $type) {
                             echo $type['type'];
                         }
                     }
 
-
+                    echo ' alert-dismissable">';
                 }
-                echo ' alert-dismissable">';
+
                 ?>
                 <?php
                 //                    var_dump(Message::getMessages());die;
@@ -124,22 +123,12 @@
 
                         }
 
-                        echo '<a class="alert-link" href="#">Alert Link</a>.';
+                        echo '<a class="alert-link" href="#">Alert Link</a>.</div></div>';
                     }
                 }
                 ?>
-            </div>
-        </div>
-    </div>
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Admin Dashboard</h2>
 
-        </div>
-        <div class="col-lg-2">
 
-        </div>
-    </div>
 
     <?php include VIEWS . $content_view; ?>
 
@@ -153,7 +142,9 @@
         </div>
     </div>
 </div>
-<div id="right-sidebar">
+<!--PAGE_WRAPPER END-->
+
+    <div id="right-sidebar">
 <div class="sidebar-container">
 
 <ul class="nav nav-tabs navs-3">
