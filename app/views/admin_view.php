@@ -23,88 +23,135 @@
 
 <div id="wrapper">
 
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
-            <li class="nav-header">
-                <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="<?php echo URL; ?>public/inspinia/img/profile_small.jpg" />
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-circle"
+                                 src="<?php echo URL; ?>public/inspinia/img/profile_small.jpg"/>
                              </span>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo URL . 'admin';?>">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $this->user->fullName() ? $this->user->fullName() : null; ?></strong>
-                             </span> <span class="text-muted text-xs block">Business Development Director <b class="caret"></b></span> </span> </a>
-                    <ul class="dropdown-menu m-t-xs">
-                           <li class="divider"></li>
-                        <li><a href="login.html">Logout</a></li>
-                    </ul>
-                </div>
-                <div class="logo-element">
-                    IN+
-                </div>
-            </li>
-            <li <?php echo $_GET['url'] == 'admin' || $_GET['url'] == 'admin/index' ? 'class="active"' : null; ?>>
-                <a href="<?php echo URL . 'admin';?>"><i class="fa fa-server"></i> <span class="nav-label">Dashboard</span></span></a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo URL . 'admin'; ?>">
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                                        class="font-bold"><?php echo $this->user->fullName() ? $this->user->fullName() : null; ?></strong>
+                             </span> <span class="text-muted text-xs block">Business Development Director <b
+                                        class="caret"></b></span> </span> </a>
+                        <ul class="dropdown-menu m-t-xs">
+                            <li class="divider"></li>
+                            <li><a href="login.html">Logout</a></li>
+                        </ul>
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                </li>
+                <li <?php echo $_GET['url'] == 'admin' || $_GET['url'] == 'admin/index' ? 'class="active"' : null; ?>>
+                    <a href="<?php echo URL . 'admin'; ?>"><i class="fa fa-server"></i> <span
+                            class="nav-label">Dashboard</span></span></a>
 
-            </li>
-            <li <?php echo $_GET['url'] == 'admin/news' ? 'class="active"' : null; ?>>
-                <a href="<?php echo URL; ?>admin/news"><i class="fa fa-th-large"></i> <span class="nav-label">News</span> <span class="fa arrow"></span></a>
+                </li>
+                <li <?php echo $_GET['url'] == 'admin/news' ? 'class="active"' : null; ?>>
+                    <a href="<?php echo URL; ?>admin/news"><i class="fa fa-th-large"></i> <span
+                            class="nav-label">News</span> <span class="fa arrow"></span></a>
 
-            </li>
-            <li <?php echo $_GET['url'] == 'admin/user' ? 'class="active"' : null; ?>>
-                <a href="<?php echo URL; ?>admin/user"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
+                </li>
+                <li <?php echo $_GET['url'] == 'admin/user' ? 'class="active"' : null; ?>>
+                    <a href="<?php echo URL; ?>admin/user"><i class="fa fa-users"></i> <span
+                            class="nav-label">Users</span></a>
 
-            </li>
+                </li>
 
-        </ul>
+            </ul>
 
-    </div>
-</nav>
-
-<div id="page-wrapper" class="gray-bg">
-<div class="row border-bottom">
-    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
         </div>
-        <ul class="nav navbar-top-links navbar-right">
-            <li>
-                <span class="m-r-sm text-muted welcome-message">Welcome to the best CMS for News Publishing</span>
-            </li>
-            <li>
-                <a href="<?php echo URL; ?>admin/login/logout">
-                    <i class="fa fa-sign-out"></i> Log out
-                </a>
-            </li>
-        </ul>
-
     </nav>
-</div>
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Admin Dashboard</h2>
 
-    </div>
-    <div class="col-lg-2">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
 
+                    <form role="search" class="navbar-form-custom" action="search_results.html">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search for something..." class="form-control"
+                                   name="top-search"
+                                   id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span
+                            class="m-r-sm text-muted welcome-message">Welcome to the best CMS for News Publishing</span>
+                    </li>
+                    <li>
+                        <a href="<?php echo URL; ?>admin/login/logout">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="row border-bottom">
+            <div class="ibox-content">
+                <?php
+                echo '<div class=" ';
+                if ($message = Session::get('message')) {
+
+                    if (isset($message) && is_array($message) && count($message)) {
+                        foreach ($message as $text => $type) {
+                            echo $type['type'];
+                        }
+                    }
+
+
+                }
+                echo ' alert-dismissable">';
+                ?>
+                <?php
+                //                    var_dump(Message::getMessages());die;
+                if ($message = Session::get('message')) {
+                    if (isset($message) && is_array($message) && count($message)) {
+                        echo ' <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>';
+                        foreach ($message as $text => $type) {
+                            echo $type['text'];
+                            //$_SESSION['message'] = null;
+                            unset($_SESSION['message']);
+                            //Message::removeMessage();
+
+                        }
+
+                        echo '<a class="alert-link" href="#">Alert Link</a>.';
+                    }
+                }
+                ?>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Admin Dashboard</h2>
+
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
 
     <?php include VIEWS . $content_view; ?>
 
 
-<div class="footer">
-    <div class="pull-right">
-        10GB of <strong>250GB</strong> Free.
+    <div class="footer">
+        <div class="pull-right">
+            10GB of <strong>250GB</strong> Free.
+        </div>
+        <div>
+            <strong>Copyright</strong> Example Company &copy; 2014-2015
+        </div>
     </div>
-    <div>
-        <strong>Copyright</strong> Example Company &copy; 2014-2015
-    </div>
-</div>
 </div>
 <div id="right-sidebar">
 <div class="sidebar-container">
@@ -128,7 +175,7 @@
 <div id="tab-1" class="tab-pane active">
 
     <div class="sidebar-title">
-        <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
+        <h3><i class="fa fa-comments-o"></i> Latest Notes</h3>
         <small><i class="fa fa-tim"></i> You have 10 new message.</small>
     </div>
 
@@ -214,7 +261,8 @@
                     <img alt="image" class="img-circle message-avatar" src="img/a7.jpg">
                 </div>
                 <div class="media-body">
-                    Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                    Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
+                    section 1.10.32.
                     <br>
                     <small class="text-muted">Yesterday 2:45 pm</small>
                 </div>
@@ -257,7 +305,7 @@
 <div id="tab-2" class="tab-pane">
 
     <div class="sidebar-title">
-        <h3> <i class="fa fa-cube"></i> Latest projects</h3>
+        <h3><i class="fa fa-cube"></i> Latest projects</h3>
         <small><i class="fa fa-tim"></i> You have 14 projects. 10 not completed.</small>
     </div>
 
@@ -372,6 +420,7 @@
                     <span>
                         Show notifications
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example">
@@ -386,6 +435,7 @@
                     <span>
                         Disable Chat
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" name="collapsemenu" checked class="onoffswitch-checkbox" id="example2">
@@ -400,6 +450,7 @@
                     <span>
                         Enable history
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example3">
@@ -414,6 +465,7 @@
                     <span>
                         Show charts
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example4">
@@ -428,6 +480,7 @@
                     <span>
                         Offline users
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" checked name="collapsemenu" class="onoffswitch-checkbox" id="example5">
@@ -442,6 +495,7 @@
                     <span>
                         Global search
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" checked name="collapsemenu" class="onoffswitch-checkbox" id="example6">
@@ -456,6 +510,7 @@
                     <span>
                         Update everyday
                     </span>
+
         <div class="switch">
             <div class="onoffswitch">
                 <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example7">
@@ -469,6 +524,7 @@
 
     <div class="sidebar-content">
         <h4>Settings</h4>
+
         <div class="small">
             I belive that. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             And typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
@@ -482,13 +538,12 @@
 </div>
 
 
-
 </div>
 </div>
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.chart').easyPieChart({
             barColor: '#f8ac59',
 //                scaleColor: false,
@@ -537,7 +592,7 @@
                     show: true,
                     align: "center",
                     barWidth: 24 * 60 * 60 * 600,
-                    lineWidth:0
+                    lineWidth: 0
                 }
 
             }, {
@@ -546,7 +601,7 @@
                 yaxis: 2,
                 color: "#464f88",
                 lines: {
-                    lineWidth:1,
+                    lineWidth: 1,
                     show: true,
                     fill: true,
                     fillColor: {
@@ -711,7 +766,7 @@
 <script src="public/inspinia/js/demo/peity-demo.js"></script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green'

@@ -94,7 +94,7 @@ class Controller_News extends ControllerBackend
             }
 
             $this->model->updateNews($data);
-            header('Location: ' . URL . 'news');
+            header('Location: ' . URL . 'admin/news');
             exit;
         } else {
             Message::add('Both body and title must be filled', Message::STATUS_ERROR);
@@ -150,7 +150,7 @@ class Controller_News extends ControllerBackend
         );
 
         if (empty($data['title']) || empty($data['body'])) {
-            Message::add('Title and body can not be empty', Message::STATUS_WARNING);
+            Message::add('Title and body can not be empty', Message::STATUS_ERROR);
             if (count($_POST)) {
                 $this->view->setData('post', $data);
                 /// header('Location: ' . URL . 'news/add');
@@ -182,7 +182,7 @@ class Controller_News extends ControllerBackend
             }
             //var_dump($data); die;
             $this->model->addNews($data);
-            redirect_to(URL . 'news');
+            redirect_to(URL . 'admin/news');
         }
     }
 

@@ -30,7 +30,7 @@ class File {
             $this->errors[] = 'No file was uploaded';
         } elseif($file['error'] !=0) {
             $this->errors[] = $this->upload_errors[$file['error']];
-            print_r($this->errors);
+            print_r($this->errors);die;
             return false;
         }
         //set object attributes to the form parameters
