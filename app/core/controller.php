@@ -1,6 +1,6 @@
 <?php
 
-class Controller {
+class Controller extends controllerBase {
 
     public $model;
     public $view;
@@ -10,6 +10,7 @@ class Controller {
 
     function __construct() {
 
+        parent::__construct();
 
         $this->view = new View();
         //$this->content_view = $this->parseUrl();
@@ -26,26 +27,12 @@ class Controller {
         $this->view->setLayout('template_view');
 
         //$this->login();
-
         $this->init();
+
     }
     
     public function init() {
         
-    }
-
-
-    public function load_model($name) {
-        //1. Initiate the model if exists
-        $model_name = 'Model_' . $name;
-        $model_file = strtolower($model_name) . '.php';
-        if (file_exists('app/models/' . $model_file)) {
-            //var_dump($model_file); die();
-            include FS_APP . 'models/' . $model_file;
-            return new $model_name;
-        } else {
-            return false;
-        }
     }
 
     public function getUser($id)
@@ -53,7 +40,6 @@ class Controller {
 
         $this->model->where('id', $id);
         return $this->model->get('user', 1);
-
     }
 
     public function isPost() {

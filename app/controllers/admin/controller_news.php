@@ -112,7 +112,7 @@ class Controller_News extends ControllerBackend
 
     public function add($id = null)
     {
-        require_once('app/libs/htmlelements.php');
+        $this->loadLibrary('htmlelements');
         if (Session::get('loggedIn') == FALSE || $this->user->get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
             header('Location: ' . URL . 'login/');

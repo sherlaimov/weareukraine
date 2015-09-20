@@ -1,6 +1,6 @@
 <?php
 
-class ControllerBackend {
+class ControllerBackend extends controllerBase {
 
     public $model;
     public $view;
@@ -10,6 +10,7 @@ class ControllerBackend {
 
     function __construct() {
 
+        parent::__construct();
 
         $this->view = new View();
         //$this->content_view = $this->parseUrl();
@@ -26,28 +27,15 @@ class ControllerBackend {
 //var_dump($this->user);
         $this->view->setLayout('admin_view');
 
-        //$this->login();
-
         $this->init();
+
     }
     
     public function init() {
-        
-    }
 
 
-    public function load_model($name) {
-        //1. Initiate the model if exists
-        $model_name = 'Model_' . $name;
-        $model_file = strtolower($model_name) . '.php';
-        if (file_exists('app/model/' . $model_file)) {
-//            var_dump($model_file); die();
-            include FS_APP . 'model/' . $model_file;
-            return new $model_name;
-        } else {
-            return false;
-        }
     }
+
 
     public function getUser($id)
     {

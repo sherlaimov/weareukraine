@@ -31,5 +31,3 @@ define('WS_IMAGES', URL . 'public/images/');
 define('VIEWS', FS_APP. 'views' . DS);
 
 define('FS_CONTROLLERS', FS_APP . 'controllers' . DS );
-
-require_once('app/libs/functions.php');
