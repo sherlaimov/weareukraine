@@ -40,25 +40,8 @@
 
     <!-- Custom styles for this template -->
     <link href="<?php echo URL; ?>carousel.css" rel="stylesheet">
+    <script src="<?php echo URL; ?>/public/js/handlebars-v3.0.3.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('nav ul li').click(function () { //debugger;
-
-                //remove all current classes
-                $('.active').removeClass('active');
-                $(this).addClass('active');
-            });
-        });
-
-        (function () {
-            $('.day').click(function () {
-                console.log(this);
-            });
-
-        })();
-
-    </script>
 </head>
 <!-- NAVBAR
 ================================================== -->
@@ -83,6 +66,7 @@
                         <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a href="<?php echo URL; ?>">Home</a></li>
                         <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a href="<?php echo URL; ?>news">News</a>
                         </li>
+                        <li class="<?php echo $_GET['url'] == 'tweets' ? 'active' : null; ?>"><a href="<?php echo URL; ?>tweets">Tweets</a></li>
                         <li><a href="<?php echo URL; ?>rules">Ground Rules</a></li>
                         <li><a href="<?php echo URL; ?>contacts">Contacts</a></li>
                         <li><a href="<?php echo URL; ?>login">Login</a></li>
