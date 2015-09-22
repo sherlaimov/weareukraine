@@ -40,7 +40,7 @@
 
     <!-- Custom styles for this template -->
     <link href="<?php echo URL; ?>carousel.css" rel="stylesheet">
-    <script src="<?php echo URL; ?>/public/js/handlebars-v3.0.3.js"></script>
+
 
 </head>
 <!-- NAVBAR
@@ -63,13 +63,19 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a href="<?php echo URL; ?>">Home</a></li>
-                        <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a href="<?php echo URL; ?>news">News</a>
+                        <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a
+                                href="<?php echo URL; ?>">Home</a></li>
+                        <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a
+                                href="<?php echo URL; ?>news">News</a>
                         </li>
-                        <li class="<?php echo $_GET['url'] == 'tweets' ? 'active' : null; ?>"><a href="<?php echo URL; ?>tweets">Tweets</a></li>
-                        <li><a href="<?php echo URL; ?>rules">Ground Rules</a></li>
-                        <li><a href="<?php echo URL; ?>contacts">Contacts</a></li>
-                        <li><a href="<?php echo URL; ?>login">Login</a></li>
+                        <li class="<?php echo $_GET['url'] == 'tweets' ? 'active' : null; ?>"><a
+                                href="<?php echo URL; ?>tweets">Tweets</a></li>
+                        <li class="<?php echo $_GET['url'] == 'rules' ? 'active' : null; ?>"><a
+                                href="<?php echo URL; ?>rules">Ground Rules</a></li>
+                        <li class="<?php echo $_GET['url'] == 'contacts' ? 'active' : null; ?>"><a
+                                href="<?php echo URL; ?>contacts">Contacts</a></li>
+                        <li class="<?php echo $_GET['url'] == 'login' ? 'active' : null; ?>"><a
+                                href="<?php echo URL; ?>login">Login</a></li>
                     </ul>
                     <?php if (Session::get('loggedIn') == TRUE) : ?>
 
@@ -78,7 +84,8 @@
                                 <?php if (Session::get('role') == 'admin' || Session::get('role') == 'owner') : ?>
                                     <li><a href="<?php echo URL; ?>user">User</a></li>
                                 <?php endif; ?>
-                                <li><a href="<?php echo URL; ?>login/logout" class="btn btn-danger logout navbar-btn">Logout</a></li>
+                                <li><a href="<?php echo URL; ?>login/logout" class="btn btn-danger logout navbar-btn">Logout</a>
+                                </li>
                             </ul>
                             <span
                                 class="session"><?php echo isset($this->user) ? "You're logged in as " . $this->user->get('login') . ', your role is ' . $this->user->get('role') : 'no session login'; ?></span>
@@ -100,7 +107,7 @@
 
                 ?>
                 <div class="<?php
-                    if ($message = Session::get('message')) {
+                if ($message = Session::get('message')) {
 
                     if (isset($message) && is_array($message) && count($message)) {
                         foreach ($message as $text => $type) {
@@ -112,7 +119,7 @@
                 } ?>" id="mainMessage">
 
                     <?php
-//                    var_dump(Message::getMessages());die;
+                    //                    var_dump(Message::getMessages());die;
                     if ($message = Session::get('message')) {
                         if (isset($message) && is_array($message) && count($message)) {
                             foreach ($message as $text => $type) {
@@ -199,6 +206,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo URL; ?>public/js/bootstrap.min.js"></script>
 <script src="<?php echo URL; ?>public/js/docs.min.js"></script>
+<script src="<?php echo URL; ?>/public/js/handlebars-v3.0.3.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="<?php echo URL; ?>public/js/ie10-viewport-bug-workaround.js"></script>
 <script src="<?php echo URL; ?>public/js/custom.js"></script>

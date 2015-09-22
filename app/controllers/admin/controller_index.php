@@ -10,10 +10,9 @@ class Controller_Index extends ControllerBackend
             redirect_to('login');
         }
         $model = $this->load_model('news');
-        $news = $model->getNews();
+//        $news = $model->getNews();
         $news = $model->getNewsWithAuthor();
-//        $news = $this->model->get('news', 7);
-//        $this->view->setData('author', $this->authorName($this->user->get('user_id')));
+        $news['totalNews'] = $model->countAll();
         $this->view->setData('news', $news);
         $this->view->generate_view();
     }

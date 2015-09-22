@@ -42,18 +42,5 @@ class Controller extends controllerBase {
         return $this->model->get('user', 1);
     }
 
-    public function isPost() {
-        return $_SERVER["REQUEST_METHOD"] == 'POST' ? true : false;
-    }
-
-    public function isAjax()
-    {
-            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-                return true;
-            }
-
-        return false;
-    }
-
 
 }

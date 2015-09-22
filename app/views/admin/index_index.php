@@ -3,7 +3,7 @@
 
 //var_dump($this->user);
 //var_dump($this->data);
-
+//var_dump($this->data['news']['totalNews']);
 
 //var_dump(Session::isAuthorized());
 echo Session::isAuthorized() ? '<p><a href="'. URL . 'news/add" class="btn btn-success pull-right">Add News</a></p>' : null;
@@ -152,7 +152,7 @@ echo Session::isAuthorized() ? '<p><a href="'. URL . 'news/add" class="btn btn-s
         </div>
         <div class="ibox-content ibox-heading">
             <h3><i class="fa fa-envelope-o"></i> New publications</h3>
-            <small><i class="fa fa-tim"></i> You have 22 new messages and 16 waiting in draft folder.</small>
+            <p><i class="fa fa-tim"></i> You have a total of <span class="label label-primary"><?php echo $this->data['news']['totalNews'];?></span> publications</p>
         </div>
         <div class="ibox-content">
             <div class="feed-activity-list">
