@@ -90,7 +90,15 @@ WHERE news.user_id = user.user_id ORDER BY news.id';
         $res = array_shift($res);
         $count = array_values($res)[0];
         return $count;
+    }
 
+    public function countUserNews()
+    {
+        $id = $_SESSION['user_id'];
+        $res = $this->query("SELECT COUNT(*) FROM news WHERE user_id = $id");
+        $res = array_pop($res);
+        $count = array_values($res);
+        return (int) $count[0];
     }
 
 }

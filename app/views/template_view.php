@@ -24,6 +24,9 @@
     <link href="<?php echo URL; ?>public/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--    SUMMERNOTE CSS-->
+    <link href="<?php echo URL; ?>/public/inspinia/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>/public/inspinia/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
 
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -206,7 +209,10 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo URL; ?>public/js/bootstrap.min.js"></script>
 <script src="<?php echo URL; ?>public/js/docs.min.js"></script>
-<script src="<?php echo URL; ?>/public/js/handlebars-v3.0.3.js"></script>
+<!--HANDLEBARS JS-->
+<script src="<?php echo URL; ?>public/js/handlebars-v3.0.3.js"></script>
+<!--SUMMERNOTE JS-->
+<script src="<?php echo URL; ?>public/inspinia/js/plugins/summernote/summernote.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="<?php echo URL; ?>public/js/ie10-viewport-bug-workaround.js"></script>
 <script src="<?php echo URL; ?>public/js/custom.js"></script>

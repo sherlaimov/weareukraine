@@ -9,7 +9,12 @@ class Pagination extends Model_News {
         parent::__construct();
         $this->current_page = (int)$page;
         $this->per_page = (int)$per_page;
-        $this->total_count = (int)$this->countAll();
+        if( Session::get('user_id') && Session::isLoggedIn()){
+            $this->total_count = (int)$this->countUserNews();
+        } else {
+            $this->total_count = (int)$this->countAll();
+        }
+
 
     }
 

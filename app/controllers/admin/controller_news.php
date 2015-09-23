@@ -18,14 +18,7 @@ class Controller_News extends ControllerBackend
     {
         $pagination = new Pagination(1, 5);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-        if (isset($this->user) && Session::isLoggedIn()) {
-            $news = $pagination->findByOffsetandUser();
-        } else {
-            $news = $pagination->findByOffset();
-        }
         $news = $pagination->findByOffset();
-//        $news = $this->model->get('news');
         $this->view->setData('news', $news);
         $this->view->setData('pagination', $pagination);
         $this->view->generate_view();
