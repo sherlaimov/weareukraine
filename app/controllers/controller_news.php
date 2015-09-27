@@ -18,7 +18,7 @@ class Controller_News extends Controller
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
         //var_dump($pagination);
         if (isset($this->user) && Session::isLoggedIn()) {
-            $news = $pagination->findByOffsetandUser();
+            $news = $pagination->findByOffsetandUser( $this->user->get('user_id') );
         } else {
             $news = $pagination->findByOffset();
         }

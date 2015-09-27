@@ -20,7 +20,7 @@
 
         var Twitter = {
             init: function( config ){
-                this.url = 'http://sandbox/twitter/tweets_json.php?count=6&screen_name=weareukraine&callback=?';
+                this.url = 'http://weareukraine/tweets/gettweets/?count=6&screen_name=weareukraine&callback=?';
                 this.template = config.template;
                 //console.log(this.template);
                 //return true;

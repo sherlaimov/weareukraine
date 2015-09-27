@@ -48,9 +48,12 @@ class Pagination extends Model_News {
         return $this->query("SELECT * FROM news ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
     }
 
-    public function findByOffsetandUser(){
-        $user_id = Session::get('user_id');
-        return $this->query("SELECT * FROM news WHERE user_id = $user_id ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
+    public function findByOffsetandUser($user_id) {
+        //$user_id = Session::get('user_id');
+        if ((int) $user_id ) {
+            return $this->query("SELECT * FROM news WHERE user_id = $user_id ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
+        }
+        return false;
     }
 
 }

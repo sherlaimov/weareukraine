@@ -5,7 +5,7 @@ class Controller_Index extends ControllerBackend
 
     public function index()
     {
-        if (!Session::isLoggedIn() || $this->user->get('role') == 'default') {
+        if ( ! Session::isLoggedIn() || $this->user->get('role') == 'default') {
             Message::add('You must be authorized to enter Admin area', Message::STATUS_ERROR);
             redirect_to('login');
         }

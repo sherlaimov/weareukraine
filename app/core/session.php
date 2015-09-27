@@ -1,10 +1,9 @@
 <?php
 
 class Session {
-    private static $loggedIn = false;
-    public static $userId;
-    public static $userRole;
-
+//    private static $loggedIn = false;
+//    public static $userId;
+//    public static $userRole;
 
     public static function init() {
         session_start();
@@ -27,7 +26,6 @@ class Session {
 
     public static function logout(){
         unset($_SESSION['user_id']);
-        unset(self::$userId);
         $_SESSION['loggedIn'] = false;
     }
 

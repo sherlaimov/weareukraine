@@ -11,7 +11,14 @@ class Model_News extends Model
     public function getNewsWithAuthor()
     {
         $sql = 'SELECT news.user_id, news.title, news.body, news.created, user.first_name, user.last_name FROM news, user
-WHERE news.user_id = user.user_id ORDER BY news.id';
+        WHERE news.user_id = user.user_id ORDER BY news.id';
+
+        $sql = 'SELECT n.user_id, n.title, n.body, n.created, u.first_name, u.last_name
+        FROM news AS n
+        INNER JOIN  user AS u ON n.user_id = u.user_id
+        WHERE 1 ORDER BY n.id';
+
+
         try {
             $sth = $this->_mysql->query($sql);
             $row = $sth->fetch_all(MYSQL_ASSOC);
@@ -86,16 +93,18 @@ WHERE news.user_id = user.user_id ORDER BY news.id';
 
     public function countAll(){
 
-       $res = $this->query("SELECT COUNT(*) FROM news");
+       $res = $this->query('SELECT COUNT(*) AS cnt FROM news');
+
         $res = array_shift($res);
-        $count = array_values($res)[0];
+        $count = $res['cnt'];
+//        var_dump($count); die;
         return $count;
     }
 
     public function countUserNews()
     {
         $id = $_SESSION['user_id'];
-        $res = $this->query("SELECT COUNT(*) FROM news WHERE user_id = $id");
+        $res = $this->query('SELECT COUNT(*) FROM news WHERE user_id ='. $id);
         $res = array_pop($res);
         $count = array_values($res);
         return (int) $count[0];

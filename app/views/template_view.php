@@ -107,10 +107,10 @@
                     <?php endif; ?>
                 </div>
                 <?php
-
+//                print_r(Message::getMessages());die;
                 ?>
                 <div class="<?php
-                if ($message = Session::get('message')) {
+                if ($message = Message::getMessages(false)) {
 
                     if (isset($message) && is_array($message) && count($message)) {
                         foreach ($message as $text => $type) {
@@ -122,14 +122,11 @@
                 } ?>" id="mainMessage">
 
                     <?php
-                    //                    var_dump(Message::getMessages());die;
-                    if ($message = Session::get('message')) {
+//                                        var_dump(Message::getMessages());die;
+                    if ($message = Message::getMessages()) {
                         if (isset($message) && is_array($message) && count($message)) {
                             foreach ($message as $text => $type) {
                                 echo $type['text'];
-                                //$_SESSION['message'] = null;
-                                unset($_SESSION['message']);
-                                //Message::removeMessage();
 
                             }
                         }

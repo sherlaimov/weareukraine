@@ -8,3 +8,7 @@ function redirect_to($location = NULL){
     }
 }
 
+function href() {
+    'http:://weareukraine/module?/controller/action';
+}
+
