@@ -84,16 +84,39 @@ class Model_User extends Model {
 
     public function editUser($data)
     {
-        $updateData = array(
-            'login' => $data['login'],
-            'password' => $data['password'],
-            'role' => $data['role']
-        );
+        if ($this->isAdmin($data['user_id'])) {
+            $updateData = array(
+                'login' => $data['login'],
+                'password' => $data['password'],
+                'role' => $data['role']
+            );
+        } else {
+
+            $updateData = array(
+                'login' => $data['login'],
+                'password' => $data['password'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'profile_image' => $data['image_name'],
+                'profile_thumb' => $data['thumb_name']
+            );
+        }
+
+
         $this->where('user_id', $data['user_id']);
         return ($this->update('user', $updateData)) ? TRUE : FALSE;
 
     }
 
+    public function isAdmin($id)
+    {
+        $data = $this->getUserById($id);
+        if( $data['role'] == 'admin' || $data['role'] == 'owner') {
+            return TRUE;
+        }
+        return FALSE;
+
+    }
     public function deleteUser($id)
     {
 

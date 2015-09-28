@@ -1,8 +1,8 @@
 <?php
-//print_r($_REQUEST);
+//print_r($_REQUEST);die;
 function html_input($name, $value, $param = array() ) {
 
-    if ( is_array($param) && count($param) ) {
+    if ( empty ($param)) {
         $param = array(
             'class' => 'form-control'
         );

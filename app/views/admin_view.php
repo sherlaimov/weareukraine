@@ -33,7 +33,9 @@
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="<?php echo URL . 'admin'; ?>">
                             <span class="clear"> <span class="block m-t-xs"> <strong
-                                        class="font-bold"><?php echo $this->user->fullName() ? $this->user->fullName() : null; ?></strong>
+                                        class="font-bold"><?php
+//                                        echo $this->user->fullName() ? $this->user->fullName() : null;
+                                        ?></strong>
                              </span> <span class="text-muted text-xs block">Business Development Director <b
                                         class="caret"></b></span> </span> </a>
                         <ul class="dropdown-menu m-t-xs">

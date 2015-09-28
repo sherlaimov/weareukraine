@@ -37,7 +37,7 @@ class View
 
 
 
-        //extract($this->data);
+//        extract($this->data);
        $data = $this->data;
         //print_r($this->data); die;
 

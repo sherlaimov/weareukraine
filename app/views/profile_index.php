@@ -1,19 +1,20 @@
 <?php
-?>
-
-<?php
+//var_dump((array)$this->user);
+//var_dump($this->data['user']);
+$data = $this->data['user'];
 ?>
 
 <div class="container">
     <div class="row">
         <h1>User profile</h1>
 
-        <form role="form" method="post" action="<?php echo URL ?>register" enctype="multipart/form-data">
+        <form role="form" method="post" action="<?php echo URL ?>profile/update/<?php echo $data['user_id']; ?>" enctype="multipart/form-data">
             <div class="col-md-3">
                 <div class="form-group">
-                    <img data-src="holder.js/140x140" class="img-circle" alt="140x140"
+                    <?php echo isset($data['thumb']) ? image_thumb($data['thumb']) : ' <img data-src="holder.js/140x140" class="img-circle" alt="140x140"
                          src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNTAwNmExMzUyZSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE1MDA2YTEzNTJlIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9Ijc0LjUiPjE0MHgxNDA8L3RleHQ+PC9nPjwvZz48L3N2Zz4="
-                         data-holder-rendered="true" style="width: 140px; height: 140px;">
+                         data-holder-rendered="true" style="width: 140px; height: 140px;">'; ?>
+
                 </div>
                 <div class="form-group">
                     <div class="col-centered">
@@ -26,42 +27,48 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name"
-                               placeholder="Enter first name" required>
+                    <label for="first_name">Your first Name</label>
+                    <?php
+                    echo html_input('first_name', $data['first_name'],
+                        array('class' => 'form-control',
+                            'type' => 'text',
+                            'id'   => 'first_name'
+
+                    ));
+                    ?>
                 </div>
                 <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">Title</label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo html_input_title('title', $news['title']);
-                        ?>
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
+                    <label for="last_name">Your last Name</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="last_name" id="last_name"
-                               placeholder="Enter last name" required>
+                        <?php
+                        echo html_input('last_name', $data['last_name'],
+                            array('class' => 'form-control',
+                                'type' => 'text',
+                                'id'   => 'last_name'
+
+                            ));
+                        ?>
                         <span class="input-group-addon"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputEmail">Enter Email</label>
+                    <label for="InputEmail">Your login / email</label>
                     <div class="input-group">
-                        <input type="email" class="form-control" id="InputEmailFirst" name="login"
-                               placeholder="Enter Email" required>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                        <?php
+                        echo html_input('login', $data['login'],
+                            array('class' => 'form-control',
+                                'type' => 'email',
+
+                            ));
+                        ?>
+                        <span class="input-group-addon"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-
+                    <label for="password">Enter your old password</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="Enter password" required>
+                        <input type="password" class="form-control" id="password" name="old_password"
+                               placeholder="Enter password">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -69,8 +76,8 @@
                     <label for="confirm">Confirm password</label>
 
                     <div class="input-group">
-                        <input type="password" class="form-control" id="password" name="password_confirm"
-                               placeholder="confirm password" required>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="confirm password">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>

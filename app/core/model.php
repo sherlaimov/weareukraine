@@ -90,7 +90,11 @@ class Model
                 $i = 1;
                 $pos = strpos($this->_query, 'UPDATE');
 
+                //throw new Exception('12312');
+                //var_dump($tableData); die;
+
                 if ($pos !== false) {
+                    $this->_paramTypeList = '';
                     foreach ($tableData as $prop => $val) {
                         //determine what data type the item is
                         $this->_paramTypeList .= $this->_determineType($val);
@@ -114,6 +118,8 @@ class Model
             }
         }
 
+
+
         //Determine if is INSERT query
         if ($hasTableData) {
             $pos = strpos($this->_query, 'INSERT');
@@ -124,6 +130,8 @@ class Model
                 $values = array_values($tableData);
                 $num = count($keys);
 
+
+                $this->_paramTypeList = '';
                 //wrap values in quotes
                 foreach ($values as $k => $v) {
                     $values[$k] = "'{$v}'";
@@ -156,6 +164,9 @@ class Model
             foreach ($tableData as $prop => $val) {
                 $args[] = &$tableData[$prop];
             }
+
+//            var_dump($args); die;
+
             call_user_func_array(array($stmt, 'bind_param'), $args);
 
         } else if ($this->_where) {

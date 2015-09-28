@@ -45,7 +45,6 @@ class Controller_User extends ControllerBackend {
     }
 
     public function editSave($id){
-
         $data = array();
         $data['user_id'] = $id;
         $data['login'] = trim($_POST['login']);
