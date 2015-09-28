@@ -41,7 +41,6 @@ $news = isset($data['news']) ? array_shift($data['news']) : null;
                 <label> Upload a file
                     <input type="file" name="upload" value="Choose an image">
                 </label>
-
             </div>
         </div>
         <div class="form-group">

@@ -10,6 +10,7 @@ class Controller_Profile extends Controller
             redirect_to('register');
         }
         $this->model = new Model_User();
+        $this->loadLibrary('htmlelements');
 
     }
 
