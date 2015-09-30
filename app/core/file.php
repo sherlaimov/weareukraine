@@ -63,17 +63,19 @@ class File {
     }
     public function tempName()
     {
-        $file_name_tmp = md5($this->filename . rand(0, 10000)) . '.'. $this->extension;
+        $file_name_tmp = md5($this->filename . rand(0, 10000));
         return $file_name_tmp;
     }
 
-    public function thumbName($width, $height)
-    {
-        return $this->tempName . '_' . $width . '_' . $height . 'jpg';
-    }
+//    public function thumbName($width, $height)
+//    {
+//        return $this->tempName . '_' . $width . '_' . $height . 'jpg';
+//    }
     public function filePath()
     {
-        return $filePath = FS_IMAGES . $this->tempName;
+        //string 'C:\OpenServer\domains\weareukraine\public/images\b384d31de70fa413bfb9a46562872bc9.jpg' (length=85)
+         return $filePath = FS_IMAGES . $this->tempName . '.'. $this->extension;
+
     }
 
     public function createThumb($width, $height)
@@ -82,7 +84,7 @@ class File {
 
         if (in_array($ext, $this->allowedImages)) {
             $filePath = $this->filePath;
-            $this->thumbName = $this->tempName . '_' . $width . '_' . $height . 'jpg';
+            $this->thumbName = $this->tempName . '_' . $width . '_' . $height . '.jpg';
             $bitmap = $this->createThumbBitmap($filePath, false, $width, $height);
             return imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $this->thumbName);
         } else {

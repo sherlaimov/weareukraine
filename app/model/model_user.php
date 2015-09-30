@@ -84,7 +84,10 @@ class Model_User extends Model {
 
     public function editUser($data)
     {
-        if ($this->isAdmin($data['user_id'])) {
+        $var = $_GET['url'];
+        $var = explode('/', $var);
+//        var_dump($var[0]);
+        if ($this->isAdmin($data['user_id']) && $var[0] != 'profile') {
             $updateData = array(
                 'login' => $data['login'],
                 'password' => $data['password'],

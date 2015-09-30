@@ -5,7 +5,7 @@
 //print_r($_GET['url']); echo '<br/>';
 //echo '$_POST ';
 //print_r($_POST);
-
+echo href('name');die;
 ?>
 
 <!DOCTYPE html>

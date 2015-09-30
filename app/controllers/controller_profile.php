@@ -52,6 +52,7 @@ class Controller_Profile extends Controller
                 }
             }
             $this->model->editUser($data);
+            redirect_to('profile');
         }
 
 
