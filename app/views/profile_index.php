@@ -60,7 +60,7 @@ $data = $this->data['user'];
                         <?php
                         echo html_input('login', $data['login'],
                             array('class' => 'form-control',
-                                'type' => 'email',
+                                'type' => 'text',
 
                             ));
                         ?>

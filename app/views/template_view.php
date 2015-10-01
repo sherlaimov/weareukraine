@@ -5,7 +5,7 @@
 //print_r($_GET['url']); echo '<br/>';
 //echo '$_POST ';
 //print_r($_POST);
-echo href('name');die;
+
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +72,7 @@ echo href('name');die;
                                 href="<?php echo URL; ?>news">News</a>
                         </li>
                         <li class="<?php echo $_GET['url'] == 'tweets' ? 'active' : null; ?>"><a
-                                href="<?php echo URL; ?>tweets">Tweets</a></li>
+                                href="<?php echo href('tweets/index'); ?>">Tweets</a></li>
                         <li class="<?php echo $_GET['url'] == 'rules' ? 'active' : null; ?>"><a
                                 href="<?php echo URL; ?>rules">Ground Rules</a></li>
                         <li class="<?php echo $_GET['url'] == 'contacts' ? 'active' : null; ?>"><a
@@ -83,10 +83,9 @@ echo href('name');die;
                     <?php if (Session::get('loggedIn') == TRUE) : ?>
 
                         <div class="nav navbar-right">
+
                             <ul class="nav navbar-nav">
-                                <?php if (Session::get('role') == 'admin' || Session::get('role') == 'owner') : ?>
-                                    <li><a href="<?php echo URL; ?>user">User</a></li>
-                                <?php endif; ?>
+
                                 <li><a href="<?php echo URL; ?>login/logout" class="btn btn-danger logout navbar-btn">Logout</a>
                                 </li>
                             </ul>

@@ -8,11 +8,11 @@ function redirect_to($location = NULL){
     }
 }
 
-function href($name) {
+function href($url) {
     'http:://weareukraine/module?/controller/action';
-    $url = $_GET['url'];
+//    $url = $_GET['url'];
 //    $url = $_SERVER['REQUEST_URI'];
 //    var_dump($url);
-    return URL . $url . $name;
+    return URL . $url;
 }
 
