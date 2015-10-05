@@ -93,8 +93,15 @@
                                         <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo URL;?>profile">Profile</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
+                                        <?php
+                                        if ($this->user->get('role') == 'default') {
+                                            echo '<li><a href="#">Do nothing?</a></li>';
+                                        } else {
+                                            echo '<li><a href="'. URL . 'admin">Admin area</a></li>';
+                                        }
+                                        ?>
+
+
                                         <li role="separator" class="divider"></li>
                                         <li><a href="<?php echo URL; ?>login/logout" class="">Logout</a></li>
                                     </ul>

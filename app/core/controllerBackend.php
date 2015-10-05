@@ -37,12 +37,12 @@ class ControllerBackend extends controllerBase {
     }
 
 
-    public function getUser($id)
-    {
-        $this->model->where('id', $id);
-        return $this->model->get('user', 1);
-
-    }
+//    public function getUser($id)
+//    {
+//        $this->model->where('id', $id);
+//        return $this->model->get('user', 1);
+//
+//    }
 
 
 }
