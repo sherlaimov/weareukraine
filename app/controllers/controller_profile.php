@@ -9,7 +9,7 @@ class Controller_Profile extends Controller
             Message::add('You must be registered to enter profile', Message::STATUS_ERROR);
 //            header('Location: profile');
 //            exit;
-            redirect_to('register');
+            redirect_to(href('register'));
         }
         $this->model = new Model_User();
         $this->loadLibrary('htmlelements');
@@ -18,8 +18,8 @@ class Controller_Profile extends Controller
 
     public function index()
     {
-        $data = $this->model->getUserById($this->user->get('user_id'));
-        $this->view->setData('user', $data);
+          //$this->model->getUserById($this->user->get('user_id'));
+        $this->view->setData('user', $this->user->getData());
         $this->view->generate_view();
     }
 
@@ -64,7 +64,8 @@ class Controller_Profile extends Controller
                 }
             }
             $this->model->editUser($data);
-            redirect_to('profile');
+//            print_r((href('profile'))); die;
+            redirect_to(href('profile'));
         }
 
 

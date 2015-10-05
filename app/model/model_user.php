@@ -111,6 +111,18 @@ class Model_User extends Model {
             }
         }
 
+        $updateData = array();
+        $fields = array('login' => 'login', 'password' => 'password', 'role' => 'role', 'first_name' => 'first_name',
+            'last_name' => 'last_name', 'image_name' => 'profile_image', 'thumb_name' => 'profile_thumb',
+            'new_password' => 'password');
+
+        foreach ($fields as $k => $v) {
+            if ( ! empty($data[$k])) {
+                $updateData[$v] = $data[$k];
+            }
+        }
+
+
 
         $this->where('user_id', $data['user_id']);
         return ($this->update('user', $updateData)) ? TRUE : FALSE;

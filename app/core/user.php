@@ -13,6 +13,10 @@ class User {
         }
     }
 
+    public function getId() {
+        return $this->get('user_id', false);
+    }
+
     public function get($key, $defValue = '') {
 
         if ( isset($this->_data[$key]) ) {
@@ -21,6 +25,11 @@ class User {
         }
 
         return $defValue;
+    }
+
+    public function getData()
+    {
+        return $this->_data;
     }
 
     public function fullName() {

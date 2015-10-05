@@ -14,61 +14,88 @@ $pagination = $data['pagination'];
 
 
 //var_dump(Session::isAuthorized());
-echo Session::isLoggedIn() ? '<p><a href="'. URL . 'news/add" class="btn btn-success pull-right">Add News</a></p>' : null;
-
 
 ?>
 
-<?php
+<div class="row">
 
-foreach($data['news'] as $news) {
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+
+        <h1 class="page-header">
+            Page Heading
+            <small>Secondary Text</small>
+        </h1>
+
+        <!-- First Blog Post -->
+        <h2>
+            <a href="#">Blog Post Title</a>
+        </h2>
+
+        <p class="lead">
+            by <a href="index.php">Start Bootstrap</a>
+        </p>
+
+        <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>
+        <hr>
+        <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+        <hr>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus
+            inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum
+            officiis rerum.</p>
+        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+    </div>
+    </div>
+
+    <?php
+
+    foreach ($data['news'] as $news) {
 
         echo '<h1>' . '<a href="/news/one_news?article_id=' . $news['id'] . '">' . $news['title'] . '</a>' . '</h1>';
-        echo '<span class="post-date">' . $news['created'] . '</span>';
+        echo '<p>By ' . $this->user->fullName() . '</p>';
+        echo '<p><span class="glyphicon glyphicon-time"></span> Posted on ' . $news['created'] . '</p><hr>';
+        echo '<img src="' . WS_IMAGES . 'thumb/' . $news['thumb'] . '" class="news-image">';
         echo '<p>' . $news['body'] . '</p>';
-        echo '<img src="'. WS_IMAGES . 'thumb/' . $news['thumb'] . '" class="news-image">';
-
-        if(Session::get('loggedIn') && $this->user->get('role') == 'owner' || $this->user->get('role') == 'admin') {
-            echo '<p><a href="'. URL . 'news/delete/' . $news['id'] .'" class="btn btn-danger pull-right">Delete</a></p>';
-            echo '<p><a href="'. URL . 'news/add/' . $news['id'] .'" class="btn btn-warning">Edit</a></p>';
-        }
 
 
-}
 
-?>
+    }
 
-<nav>
-    <ul class="pagination">
-        <li>
+    ?>
+
+    <nav>
+        <ul class="pagination">
+            <li>
+                <?php
+                if ($pagination->totalPages() > 1) {
+                    if ($pagination->hasPrevPage()) {
+                        echo '<a href="news?page=' .
+                            $pagination->prevPage() .
+                            '" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+                    }
+                }
+                ?>
+            </li>
             <?php
-            if($pagination->totalPages() > 1){
-                if($pagination->hasPrevPage()){
-                    echo '<a href="news?page=' .
-                        $pagination->prevPage() .
-                        '" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+            for ($i = 1; $pagination->totalPages() >= $i; $i++) {
+                if ($i == $page) {
+                    echo '<li class="active"><a href="news?page=' . $i . '">' . "$i</a></li>";
+                } else {
+                    echo '<li><a href="news?page=' . $i . '">' . "$i</a></li>";
                 }
             }
             ?>
-        </li>
-<?php
-        for($i = 1; $pagination->totalPages() >= $i; $i++){
-            if ($i == $page) {
-                echo '<li class="active"><a href="news?page=' . $i . '">' . "$i</a></li>";
-            } else {
-                echo '<li><a href="news?page=' . $i . '">' . "$i</a></li>";
-            }
-        }
-        ?>
-        <li>
-            <?php
-            if($pagination->totalPages() > 1){
-                if($pagination->hasNextPage()){
-                    echo '<a href="news?page=' . $pagination->nextPage() . '" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+            <li>
+                <?php
+                if ($pagination->totalPages() > 1) {
+                    if ($pagination->hasNextPage()) {
+                        echo '<a href="news?page=' . $pagination->nextPage() . '" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+                    }
                 }
-            }
-            ?>
-        </li>
-    </ul>
-</nav>
+                ?>
+            </li>
+        </ul>
+    </nav>
 

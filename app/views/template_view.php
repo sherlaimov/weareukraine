@@ -5,7 +5,7 @@
 //print_r($_GET['url']); echo '<br/>';
 //echo '$_POST ';
 //print_r($_POST);
-
+//var_dump($this->user);
 ?>
 
 <!DOCTYPE html>
@@ -157,7 +157,7 @@
 ================================================== -->
 <!-- Wrap the rest of the page in another container to center all the content. -->
 
-<div class="container marketing">
+<div class="container">
     <?php
     include VIEWS . $content_view;
     // include 'app/views/' . $controller_name .'_'. $action_name.'.php';
