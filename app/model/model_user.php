@@ -97,12 +97,18 @@ class Model_User extends Model {
 
             $updateData = array(
                 'login' => $data['login'],
-                'password' => $data['password'],
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
-                'profile_image' => $data['image_name'],
-                'profile_thumb' => $data['thumb_name']
             );
+
+            if (isset($data['image_name']) && isset($data['thumb_name'])){
+                $updateData['profile_image'] = $data['image_name'];
+                $updateData['profile_thumb'] = $data['thumb_name'];
+            }
+
+            if( ! empty($data['new_password'])) {
+                $updateData['password'] = $data['new_password'];
+            }
         }
 
 

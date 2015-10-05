@@ -86,12 +86,20 @@
 
                             <ul class="nav navbar-nav">
 
-                                <li><a href="<?php echo URL; ?>login/logout" class="btn btn-danger logout navbar-btn">Logout</a>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <?php echo isset($this->user) ? $this->user->get('login') : null; ?>
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo URL;?>profile">Profile</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="<?php echo URL; ?>login/logout" class="">Logout</a></li>
+                                    </ul>
                                 </li>
                             </ul>
-                            <span
-                                class="session"><?php echo isset($this->user) ? "You're logged in as " . $this->user->get('login') . ', your role is ' . $this->user->get('role') : 'no session login'; ?></span>
-
                         </div>
                     <?php else : ?>
                         <form class="navbar-form navbar-right" action="<?php echo URL; ?>login" method="post">

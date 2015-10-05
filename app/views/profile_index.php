@@ -79,7 +79,7 @@ $data = $this->data['user'];
                     <label for="confirm">Confirm password</label>
 
                     <div class="input-group">
-                        <input type="password" class="form-control" id="password" name="password"
+                        <input type="password" class="form-control" id="password" name="new_password"
                                placeholder="confirm password">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>

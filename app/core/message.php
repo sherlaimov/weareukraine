@@ -2,7 +2,7 @@
 
 class Message {
 
-    const STATUS_NORMAL = 'alert';
+    const STATUS_SUCCESS = 'alert alert-success';
     const STATUS_WARNING = 'alert alert-warning';
     const STATUS_ERROR = 'alert alert-danger';
 

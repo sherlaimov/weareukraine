@@ -5,8 +5,10 @@ class Controller_Profile extends Controller
     public function __construct()
     {
         parent::__construct();
-        if ( ! Session::isLoggedIn() && ! isset($this->user)){
+        if ( ! Session::isLoggedIn()){
             Message::add('You must be registered to enter profile', Message::STATUS_ERROR);
+//            header('Location: profile');
+//            exit;
             redirect_to('register');
         }
         $this->model = new Model_User();
@@ -30,7 +32,17 @@ class Controller_Profile extends Controller
                 'last_name' => trim($_POST['last_name']),
                 'login' => trim($_POST['login']),
                 'user_id' => $id);
-            $data['password'] = Hash::create_hash('md5',(trim($_POST['password'])), HASH_KEY );
+            if( ! empty($_POST['old_password']) && ! empty($_POST['new_password'])){
+                if ($this->user->get('password') == Hash::create_hash('md5',(trim($_POST['old_password'])), HASH_KEY )) {
+                    $data['new_password'] = Hash::create_hash('md5',(trim($_POST['new_password'])), HASH_KEY );
+                    Message::add('Password successfully changed', Message::STATUS_SUCCESS);
+                } else {
+                    Message::add('Incorrect old password', Message::STATUS_ERROR);
+//                    return false; Нужен ли здесь редирект?
+                    redirect_to('profile');
+                }
+            }
+
 
             if (isset($_FILES['upload']) && !empty($_FILES['upload']['name'])) {
                 $file = new File($_FILES['upload']);
