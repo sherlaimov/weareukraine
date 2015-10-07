@@ -45,7 +45,12 @@ class Pagination extends Model_News {
     }
 
     public function findByOffset(){
-        return $this->query("SELECT * FROM news ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
+//        return $this->query("SELECT * FROM news ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
+        return $this->query('SELECT n.user_id, n.title, n.body, n.created, u.first_name, u.last_name
+        FROM news AS n
+        INNER JOIN  user AS u ON n.user_id = u.user_id
+        WHERE 1 ORDER BY n.id DESC LIMIT ' . $this->per_page . ' OFFSET ' . $this->offset());
+
     }
 
     public function findByOffsetandUser($user_id) {
@@ -53,6 +58,13 @@ class Pagination extends Model_News {
         if ((int) $user_id ) {
             return $this->query("SELECT * FROM news WHERE user_id = $user_id ORDER BY id DESC LIMIT $this->per_page OFFSET {$this->offset()}");
         }
+        $sql = 'SELECT news.user_id, news.title, news.body, news.created, user.first_name, user.last_name FROM news, user
+        WHERE news.user_id = user.user_id ORDER BY news.id';
+
+        $sql = 'SELECT n.user_id, n.title, n.body, n.created, u.first_name, u.last_name
+        FROM news AS n
+        INNER JOIN  user AS u ON n.user_id = u.user_id
+        WHERE 1 ORDER BY n.id';
         return false;
     }
 

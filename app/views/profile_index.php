@@ -2,7 +2,7 @@
 //var_dump($this->user);
 //var_dump($this->data['user']);
 $data = $this->data['user'];
-//var_dump($data);
+
 ?>
 
 <div class="container">
