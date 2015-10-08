@@ -18,6 +18,8 @@ class Controller_News extends ControllerBackend
     {
         $pagination = new Pagination(1, 5);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+        $news = $this->model->get('news');
         $news = $pagination->findByOffset();
         $this->view->setData('news', $news);
         $this->view->setData('pagination', $pagination);

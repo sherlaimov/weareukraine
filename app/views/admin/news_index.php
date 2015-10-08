@@ -12,7 +12,7 @@
 //var_dump($data);
 
 $pagination = $data['pagination'];
-
+var_dump($pagination);
 
 //var_dump(Session::isAuthorized());
 echo Session::isLoggedIn() ? '<p><a href="'. URL . 'admin/news/add" class="btn btn-success pull-right">Add News</a></p>' : null;
@@ -39,7 +39,6 @@ foreach($data['news'] as $news) {
 
 ?>
 
-<nav>
     <ul class="pagination">
         <li>
             <?php
@@ -54,7 +53,7 @@ foreach($data['news'] as $news) {
         </li>
 <?php
         for($i = 1; $pagination->totalPages() >= $i; $i++){
-            if ($i == $page) {
+            if ($i == $pagination->current_page) {
                 echo '<li class="active"><a href="news?page=' . $i . '">' . "$i</a></li>";
             } else {
                 echo '<li><a href="news?page=' . $i . '">' . "$i</a></li>";
@@ -71,5 +70,5 @@ foreach($data['news'] as $news) {
             ?>
         </li>
     </ul>
-</nav>
+
 

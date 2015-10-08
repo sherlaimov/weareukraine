@@ -14,8 +14,6 @@ class Pagination extends Model_News {
         } else {
             $this->total_count = (int)$this->countAll();
         }
-
-
     }
 
     public function offset(){
@@ -49,7 +47,7 @@ class Pagination extends Model_News {
         return $this->query('SELECT news.id, news.user_id, news.title, news.body, news.created, news.image_name, news.thumb,
                             user.first_name, user.last_name
                             FROM news, user
-                            WHERE news.user_id = user.user_id ORDER BY news.id LIMIT '
+                            WHERE news.user_id = user.user_id ORDER BY news.id DESC LIMIT '
          . $this->per_page . ' OFFSET ' . $this->offset());
 
     }

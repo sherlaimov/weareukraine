@@ -8,7 +8,7 @@ class File {
     public $extension;
     private $temp_path; //nah nuzhen? Мы хватаем файл отсюда в итоге?
     private $filePath;
-    private $tempName;
+    private $tempName; //resulting file name, maybe a different naming convention would be better?
     public $thumbName;
     //protected $uploadDir = 'img';
     protected $allowedImages = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
@@ -49,10 +49,9 @@ class File {
 
     public function getImageInfo()
     {
-        $data = array();
 
         $data = array(
-            'image_name' => $this->tempName,
+            'image_name' => $this->tempName . '.jpg',
             'tmp_name' => $this->temp_path,
             'type' => $this->type,
             'extension' => $this->extension,
