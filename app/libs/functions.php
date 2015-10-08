@@ -13,10 +13,11 @@ function href($url, $getParam = array()) { // array( 'module' => '', 'controller
 //    $url = $_GET['url'];
 //    $url = $_SERVER['REQUEST_URI'];
 //    var_dump($url);
+    //$getParam = $_GET request value
     if (is_string($url)) {
        // then convert it to this type of record array('controller' => 'tweets', 'action' => 'index')
     }
-    /*
+    /* если модуль не подключен, но я нахожусь в админке, то автоматически дописуется админ
     if (is_array($url)) {
 
     }*/

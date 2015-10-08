@@ -12,7 +12,7 @@
 //var_dump($data);
 
 $pagination = $data['pagination'];
-var_dump($pagination);
+//var_dump($pagination);
 
 //var_dump(Session::isAuthorized());
 echo Session::isLoggedIn() ? '<p><a href="'. URL . 'admin/news/add" class="btn btn-success pull-right">Add News</a></p>' : null;
@@ -25,6 +25,7 @@ echo Session::isLoggedIn() ? '<p><a href="'. URL . 'admin/news/add" class="btn b
 foreach($data['news'] as $news) {
 
         echo '<h1>' . '<a href="news/one_news?article_id=' . $news['id'] . '">' . $news['title'] . '</a>' . '</h1>';
+        echo '<p>By ' . $news['first_name'] . ' ' . $news['last_name'] . '</p>';
         echo '<span class="post-date">' . $news['created'] . '</span>';
         echo '<p>' . $news['body'] . '</p>';
         echo '<img src="'. WS_IMAGES . 'thumb/' . $news['thumb'] . '" class="news-image">';
