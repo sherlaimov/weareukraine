@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label for="InputEmail">Enter Email</label>
                     <div class="input-group">
-                        <input type="email" class="form-control" id="InputEmailFirst" name="login" placeholder="Enter Email" required>
+                        <input type="text" class="form-control" id="InputEmailFirst" name="login" placeholder="Enter Email" required>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>

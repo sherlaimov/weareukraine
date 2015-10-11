@@ -7,7 +7,7 @@ class Controller_Index extends ControllerBackend
     {
         if ( ! Session::isLoggedIn() || $this->user->get('role') == 'default') {
             Message::add('You must be authorized to enter Admin area', Message::STATUS_ERROR);
-            redirect_to('login');
+            redirect_to(href('login'));
         }
         $model = $this->load_model('news');
 //        $news = $model->getNews();

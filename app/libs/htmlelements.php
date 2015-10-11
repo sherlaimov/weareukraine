@@ -67,6 +67,10 @@ function image_thumb($name) {
     return '<img src="' . WS_IMAGES . 'thumb/' . $name .'">';
 }
 
+function profileImageThumb($name) {
+    return '<img src="' . WS_IMAGES . 'thumb/' . $name .'" class="img-circle img-responsive">';
+}
+
 function html_get_thumbnail($filename, $width, $height, $style = '') {
     $fileInfo = pathinfo($filename);
 

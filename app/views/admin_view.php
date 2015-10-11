@@ -1,5 +1,6 @@
 <?php
-//var_dump($this->user);
+var_dump($_GET['url']);
+//echo href('news');die;
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,8 +55,8 @@
                             class="nav-label">Dashboard</span></span></a>
 
                 </li>
-                <li <?php echo $_GET['url'] == 'admin/news' ? 'class="active"' : null; ?>>
-                    <a href="<?php echo URL; ?>admin/news"><i class="fa fa-th-large"></i> <span
+                <li <?php echo $_GET['url'] == 'admin/news/' ? 'class="active"' : null; ?>>
+                    <a href="<?php echo href('news'); ?>"><i class="fa fa-th-large"></i> <span
                             class="nav-label">News</span> <span class="fa arrow"></span></a>
 
                 </li>
@@ -91,7 +92,7 @@
                             class="m-r-sm text-muted welcome-message">Welcome to the best CMS for News Publishing</span>
                     </li>
                     <li>
-                        <a href="<?php echo URL; ?>admin/login/logout">
+                        <a href="<?php echo href('login/logout'); ?>">
                             <i class="fa fa-sign-out"></i> Log out
                         </a>
                     </li>

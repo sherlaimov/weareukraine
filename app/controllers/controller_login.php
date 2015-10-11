@@ -14,6 +14,9 @@ class Controller_Login extends Controller
     {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //header('Content-Type: text/html; charset=utf-8');
+            //print_r($_POST); die;
+
             $login = trim($_POST['login']);
             $password = trim($_POST['password']);
             $password = Hash::create_hash('md5', $password, HASH_KEY);

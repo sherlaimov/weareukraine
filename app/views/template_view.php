@@ -6,6 +6,7 @@
 //echo '$_POST ';
 //print_r($_POST);
 //var_dump($this->user);
+//echo href('tweets/index'); die;
 ?>
 
 <!DOCTYPE html>

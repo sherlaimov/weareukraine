@@ -5,12 +5,7 @@ class Controller_Profile extends Controller
     public function __construct()
     {
         parent::__construct();
-        if ( ! Session::isLoggedIn()){
-            Message::add('You must be registered to enter profile', Message::STATUS_ERROR);
-//            header('Location: profile');
-//            exit;
-            redirect_to(href('register'));
-        }
+
         $this->model = new Model_User();
         $this->loadLibrary('htmlelements');
 
@@ -19,8 +14,25 @@ class Controller_Profile extends Controller
     public function index()
     {
           //$this->model->getUserById($this->user->get('user_id'));
+        if ( ! Session::isLoggedIn()){
+            Message::add('You must be registered to enter profile', Message::STATUS_ERROR);
+//            header('Location: profile');
+//            exit;
+            redirect_to(href('register'));
+        }
         $this->view->setData('user', $this->user->getData());
         $this->view->generate_view();
+    }
+
+    public function user()
+    {
+        $id = (int)trim($_GET['user_id']);
+        $data = $this->model->getUserById($id);
+        $newsModel = new Model_News();
+        $data['newsCount'] = $newsModel->countUserNews($id);
+        $this->view->setData('user', $data);
+        $this->view->generate_view();
+
     }
 
     public function update($id)

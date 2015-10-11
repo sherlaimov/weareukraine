@@ -28,14 +28,28 @@ class Model_User extends Model {
 
 
     public function authenticate($login='', $password=''){
+
         $sql = 'SELECT * FROM user WHERE login=' . "'$login' " . 'AND password=' . "'$password'" . ' LIMIT 1';
         try {
             $sth = $this->_mysql->query($sql);
-            $row = $sth->fetch_array(MYSQL_ASSOC);
+            if(is_object($sth)) {
+                $row = $sth->fetch_array(MYSQL_ASSOC);
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }
         return isset($row) ? $row : FALSE;
+    }
+
+    public function loginTaken($login)
+    {
+        $this->where('login', $login);
+        $results = $this->get('user');
+//        var_dump($results);die;
+        if ( $results ) {
+            return TRUE;
+        }
+        return FALSE;
     }
 
     public function registerUser($data = array()){

@@ -1,4 +1,4 @@
 <h1>404_index</h1>
 <p>
-<img src="/images/404.png">
+    <img src="<?php echo WS_IMAGES . '404.jpg'?>">
 </p>

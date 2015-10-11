@@ -16,15 +16,24 @@ class Controller_Register extends Controller
             $password = trim($_POST['password']);
             $passConfirm = trim($_POST['password_confirm']);
 
+//            var_dump($this->model->loginTaken($login));die;
+            if($this->model->loginTaken($login)) {
+                Message::add('Login taken', Message::STATUS_ERROR);
+                $this->view->generate_view();
+                return false;
+            }
             if ($password !== $passConfirm) {
                 Message::add('Password has not been confirmed', Message::STATUS_ERROR);
                 $this->view->generate_view();
                 return false;
             }
-            if(empty($login) || empty($password) | empty($firstName) || empty($lastName)){
+            if(empty($login) || empty($password) || empty($firstName) || empty($lastName)){
                 Message::add('Please fill out all the required fields', Message::STATUS_ERROR);
+                redirect_to(href('register'));
                 return false;
             }
+
+
 
             $password = Hash::create_hash('md5', $password, HASH_KEY);
             $data = array(

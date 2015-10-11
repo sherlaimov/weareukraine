@@ -74,7 +74,7 @@ class Controller_Login extends ControllerBackend
         //unset($_SESSION);
         //$_SESSION = array();
 
-       redirect_to('admin');
+       redirect_to(href('login'));
 
     }
 

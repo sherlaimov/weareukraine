@@ -106,7 +106,7 @@ class Route
 
             } else {
                 $controller_name = '404';
-                require_once FS_CONTROLLERS . $this->_prefix  . $controller_name .'.php';
+                require_once FS_CONTROLLERS . $this->getModulePrefix() . $this->_prefix  . $controller_name .'.php';
             }
         }
 

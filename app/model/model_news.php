@@ -87,6 +87,13 @@ class Model_News extends Model
 
             );
         }
+        $fields = array('title', 'body', 'image_name', 'thumb', 'created');
+        $updateData = array();
+        foreach($fields as $field) {
+            if( ! empty ($data[$field])) {
+                $updateData[$field] = $data[$field];
+            }
+        }
 
         return $this->update('news', $updateData);
     }
@@ -101,7 +108,13 @@ class Model_News extends Model
         return $count;
     }
 
-    public function countUserNews()
+    public function countUserNews($id)
+    {
+        $res = $this->query('SELECT COUNT(*) AS cnt FROM news WHERE user_id = ' . $id);
+        return $res[0]['cnt'];
+    }
+
+    public function countCurrentUserNews()
     {
         $id = $_SESSION['user_id'];
         $res = $this->query('SELECT COUNT(*) FROM news WHERE user_id ='. $id);
