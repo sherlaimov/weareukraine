@@ -49,12 +49,19 @@ function href($url, $getParam = array())
     if (is_array($url)) {
 
            // $arr = array('controller' => $url[0], 'action' => $url[1]);
+//            var_dump($oRoute->getModuleName());
+            if ($oRoute->isFrontEnd() === FALSE) {
+                if ($url[0] == 'frontend') {
+                    array_shift($url);
+                } else {
+                    array_unshift($url, $oRoute->getModuleName());
 
-            if ($oRoute->getModulePrefix() != '') {
-                array_unshift($url, $oRoute->getModulePrefix());
+                }
+//                    var_dump($url);
             }
 
-
+            $v = implode('/', $url);
+//            var_dump($v);
             return URL . implode('/', $url) . $params;
 
     }

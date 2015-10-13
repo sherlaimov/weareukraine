@@ -1,6 +1,5 @@
 <?php
-var_dump($_GET['url']);
-//echo href('news');die;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -93,6 +92,8 @@ var_dump($_GET['url']);
                         <span
                             class="m-r-sm text-muted welcome-message">Welcome to the best CMS for News Publishing</span>
                     </li>
+                    <li><a href="<?php echo href('frontend/index'); ?>"><i class="fa fa-location-arrow"></i>Go Back to Site</a></li>
+
                     <li>
                         <a href="<?php echo href('login/logout'); ?>">
                             <i class="fa fa-sign-out"></i> Log out
