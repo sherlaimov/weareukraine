@@ -30,8 +30,16 @@ class Model_News extends Model
 
     public function get_one_news()
     {
-        $this->where('id', $_GET['article_id']);
-        $res = $this->get('news');
+        $news_id = (int) $_GET['article_id'];
+        $sql = 'SELECT news.id, news.user_id, news.title, news.body, news.created, news.image_name, news.thumb,
+                        comment.body, comment.created
+                        FROM news, comment
+                        WHERE comment_id=' . $news_id ;
+//        $this->where('id', $news_id );
+//        $news = $this->get('news');
+//        $this->where('news_id', $news_id);
+//        $comments = $this->get('comment');
+        $res = $this->query($sql);
         return $res;
     }
 

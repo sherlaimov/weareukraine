@@ -104,6 +104,22 @@ class Controller_News extends Controller
         }
     }
 
+    public function addComment($news_id)
+    {
+        if($this->isPost()) {
+            $news_id = (int)$news_id;
+            $user_id = $this->user->getId();
+            $body = htmlspecialchars(trim($_POST['body']));
+            $comment = Comment::make($news_id, $user_id, $body);
+            $comment->insertComment();
+//            redirect_to(href('news'));
+            redirect_to(href('news/one_news', array('article_id' => $news_id)));
+
+        }
+
+
+    }
+
     public function add($id = null)
     {
         $this->loadLibrary('htmlelements');
@@ -126,6 +142,7 @@ class Controller_News extends Controller
         }
         $this->view->generate_view();
     }
+
 
 
     public function addNews()

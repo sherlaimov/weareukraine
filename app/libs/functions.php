@@ -60,8 +60,8 @@ function href($url, $getParam = array())
 //                    var_dump($url);
             }
 
-            $v = implode('/', $url);
-//            var_dump($v);
+            $v = URL . implode('/', $url) . $params;
+//            var_dump($v);die;
             return URL . implode('/', $url) . $params;
 
     }
