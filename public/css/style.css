@@ -105,9 +105,12 @@ span.session {
 /*@import url(//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css);*/
 
 .detailBox {
-    width:800px;
+    width:95%;
+    /*width:900px;*/
     border:1px solid #bbb;
-    margin:50px;
+
+    margin: 0 auto;
+    margin-top:10px;
 }
 .titleBox {
     background-color:#fdfdfd;
@@ -138,8 +141,8 @@ span.session {
 .commentList {
     padding:0;
     list-style:none;
-    max-height:200px;
-    overflow:auto;
+    /*max-height:200px;*/
+    /*overflow:hidden;*/
 }
 .commentList li {
     margin:0;

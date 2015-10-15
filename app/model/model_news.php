@@ -31,16 +31,33 @@ class Model_News extends Model
     public function get_one_news()
     {
         $news_id = (int) $_GET['article_id'];
-        $sql = 'SELECT news.id, news.user_id, news.title, news.body, news.created, news.image_name, news.thumb,
-                        comment.body, comment.created
-                        FROM news, comment
-                        WHERE comment_id=' . $news_id ;
-//        $this->where('id', $news_id );
-//        $news = $this->get('news');
-//        $this->where('news_id', $news_id);
-//        $comments = $this->get('comment');
-        $res = $this->query($sql);
+
+//        $sql = 'SELECT n.user_id, n.title, n.body, n.created, n.image_name, n.thumb,
+//                      c.body, c.user_id, c.created
+//        FROM news AS n
+//        INNER JOIN comment AS c ON n.id = c.news_id
+//        WHERE id=' . $news_id ;
+//      news body overriden by comment body, WHY?
+//        $res = $this->query($sql);
+        $this->where('id', $news_id );
+        $res = $this->get('news');
+
         return $res;
+    }
+
+    public function getNewsComments()
+    {
+        $news_id = (int) $_GET['article_id'];
+//        var_dump($news_id); die;
+        $sql = 'SELECT c.user_id, c.body, c.created,
+                u.first_name, u.last_name, u.profile_thumb
+                FROM comment as c
+                INNER JOIN user as u ON c.user_id = u.user_id
+                WHERE c.news_id=' . $news_id;
+        //Вытащить с пользователем?
+        //не могу два раза использовать where!
+//        $sql = 'SELECT * FROM comment WHERE news_id=' . $news_id;
+        return $this->query($sql);
     }
 
     public function addNews($data, $image = NULL)
