@@ -1,5 +1,5 @@
 <?php
-var_dump($data);
+//var_dump($data);
 //$userData = $this->user->getData();
 foreach ($data['news'] as $news) {
 

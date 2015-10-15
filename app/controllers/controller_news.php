@@ -17,11 +17,11 @@ class Controller_News extends Controller
         $pagination = new Pagination(1, 5);
         $pagination->current_page = isset($_GET['page']) ? $_GET['page'] : 1;
         //var_dump($pagination);
-        if ($this->user->getId() && Session::isLoggedIn()) {
-            $news = $pagination->findByOffsetandUser( $this->user->get('user_id') );
-        } else {
-            $news = $pagination->findByOffset();
-        }
+//        if ($this->user->getId() && Session::isLoggedIn()) {
+//            $news = $pagination->findByOffsetandUser( $this->user->get('user_id') );
+
+        $news = $pagination->findByOffset();
+
         $this->view->setData('news', $news);
         $this->view->setData('pagination', $pagination);
         $this->view->generate_view();

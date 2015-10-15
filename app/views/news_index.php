@@ -11,7 +11,7 @@
 //var_dump($this->data);
 
 $pagination = $data['pagination'];
-
+//var_dump($pagination);
 
 //var_dump(Session::isAuthorized());
 

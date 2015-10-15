@@ -131,7 +131,7 @@
 
                         }
 
-                        echo '<a class="alert-link" href="#">Alert Link</a>.</div></div>';
+                        echo '</div></div></div>';
                     }
                 }
                 ?>

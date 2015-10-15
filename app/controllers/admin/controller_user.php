@@ -9,8 +9,7 @@ class Controller_User extends ControllerBackend {
 
         $logged = Session::get('loggedIn');
         if($logged == false || $this->user->get('role') == 'default'){
-            header('Location: ' . URL . 'admin/login');
-            exit;
+            redirect_to(href('login'));
         }
 
     }
@@ -30,7 +29,7 @@ class Controller_User extends ControllerBackend {
         $data['role'] = trim($_POST['role']);
 
         $this->model->insertUser($data);
-        header('Location: ' . URL . 'user');
+        redirect_to(href('user'));
 
     }
 
@@ -51,14 +50,19 @@ class Controller_User extends ControllerBackend {
         $data['password'] = Hash::create_hash('md5',(trim($_POST['password'])), HASH_KEY );
         $data['role'] = trim($_POST['role']);
         ///print_r($data); die;
-        $this->model->editUser($data);
-        header('Location: ' . URL . 'user');
+        if($this->model->editUser($data)){
+            Message::add('User successfully updated', Message::STATUS_SUCCESS);
+            redirect_to(href("user/edit/$id"));
+        } else {
+            Message::add('Could not update user', Message::STATUS_ERROR);
+            redirect_to(href("user/edit/$id"));
+        }
     }
 
     public function delete($id)
     {
         $this->model->deleteUser($id);
-        header('Location: ' . URL . 'user');
+        redirect_to(href('user'));
 
 
     }

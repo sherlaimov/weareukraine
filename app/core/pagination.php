@@ -9,11 +9,11 @@ class Pagination extends Model_News {
         parent::__construct();
         $this->current_page = (int)$page;
         $this->per_page = (int)$per_page;
-        if( Session::get('user_id') && Session::isLoggedIn()){
-            $this->total_count = (int)$this->countCurrentUserNews();
-        } else {
+//        if( $this->user->getId() && Session::isLoggedIn()){
+//            $this->total_count = (int)$this->countCurrentUserNews();
+
             $this->total_count = (int)$this->countAll();
-        }
+
     }
 
     public function offset(){

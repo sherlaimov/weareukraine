@@ -98,32 +98,6 @@ class Model_User extends Model {
 
     public function editUser($data)
     {
-        $var = $_GET['url'];
-        $var = explode('/', $var);
-//        var_dump($var[0]);
-        if ($this->isAdmin($data['user_id']) && $var[0] != 'profile') {
-            $updateData = array(
-                'login' => $data['login'],
-                'password' => $data['password'],
-                'role' => $data['role']
-            );
-        } else {
-
-            $updateData = array(
-                'login' => $data['login'],
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-            );
-
-            if (isset($data['image_name']) && isset($data['thumb_name'])){
-                $updateData['profile_image'] = $data['image_name'];
-                $updateData['profile_thumb'] = $data['thumb_name'];
-            }
-
-            if( ! empty($data['new_password'])) {
-                $updateData['password'] = $data['new_password'];
-            }
-        }
 
         $updateData = array();
         $fields = array('login' => 'login', 'password' => 'password', 'role' => 'role', 'first_name' => 'first_name',
@@ -143,15 +117,6 @@ class Model_User extends Model {
 
     }
 
-    public function isAdmin($id)
-    {
-        $data = $this->getUserById($id);
-        if( $data['role'] == 'admin' || $data['role'] == 'owner') {
-            return TRUE;
-        }
-        return FALSE;
-
-    }
     public function deleteUser($id)
     {
 
