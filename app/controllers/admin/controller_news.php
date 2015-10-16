@@ -39,8 +39,7 @@ class Controller_News extends ControllerBackend
     public function delete($id)
     {
         $this->model->deleteNews($id);
-        header('Location: ' . URL . 'news');
-        exit;
+        redirect_to((href('news')));
 
     }
 
@@ -89,8 +88,7 @@ class Controller_News extends ControllerBackend
             }
 
             $this->model->updateNews($data);
-            header('Location: ' . URL . 'admin/news');
-            exit;
+            redirect_to(href('news'));
         } else {
             Message::add('Both body and title must be filled', Message::STATUS_ERROR);
             if (count($_POST)) {

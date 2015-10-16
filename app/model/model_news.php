@@ -10,6 +10,7 @@ class Model_News extends Model
 
     public function getNewsWithAuthor()
     {
+        //same as in findByOffset()
         $sql = 'SELECT news.user_id, news.title, news.body, news.created, user.first_name, user.last_name FROM news, user
         WHERE news.user_id = user.user_id ORDER BY news.id';
 
