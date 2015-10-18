@@ -29,19 +29,29 @@ class Model_News extends Model
         return isset($row) ? $row : FALSE;
     }
 
-    public function get_one_news()
+    public function get_one_news($news_id, $full = false)
     {
-        $news_id = (int) $_GET['article_id'];
+        //$news_id = (int) $_GET['article_id'];
+        $res = false;
 
-//        $sql = 'SELECT n.user_id, n.title, n.body, n.created, n.image_name, n.thumb,
-//                      c.body, c.user_id, c.created
-//        FROM news AS n
-//        INNER JOIN comment AS c ON n.id = c.news_id
-//        WHERE id=' . $news_id ;
+        if ($full) {
+
+            $sql = 'SELECT n.user_id, n.title, n.body, n.created, n.image_name, n.thumb,
+                      c.body as comment_body, c.user_id, c.created, u.*
+        FROM news AS n
+        INNER JOIN comment AS c ON n.id = c.news_id
+        INNER JOIN user AS u ON u.user_id = c.news_id
+        WHERE id=' . $news_id;
+
 //      news body overriden by comment body, WHY?
 //        $res = $this->query($sql);
-        $this->where('id', $news_id );
-        $res = $this->get('news');
+        } else {
+
+            if ((int)$news_id) {
+                $this->where('id', $news_id);
+                $res = $this->get('news');
+            }
+        }
 
         return $res;
     }
@@ -82,6 +92,8 @@ class Model_News extends Model
 
     public function deleteNews($id)
     {
+        $data = $this->get_one_news($id);
+        unlink(FS_IMAGES . $data['image_name']);
         $this->where('id', $id);
         return $this->delete('news');
     }

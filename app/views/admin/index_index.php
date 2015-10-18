@@ -6,10 +6,10 @@
 //var_dump($this->data['news']['totalNews']);
 
 //var_dump(Session::isAuthorized());
-echo Session::isAuthorized() ? '<p><a href="'. URL . 'news/add" class="btn btn-success pull-right">Add News</a></p>' : null;
 
 
 ?>
+
 <div class="row border-bottom">
     <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -152,7 +152,7 @@ echo Session::isAuthorized() ? '<p><a href="'. URL . 'news/add" class="btn btn-s
         </div>
         <div class="ibox-content ibox-heading">
             <h3><i class="fa fa-envelope-o"></i> New publications</h3>
-            <p><i class="fa fa-tim"></i> You have a total of <span class="label label-primary"><?php echo $this->data['news']['totalNews'];?></span> publications</p>
+            <p><i class="fa fa-tim"></i> Total publications <span class="label label-primary"><?php echo $this->data['news']['totalNews'];?></span> </p>
         </div>
         <div class="ibox-content">
             <div class="feed-activity-list">
@@ -166,7 +166,6 @@ echo Session::isAuthorized() ? '<p><a href="'. URL . 'news/add" class="btn btn-s
                         echo ' <small class="pull-right text-navy">' . $v['created'] . ' </small>';
                         echo '<p><strong>Author '. $v['first_name'] . ' ' . $v['last_name'] . '</strong></p>';
                         echo '<h3>' .$v['title'] . '</h3>';
-                        echo '<p>' . $v['body'] . '</p>';
                         echo '<small class="text-muted">posted N time ago</small></div></div>';
                     }
                     ?>

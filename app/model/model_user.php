@@ -2,7 +2,7 @@
 
 class Model_User extends Model {
 
-    protected static $table_name = 'user';
+    protected $_table_name = 'user';
     protected static $db_fields = array('user_id', 'login', 'password', 'role', 'first_name', 'last_name');
     public $user_id;
     public $login;
@@ -29,7 +29,7 @@ class Model_User extends Model {
 
     public function authenticate($login='', $password=''){
 
-        $sql = 'SELECT * FROM user WHERE login=' . "'$login' " . 'AND password=' . "'$password'" . ' LIMIT 1';
+        $sql = 'SELECT * FROM '. $this->_table_name .' WHERE login=' . "'$login' " . 'AND password=' . "'$password'" . ' LIMIT 1';
         try {
             $sth = $this->_mysql->query($sql);
             if(is_object($sth)) {
@@ -50,6 +50,18 @@ class Model_User extends Model {
             return TRUE;
         }
         return FALSE;
+    }
+
+    public function getUserComments($id)
+    {
+        $this->where('user_id', $id);
+        return $this->get('comment');
+    }
+
+    public function countUserComments($id)
+    {
+        $res = $this->query('SELECT COUNT(*) AS cnt FROM comment WHERE user_id = ' . $id);
+        return $res[0]['cnt'];
     }
 
     public function registerUser($data = array()){

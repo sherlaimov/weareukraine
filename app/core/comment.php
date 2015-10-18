@@ -3,8 +3,8 @@
 class Comment extends Model
 {
 
-    protected static $table_name = 'comment';
-    protected static $db_fields = array('comment_id', 'news_id', 'created', 'user_id', 'body');
+    protected $table_name = 'comment';
+    protected static $db_fields = array('comment_id', 'news_id', 'created', 'updated', 'user_id', 'body');
 
     public $comment_id;
     public $news_id;
@@ -12,7 +12,7 @@ class Comment extends Model
     public $user_id;
     public $body;
 
-    public static function make($news_id, $user_id, $body = '')
+    public static function make($news_id, $user_id, $body)
     {
          if (!empty($news_id) && !empty($user_id) && !empty ($body)) {
 
@@ -22,6 +22,10 @@ class Comment extends Model
             $comment->created = strftime("%Y-%m-%d %H:%M:%S", time());
             $comment->user_id = $user_id;
             $comment->body = $body;
+
+//             self::insertComment();
+//             $comment->comment_id = $this->_mysql->insert_id;
+
 //            var_dump($comment);
             return $comment;
         } else {
@@ -45,5 +49,12 @@ class Comment extends Model
                         'body'      => $this->body
         );
         return $this->insert('comment', $data);
+    }
+//Strict standards: Non-static method Model::where() should not be called statically
+//Перенесена в model_user.php
+    public function getUserComments($id)
+    {
+        $this->where('user_id', $id);
+        return $this->get($this->table_name, null, 'ORDER BY DESC');
     }
 }

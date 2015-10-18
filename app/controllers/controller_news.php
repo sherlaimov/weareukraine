@@ -30,7 +30,8 @@ class Controller_News extends Controller
     function one_news()
     {
         $this->loadLibrary('htmlelements');
-        $news = $this->model->get_one_news();
+
+        $news = $this->model->get_one_news($_GET['article_id']);
         //print_r($news); die;
         $newsComments = $this->model->getNewsComments();
         $this->view->setData('news', $news);
@@ -121,7 +122,7 @@ class Controller_News extends Controller
         }
     }
 
-
+// NOT IN USE
     public function add($id = null)
     {
         $this->loadLibrary('htmlelements');

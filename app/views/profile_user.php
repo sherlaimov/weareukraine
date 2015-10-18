@@ -2,15 +2,9 @@
 //var_dump($this->user);
 //var_dump($this->data['user']);
 $data = $data['user'];
-
+var_dump($data);
 ?>
 
-
-<!--
-User Profile Sidebar by @keenthemes
-A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
-Licensed under MIT
--->
 
 <div class="container">
     <div class="row">
@@ -67,6 +61,10 @@ Licensed under MIT
                                 <tr>
                                     <td>Total publications</td>
                                     <td><?php echo '<span class="label label-primary">'. $data['newsCount'] .'</span>';?></td>
+                                </tr>
+                                <tr>
+                                    <td>Total comments</td>
+                                    <td><?php echo '<span class="label label-primary">'. $data['commentsCount'] .'</span>';?></td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>

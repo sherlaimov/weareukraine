@@ -81,7 +81,7 @@ class File {
     {
         $ext = $this->extension;
 
-        if (in_array($ext, $this->allowedImages)) {
+        if (in_array(strtolower($ext), $this->allowedImages)) {
             $filePath = $this->filePath;
             $this->thumbName = $this->tempName . '_' . $width . '_' . $height . '.jpg';
             $bitmap = $this->createThumbBitmap($filePath, false, $width, $height);
