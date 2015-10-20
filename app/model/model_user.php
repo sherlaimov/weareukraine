@@ -52,18 +52,6 @@ class Model_User extends Model {
         return FALSE;
     }
 
-    public function getUserComments($id)
-    {
-        $this->where('user_id', $id);
-        return $this->get('comment');
-    }
-
-    public function countUserComments($id)
-    {
-        $res = $this->query('SELECT COUNT(*) AS cnt FROM comment WHERE user_id = ' . $id);
-        return $res[0]['cnt'];
-    }
-
     public function registerUser($data = array()){
         $insertData = array(
             'login' => $data['login'],

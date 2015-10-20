@@ -110,14 +110,12 @@ class Model
                         $i++;
                     }
                 }
-            }
-            else {
+            } else {
                 // no table data was passed. Might be SELECT stmt
                 $this->_paramTypeList = $this->_determineType($where_value);
                 $this->_query .= ' WHERE ' . $where_prop . '= ?';
             }
         }
-
 
 
         //Determine if is INSERT query
@@ -222,15 +220,17 @@ class Model
 
     protected function _prepareQuery()
     {
-       // var_dump($this->_mysql->prepare($this->_query));die;
-       //print_r($this->_query);die;
+//         var_dump($this->_mysql->prepare($this->_query));die;
+//       print_r($this->_query);die;
         if (!$stmt = $this->_mysql->prepare($this->_query)) {
             echo 'Last SQL query was - ' . $this->_query;
             trigger_error('Problem preparing query', E_USER_ERROR);
         }
         return $stmt;
     }
-    function __destruct(){
+
+    function __destruct()
+    {
         //$this->_mysql->close();
     }
 

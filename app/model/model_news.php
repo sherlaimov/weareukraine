@@ -37,14 +37,20 @@ class Model_News extends Model
         if ($full) {
 
             $sql = 'SELECT n.user_id, n.title, n.body, n.created, n.image_name, n.thumb,
-                      c.body as comment_body, c.user_id, c.created, u.*
+                      c.body as comment_body, c.user_id,
+                      u.*
         FROM news AS n
         INNER JOIN comment AS c ON n.id = c.news_id
-        INNER JOIN user AS u ON u.user_id = c.news_id
+        INNER JOIN user AS u ON u.user_id = c.user_id
         WHERE id=' . $news_id;
-
+        $sql = 'SELECT n.id, n.user_id, n.title, n.body, n.created, n.image_name,
+                        u.first_name, u.last_name
+                        FROM news AS n
+                        INNER JOIN user AS u ON n.user_id = u.user_id
+                        WHERE id=' . $news_id;
 //      news body overriden by comment body, WHY?
-//        $res = $this->query($sql);
+        return $res = $this->query($sql);
+
         } else {
 
             if ((int)$news_id) {
@@ -54,21 +60,6 @@ class Model_News extends Model
         }
 
         return $res;
-    }
-
-    public function getNewsComments()
-    {
-        $news_id = (int) $_GET['article_id'];
-//        var_dump($news_id); die;
-        $sql = 'SELECT c.user_id, c.body, c.created,
-                u.first_name, u.last_name, u.profile_thumb
-                FROM comment as c
-                INNER JOIN user as u ON c.user_id = u.user_id
-                WHERE c.news_id=' . $news_id;
-        //Вытащить с пользователем?
-        //не могу два раза использовать where!
-//        $sql = 'SELECT * FROM comment WHERE news_id=' . $news_id;
-        return $this->query($sql);
     }
 
     public function addNews($data, $image = NULL)

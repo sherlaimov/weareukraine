@@ -20,6 +20,11 @@ class Controller_Profile extends Controller
 //            exit;
             redirect_to(href('register'));
         }
+        $user_id = $this->user->get('user_id');
+        $comment = new Comment();
+        $data['commentsCount'] = $comment->countUserComments($user_id);
+        $newsModel = new Model_News();
+        $data['newsCount'] = $newsModel->countUserNews($user_id);
         $this->view->setData('user', $this->user->getData());
         $this->view->generate_view();
     }
@@ -28,7 +33,10 @@ class Controller_Profile extends Controller
     {
         $id = (int)trim($_GET['user_id']);
         $data = $this->model->getUserById($id);
-        $data['commentsCount'] = $this->model->countUserComments($id);
+//        $commentsModel = new Model_Comments();
+//        $data['commentsCount'] = $commentsModel->countUserComments($id);
+        $comment = new Comment();
+        $data['commentsCount'] = $comment->countUserComments($id);
         $newsModel = new Model_News();
         $data['newsCount'] = $newsModel->countUserNews($id);
         $this->view->setData('user', $data);

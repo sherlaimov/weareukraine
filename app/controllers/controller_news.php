@@ -30,10 +30,10 @@ class Controller_News extends Controller
     function one_news()
     {
         $this->loadLibrary('htmlelements');
-
-        $news = $this->model->get_one_news($_GET['article_id']);
-        //print_r($news); die;
-        $newsComments = $this->model->getNewsComments();
+        $news_id = (int)$_GET['article_id'];
+        $news = $this->model->get_one_news($news_id, true);
+        $comment = new Comment();
+        $newsComments = $comment->getNewsComments($news_id);
         $this->view->setData('news', $news);
         $this->view->setData('comment', $newsComments);
         $this->view->generate_view();
@@ -45,8 +45,10 @@ class Controller_News extends Controller
             $news_id = (int)$news_id;
             $user_id = $this->user->getId();
             $body = htmlspecialchars(trim($_POST['body']));
-            $comment = Comment::make($news_id, $user_id, $body);
-            $comment->insertComment();
+            $comment = new Comment();
+            $comment->make($news_id, $user_id, $body);
+//            $comment = Comment::make($news_id, $user_id, $body);
+//            $comment->insertComment();
 //            redirect_to(href('news'));
             redirect_to(href('news/one_news', array('article_id' => $news_id)));
 

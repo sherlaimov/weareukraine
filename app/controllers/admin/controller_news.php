@@ -28,8 +28,8 @@ class Controller_News extends ControllerBackend
 
     public function one_news()
     {
-
-        $news = $this->model->get_one_news();
+        $news_id = (int)trim($_GET['article_id']);
+        $news = $this->model->get_one_news($news_id, true);
         //print_r($news); die;
         $this->view->setData('news', $news);
         $this->view->generate_view();
