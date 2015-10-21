@@ -2,7 +2,7 @@
 //var_dump($this->user);
 //var_dump($this->data['user']);
 $data = $this->data['user'];
-var_dump($this->data);
+//var_dump($news);
 ?>
 
 <h1><?php echo $this->user->fullName() . '\'s'; ?> profile</h1>
@@ -17,12 +17,11 @@ var_dump($this->data);
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
         </li>
         <li role="presentation"><a href="#messages" aria-controls="messages" role="tab"
-                                   data-toggle="tab">Messages</a></li>
+                                   data-toggle="tab">News(<?= $data['newsCount'] ?>)</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab"
                                    data-toggle="tab">Publish news</a></li>
     </ul>
 </div>
-
 
 <div class="row container">
     <!-- Tab panes -->
@@ -194,7 +193,34 @@ var_dump($this->data);
                 </div>
             </form>
         </div>
-        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+        <div role="tabpanel" class="tab-pane" id="messages">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+            <?php
+            foreach ($data['news'] as $news) {
+
+                $output = '<tr><td><a href="' . href('news/one_news', array('article_id' => $news['id'])) . '">' . image_thumb($news['thumb']) . '</a></td>';
+                $output .= '<td><h4><a href="' . href('news/one_news', array('article_id' => $news['id'])) . '">' . $news['title'] . '</a></h4></td>';
+                $output .= '<td><p>' . shortText($news['body']) . '</p></td>';
+                $output .= '<td><a href="' . href("news/add/{$news['id']}") . '" class="btn btn-warning btn-sm">Edit</a></td>';
+                $output .= '<td><a href="' . href("news/delete/{$news['id']}") . '" class="btn btn-danger btn-sm">Edit</a></td></tr>';
+
+                echo $output;
+            }
+
+            ?>
+                </tbody>
+            </table>
+        </div>
         <div role="tabpanel" class="tab-pane" id="settings">...</div>
     </div>
 </div>
@@ -212,6 +238,9 @@ var_dump($this->data);
     </div>
 
 </div>
+<?php
+var_dump($news);
+?>
 <form class="form-horizontal"
       action="<?php echo URL; ?>profile/addNews/<?php echo isset($news['id']) ? $news['id'] : null; ?>" method="POST"
       enctype="multipart/form-data">

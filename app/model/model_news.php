@@ -8,6 +8,11 @@ class Model_News extends Model
         return $res = $this->get('news', 7, 'ORDER BY id DESC');
     }
 
+    public function getUserNews($user_id)
+    {
+        $this->where('user_id', $user_id);
+        return $this->get('news', null, 'ORDER BY id DESC');
+    }
     public function getNewsWithAuthor()
     {
         //same as in findByOffset()

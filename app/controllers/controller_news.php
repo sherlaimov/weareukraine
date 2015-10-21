@@ -62,17 +62,17 @@ class Controller_News extends Controller
 
     }
 
-    public function edit($id)
-    {
-
-        if ($this->isPost()) {
-            $this->editSave($id);
-        }
-
-        $news = $this->model->selectOneNews($id);
-        $this->view->setData('news', $news);
-        $this->view->generate_view();
-    }
+//    public function edit($id)
+//    {
+//
+//        if ($this->isPost()) {
+//            $this->editSave($id);
+//        }
+//
+//        $news = $this->model->selectOneNews($id);
+//        $this->view->setData('news', $news);
+//        $this->view->generate_view();
+//    }
 
     public function editSave($id)
     {
@@ -139,7 +139,8 @@ class Controller_News extends Controller
             }
             $news = $this->model->selectOneNews($id);
             $this->view->setData('news', $news);
-            $this->view->generate_view();
+            //why should we not use this here?
+//            $this->view->generate_view();
         }
         if ($_POST) {
             $this->addNews();
