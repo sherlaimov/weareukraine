@@ -58,8 +58,7 @@ class Controller_News extends Controller
     public function delete($id)
     {
         $this->model->deleteNews($id);
-        header('Location: ' . URL . 'news');
-        exit;
+        redirect_to(href('news'));
 
     }
 

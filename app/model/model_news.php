@@ -83,8 +83,14 @@ class Model_News extends Model
 
     public function deleteNews($id)
     {
-        $data = $this->get_one_news($id);
-        unlink(FS_IMAGES . $data['image_name']);
+        $data = array_shift($this->get_one_news($id));
+        $path = FS_IMAGES . $data['image_name'];
+//        var_dump($path);
+        if ($data['image_name'] != null && $data['thumb'] != null) {
+            unlink(FS_IMAGES . $data['image_name']);
+            unlink(FS_IMAGES . 'thumb' . DS . $data['thumb']);
+        }
+
         $this->where('id', $id);
         return $this->delete('news');
     }

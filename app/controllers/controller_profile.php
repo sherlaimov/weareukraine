@@ -25,7 +25,8 @@ class Controller_Profile extends Controller
         $data['commentsCount'] = $comment->countUserComments($user_id);
         $newsModel = new Model_News();
         $data['newsCount'] = $newsModel->countUserNews($user_id);
-        $this->view->setData('user', $this->user->getData());
+        $data = array_merge($data, $this->user->getData());
+        $this->view->setData('user', $data);
         $this->view->generate_view();
     }
 
