@@ -79,6 +79,15 @@ class Model_News extends Model
             'created' => $data['created']
 
         );
+        $postData = array('title' => 'title', 'body' => 'body', 'image_name' => 'image_name', 'thumb' => 'thumb_name',
+                            'user_id' => 'user_id', 'created' => 'created', 'updated' => 'updated');
+        $insertData = array();
+        foreach ($postData as $k => $v) {
+            if (! empty($data[$v])){
+                $insertData[$k] = $data[$v];
+            }
+        }
+
         //var_dump($insertData); die;
         //print_r($insertData); die;
         return $this->insert('news', $insertData);
@@ -92,7 +101,7 @@ class Model_News extends Model
         $path = FS_IMAGES . $data['image_name'];
 //        var_dump($path);
         if ($data['image_name'] != null && $data['thumb'] != null) {
-            unlink(FS_IMAGES . $data['image_name']);
+            File::delete(FS_IMAGES . $data['image_name']);
             unlink(FS_IMAGES . 'thumb' . DS . $data['thumb']);
         }
 

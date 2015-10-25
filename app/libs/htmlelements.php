@@ -9,6 +9,11 @@ function html_input($name, $value, $param = array() ) {
     }
 
     $attr = '';
+
+    if ( ! isset($param['id'])) {
+        $param['id'] = $name;
+    }
+
     foreach($param as $k => $v) {
         $attr .= $k.'="'.$v.'" ';
     }

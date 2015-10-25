@@ -55,6 +55,10 @@ class Controller_News extends Controller
         }
     }
 
+    public function editComment($comment_id){
+
+    }
+
     public function delete($id)
     {
         $this->model->deleteNews($id);
@@ -73,6 +77,61 @@ class Controller_News extends Controller
 //        $this->view->setData('news', $news);
 //        $this->view->generate_view();
 //    }
+
+    public function addCommentAjax()
+    {
+        $answer = array('status' => 'error', 'text' => '');
+
+        if ($this->isPost()) {
+            if ( ! empty( $_POST['body']) ) {
+                $news_id = (int)$_POST['news_id'];
+                $user_id = $this->user->getId();
+                $body = htmlspecialchars(trim($_POST['body']));
+                $comment = new Comment();
+                $comment->make($news_id, $user_id, $body);
+                $answer['status'] = 'ok';
+            } else {
+                $answer['error'] = 'body is empty';
+            }
+        }
+
+        echo json_encode($answer);
+        die;
+    }
+
+    public function loadCommentListAjax() {
+
+        if ( isset($_GET['newsId'])) {
+
+            $this->loadLibrary('htmlelements');
+
+            $newsId = $_GET['newsId'];
+            $comment = new Comment();
+            $newsComments = $comment->getNewsComments($newsId);
+
+            foreach ($newsComments as $comment) {
+
+                $output = '<li>
+                <div class="commenterImage" id="comment-'.$comment['comment_id'] .'" >';
+                $output .= isset($comment['profile_thumb']) ? profileImageThumb($comment['profile_thumb']) :
+                    '<img alt="User Pic" src="http://lorempixel.com/50/50/people/9"
+                            class="img-circle img-responsive">';
+                $output .= '</div><div class="commentText">';
+//                $output .= '<a href="/profile/user?user_id=' . $userData['user_id'] . '">' .  $userData['first_name'] . ' ' . $userData['last_name'] . '</a>';
+                $output .= '<a href="' . href('profile/user', array('user_id' => $comment['user_id'])) . '">' .
+                    $comment['first_name'] . ' ' . $comment['last_name'] . '</a>';
+                $output .= '<p class="">' . $comment['body'] . '</p>';
+                $output .= '<a onclick="editComment('.$comment['comment_id'].')" href="javascript:void(0)">Edit</a>';
+                $output .= '<span class="date sub-text">'.$comment['created'];
+                $output .= '</span></div></li>';
+                echo $output;
+            }
+        } else {
+            echo 'newsId is empty';
+        }
+
+        die;
+    }
 
     public function editSave($id)
     {
@@ -134,7 +193,7 @@ class Controller_News extends Controller
             exit;
         }
         if (isset($id)) {
-            if ($this->isPost()) {
+            if ($this->isPost()) { //почти как eventListener
                 $this->editSave($id);
             }
             $news = $this->model->selectOneNews($id);
@@ -152,7 +211,7 @@ class Controller_News extends Controller
 
     public function addNews()
     {
-
+        die('BELGO');
         $data = array(
             'title' => trim($_POST['title']),
             'body' => trim($_POST['body']),
@@ -169,6 +228,7 @@ class Controller_News extends Controller
             }
         } else {
             if ($_FILES['upload']) {
+
                 $file = new File($_FILES['upload']);
 
                 $imageData = $file->getImageInfo();

@@ -2,7 +2,7 @@
 //var_dump($this->user);
 //var_dump($this->data['user']);
 $data = $this->data['user'];
-//var_dump($news);
+//var_dump($data);
 ?>
 
 <h1><?php echo $this->user->fullName() . '\'s'; ?> profile</h1>
@@ -18,7 +18,9 @@ $data = $this->data['user'];
         </li>
         <li role="presentation"><a href="#messages" aria-controls="messages" role="tab"
                                    data-toggle="tab">News(<?= $data['newsCount'] ?>)</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab"
+        <li role="presentation"><a href="#comments" aria-controls="comments" role="tab"
+                                   data-toggle="tab">Comments(<?= $data['commentsCount'] ?>)</a></li>
+        <li role="presentation"><a href="#publications" aria-controls="publications" role="tab"
                                    data-toggle="tab">Publish news</a></li>
     </ul>
 </div>
@@ -221,74 +223,85 @@ $data = $this->data['user'];
                 </tbody>
             </table>
         </div>
-        <div role="tabpanel" class="tab-pane" id="settings">...</div>
-    </div>
-</div>
+        <div role="tabpanel" class="tab-pane" id="comments">
+        <?php
+        foreach ($data['userComments'] as $comment) {
+            $output = '<p><span class="glyphicon glyphicon-time"></span> Posted on ' . $comment['created']. ' </p>';
+            $output .= '<p>'. $comment['body'] .  '</p>';
+            $output .= '<a href="'. href('news/one_news', array('article_id' => $comment['news_id'])) . '"">News Link</a>';
+            echo $output;
+        }
+        ?>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="publications">
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1">
+                    <h1>Add your publication</h1>
+                </div>
+                <div class="col-md-3">
 
+                </div>
 
-<br>
-<br>
-
-<div class="row">
-    <div class="col-md-9 col-md-offset-1">
-        <h1>Add your publication</h1>
-    </div>
-    <div class="col-md-3">
-
-    </div>
-
-</div>
-<?php
-var_dump($news);
-?>
-<form class="form-horizontal"
-      action="<?php echo URL; ?>profile/addNews/<?php echo isset($news['id']) ? $news['id'] : null; ?>" method="POST"
-      enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">Title</label>
-
-        <div class="col-sm-10">
+            </div>
             <?php
-            echo html_input_title('title', $news['title']);
+            var_dump($news);
             ?>
+            <form class="form-horizontal"
+                  action="<?php echo URL; ?>profile/addNews/<?php echo isset($news['id']) ? $news['id'] : null; ?>" method="POST"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">Title</label>
 
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="body" class="col-sm-2 control-label">Body</label>
+                    <div class="col-sm-10">
+                        <?php
+                        echo html_input_title('title', $news['title']);
+                        ?>
 
-        <div class="col-sm-10">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="body" class="col-sm-2 control-label">Body</label>
 
-            <?= html_textarea('body', $news['body']); ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <label> Upload a file
-                <input type="file" name="upload" value="Choose an image">
-            </label>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <?php echo isset($news['thumb']) ? image_thumb($news['thumb']) : null; ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-md-2">
-            <select class="form-control" name="width">
-                <option value="100">100 X 100</option>
-                <option value="150">150 X 150</option>
-                <option value="200">200 X 200</option>
-                <option value="300">300 X 300</option>
+                    <div class="col-sm-10">
 
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" name="submit" class="btn btn-default delete" value="upload">Post News</button>
-        </div>
-    </div>
+                        <?= html_textarea('body', $news['body']); ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <label> Upload a file
+                            <input type="file" name="upload" value="Choose an image">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <?php echo isset($news['thumb']) ? image_thumb($news['thumb']) : null; ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-md-2">
+                        <select class="form-control" name="width">
+                            <option value="100">100 X 100</option>
+                            <option value="150">150 X 150</option>
+                            <option value="200">200 X 200</option>
+                            <option value="300">300 X 300</option>
 
-</form>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" name="submit" class="btn btn-default delete" value="upload">Post News</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<br>
+<br>
+

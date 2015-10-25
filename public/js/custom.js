@@ -30,6 +30,36 @@ $(document).ready(function () {
     })
 
 })();
+
+function addNewComment() {
+
+    var params = $('#add-comment-form').serialize();
+
+
+     //   $.ajaxSetup({ "async" : false });
+
+        $.post( basePath + 'news/addCommentAjax/',
+            params,
+            function (data, status) {
+                if (data.status == 'ok') {
+                    $("#body").val('');
+                    loadCommentList( $("#news_id").val() );
+                }
+            },
+            'json');
+
+     //   $.ajaxSetup({ "async" : true });
+
+}
+
+function loadCommentList(newsId) {
+    $( ".commentList").html('');
+    $( ".commentList" ).load( basePath + 'news/loadCommentListAjax/?newsId='+ newsId);
+}
+
+function editComment(commentId) {
+
+}
 //
 //$(document).ready(function () {
 //   $('#mainMessage').fadeOut(7000);

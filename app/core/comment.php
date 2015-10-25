@@ -71,10 +71,14 @@ class Comment extends Model
         $this->where('user_id', $id);
         return $this->get('comment');
     }
+    public function edit($id, $data){
+        $this->where('comment_id', $id);
+        return $this->update('comment', $data);
+    }
     public function getNewsComments($news_id)
     {
         //        var_dump($news_id); die;
-        $sql = 'SELECT c.user_id, c.body, c.created,
+        $sql = 'SELECT c.comment_id, c.user_id, c.body, c.created,
                 u.first_name, u.last_name, u.profile_thumb
                 FROM comment as c
                 INNER JOIN user as u ON c.user_id = u.user_id

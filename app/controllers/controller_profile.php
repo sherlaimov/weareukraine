@@ -22,6 +22,7 @@ class Controller_Profile extends Controller
         }
         $user_id = $this->user->get('user_id');
         $comment = new Comment();
+        $data['userComments'] = $comment->getUserComments($user_id);
         $data['commentsCount'] = $comment->countUserComments($user_id);
         $newsModel = new Model_News();
         $data['news'] = $newsModel->getUserNews($user_id);
@@ -117,7 +118,7 @@ class Controller_Profile extends Controller
             } else {
                 if ($_FILES['upload']) {
                     $file = new File($_FILES['upload']);
-
+                    var_dump($file); die;
                     $imageData = $file->getImageInfo();
                     //var_dump($imageData); die;
                     $data = array_merge($data, $imageData);

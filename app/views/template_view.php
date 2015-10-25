@@ -46,6 +46,9 @@
     <link href="<?php echo URL; ?>carousel.css" rel="stylesheet">
 
 
+    <script type="text/javascript">
+        var basePath = "<?php echo URL;?>";
+    </script>
 </head>
 <!-- NAVBAR
 ================================================== -->
