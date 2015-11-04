@@ -117,8 +117,16 @@ class Controller_Profile extends Controller
                 }
             } else {
                 if ($_FILES['upload']) {
+<<<<<<< HEAD
+                    $destination = FS_IMAGES;
+                    $file = new fileWizard($destination);
+                    $file->upload();
+//                    $file = new File($_FILES['upload']);
+
+=======
                     $file = new File($_FILES['upload']);
                     var_dump($file); die;
+>>>>>>> 15fed47f3b694291cf4097ae672ddc73d6e85747
                     $imageData = $file->getImageInfo();
                     //var_dump($imageData); die;
                     $data = array_merge($data, $imageData);
