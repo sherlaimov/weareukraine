@@ -117,36 +117,16 @@ class Controller_Profile extends Controller
                 }
             } else {
                 if ($_FILES['upload']) {
-<<<<<<< HEAD
+
                     $destination = FS_IMAGES;
-                    $file = new fileWizard($destination);
-                    $file->upload();
-//                    $file = new File($_FILES['upload']);
-
-=======
-                    $file = new File($_FILES['upload']);
-                    var_dump($file); die;
->>>>>>> 15fed47f3b694291cf4097ae672ddc73d6e85747
-                    $imageData = $file->getImageInfo();
-                    //var_dump($imageData); die;
-                    $data = array_merge($data, $imageData);
-                    //print_r($data);
-                    if (move_uploaded_file($data['tmp_name'], $data['file_path'])) {
-                        //echo 'BELGO'; die;
-                        if (isset($_POST['width'])) {
-                            $value = $_POST['width'];
-                            if ($file->createThumb($value, $value)) {
-                                $data['thumb_name'] = $file->thumbName;
-
-                            } else {
-                                return false;
-                            }
-
-                        } else {
-                            $file->createThumb(150, 150);
-                            $data['thumb_name'] = $file->thumbName;
-                        }
+                    try {
+                        $file = new fileWizard($destination);
+                        $file->upload();
+                        $data = array_merge($data, $file->getImageInfo());
+                    } catch (Exception $e) {
+                        Message::add($e->getMessage(), Message::STATUS_ERROR);
                     }
+
                 }
                 //var_dump($data); die;
                 $model->addNews($data);

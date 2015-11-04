@@ -79,8 +79,8 @@ class Model_News extends Model
             'created' => $data['created']
 
         );
-        $postData = array('title' => 'title', 'body' => 'body', 'image_name' => 'image_name', 'thumb' => 'thumb_name',
-                            'user_id' => 'user_id', 'created' => 'created', 'updated' => 'updated');
+        $postData = array('title' => 'title', 'body' => 'body', 'image_name' => 'image_name', 'thumb' => 'thumb',
+                            'user_id' => 'user_id', 'created' => 'created', 'updated' => 'updated', 'file_name' => 'file_name');
         $insertData = array();
         foreach ($postData as $k => $v) {
             if (! empty($data[$v])){

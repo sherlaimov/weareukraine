@@ -4,7 +4,7 @@ class fileWizard
 {
     protected $destination;
     protected $messages = array();
-    protected $maxSize = 51200;
+    protected $maxSize = 512000;
     protected $permittedTypes = array(
         'image/jpeg',
         'image/pjpeg',
@@ -12,7 +12,9 @@ class fileWizard
         'image/png',
         'image/webp'
     );
+    protected $fileName;
     protected $newName;
+    protected $thumbName;
     protected $typeCheckingOn = true;
     protected $notTrusted = array('bin', 'cgi', 'exe', 'js', 'pl', 'php', 'py', 'sh');
     protected $suffix = '.upload';
@@ -29,56 +31,6 @@ class fileWizard
         $this->destination = $uploadFolder;
     }
 
-    public function setMaxSize($bytes)
-    {
-        $serverMax = self::convertToBytes(ini_get('upload_max_filesize'));
-        if ($bytes > $serverMax) {
-            throw new Exception('Maximum size cannot exceed server limit for individual files: ' .
-                self::convertFromBytes($serverMax));
-        }
-        if (is_numeric($bytes) && $bytes > 0) {
-            $this->maxSize = $bytes;
-        }
-    }
-
-    public static function convertToBytes($val)
-    {
-        $val = trim($val);
-        $last = strtolower($val[strlen($val)-1]);
-        if (in_array($last, array('g', 'm', 'k'))){
-            switch ($last) {
-                case 'g':
-                    $val *= 1024;
-                case 'm':
-                    $val *= 1024;
-                case 'k':
-                    $val *= 1024;
-            }
-        }
-        return $val;
-    }
-
-    public static function convertFromBytes($bytes)
-    {
-        $bytes /= 1024;
-        if ($bytes > 1024) {
-            return number_format($bytes/1024, 1) . ' MB';
-        } else {
-            return number_format($bytes, 1) . ' KB';
-        }
-    }
-
-    public function allowAllTypes($suffix = null)
-    {
-        $this->typeCheckingOn = false;
-        if (!is_null($suffix)) {
-            if (strpos($suffix, '.') === 0 || $suffix == '') {
-                $this->suffix = $suffix;
-            } else {
-                $this->suffix = ".$suffix";
-            }
-        }
-    }
 
     public function upload($renameDuplicates = true)
     {
@@ -126,47 +78,6 @@ class fileWizard
         $this->checkName($file);
         return true;
     }
-
-    protected function setNewName($file)
-    {
-
-        $this->newName = md5($file['name'] . rand(0, 10000)) . '.' . self::extension($file['name']);
-    }
-
-    public function getImageInfo()
-    {
-
-        $data = array(
-            'image_name' => $this->tempName . '.jpg',
-            'tmp_name' => $this->temp_path,
-            'type' => $this->type,
-            'extension' => $this->extension,
-            'file_path' => $this->filePath,
-        );
-        return $data;
-
-    }
-
-    protected function getErrorMessage($file)
-    {
-        switch($file['error']) {
-            case 1:
-            case 2:
-                $this->messages[] = $file['name'] . ' is too big: (max: ' .
-                    self::convertFromBytes($this->maxSize) . ').';
-                break;
-            case 3:
-                $this->messages[] = $file['name'] . ' was only partially uploaded.';
-                break;
-            case 4:
-                $this->messages[] = 'No file submitted.';
-                break;
-            default:
-                $this->messages[] = 'Sorry, there was a problem uploading ' . $file['name'];
-                break;
-        }
-    }
-
     protected function checkSize($file)
     {
         if ($file['size'] == 0) {
@@ -193,6 +104,7 @@ class fileWizard
 
     protected function checkName($file)
     {
+        $this->fileName = $file['name'];
         $this->newName = null;
         $nospaces = str_replace(' ', '_', $file['name']);
         if ($nospaces != $file['name']) {
@@ -200,7 +112,7 @@ class fileWizard
         }
         $nameparts = pathinfo($nospaces);
         $extension = isset($nameparts['extension']) ? $nameparts['extension'] : '';
-        if (!$this->typeCheckingOn && !empty($this->suffix)) {
+        if ( ! $this->typeCheckingOn && ! empty($this->suffix)) {
             if (in_array($extension, $this->notTrusted) || empty($extension)) {
                 $this->newName = $nospaces . $this->suffix;
             }
@@ -222,6 +134,47 @@ class fileWizard
             }
         }
     }
+
+
+    protected function setNewName($file)
+    {
+
+        $this->newName = md5($file['name'] . rand(0, 10000)) . '.' . self::extension($file['name']);
+    }
+
+    public function getImageInfo()
+    {
+
+        $data = array(
+            'image_name' => $this->newName,
+            'thumb'     => $this->thumbName,
+            'file_name'     => $this->fileName
+        );
+        return $data;
+
+    }
+
+    protected function getErrorMessage($file)
+    {
+        switch($file['error']) {
+            case 1:
+            case 2:
+                $this->messages[] = $file['name'] . ' is too big: (max: ' .
+                    self::convertFromBytes($this->maxSize) . ').';
+                break;
+            case 3:
+                $this->messages[] = $file['name'] . ' was only partially uploaded.';
+                break;
+            case 4:
+                $this->messages[] = 'No file submitted.';
+                break;
+            default:
+                $this->messages[] = 'Sorry, there was a problem uploading ' . $file['name'];
+                break;
+        }
+    }
+
+
 
     protected function moveFile($file)
     {
@@ -248,9 +201,9 @@ class fileWizard
 
             $filePath = $this->destination . $this->newName;
             $noExtention = self::name($this->newName);
-            $thumbName = $noExtention . '_' . $width . '_' . $height . '.jpg';
+            $this->thumbName = $noExtention . '_' . $width . '_' . $height . '.jpg';
             $bitmap = $this->createThumbBitmap($filePath, false, $width, $height);
-            return imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $thumbName);
+            return imagejpeg($bitmap, FS_IMAGES . 'thumb' . DS . $this->thumbName);
 
     }
 
@@ -320,6 +273,58 @@ class fileWizard
         return $thumb;
 
     }
+
+    public function setMaxSize($bytes)
+    {
+        $serverMax = self::convertToBytes(ini_get('upload_max_filesize'));
+        if ($bytes > $serverMax) {
+            throw new Exception('Maximum size cannot exceed server limit for individual files: ' .
+                self::convertFromBytes($serverMax));
+        }
+        if (is_numeric($bytes) && $bytes > 0) {
+            $this->maxSize = $bytes;
+        }
+    }
+
+    public static function convertToBytes($val)
+    {
+        $val = trim($val);
+        $last = strtolower($val[strlen($val)-1]);
+        if (in_array($last, array('g', 'm', 'k'))){
+            switch ($last) {
+                case 'g':
+                    $val *= 1024;
+                case 'm':
+                    $val *= 1024;
+                case 'k':
+                    $val *= 1024;
+            }
+        }
+        return $val;
+    }
+
+    public static function convertFromBytes($bytes)
+    {
+        $bytes /= 1024;
+        if ($bytes > 1024) {
+            return number_format($bytes/1024, 1) . ' MB';
+        } else {
+            return number_format($bytes, 1) . ' KB';
+        }
+    }
+
+    public function allowAllTypes($suffix = null)
+    {
+        $this->typeCheckingOn = false;
+        if (!is_null($suffix)) {
+            if (strpos($suffix, '.') === 0 || $suffix == '') {
+                $this->suffix = $suffix;
+            } else {
+                $this->suffix = ".$suffix";
+            }
+        }
+    }
+
 
     public static function extension($file)
     {
