@@ -3,6 +3,9 @@
 class Controller_Register extends Controller
 {
     public function init(){
+        if( Session::isLoggedIn() && $this->user->getId() !== 0) {
+            redirect_to(href('login'));
+        }
         $this->model = new Model_User();
     }
 

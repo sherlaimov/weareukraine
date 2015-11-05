@@ -44,7 +44,7 @@ class fileWizard
                 $currentFile['error'] = $uploaded['error'][$key];
                 $currentFile['size'] = $uploaded['size'][$key];
                 if ($this->checkFile($currentFile)) {
-//                    $this->setNewName($currentFile); not gonna work!
+                    $this->setNewName($currentFile);
                     $this->moveFile($currentFile);
                 }
             }
@@ -67,11 +67,11 @@ class fileWizard
             $this->getErrorMessage($file);
             return false;
         }
-        if (!$this->checkSize($file)) {
+        if ( ! $this->checkSize($file)) {
             return false;
         }
         if ($this->typeCheckingOn) {
-            if (!$this->checkType($file)) {
+            if ( ! $this->checkType($file)) {
                 return false;
             }
         }

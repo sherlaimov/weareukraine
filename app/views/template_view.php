@@ -1,12 +1,23 @@
 <?php
-//echo '$_SESSION ';
-//print_r($_SESSION);echo '<br/>';
-//echo '$_GET[url] ';
-//print_r($_GET['url']); echo '<br/>';
-//echo '$_POST ';
-//print_r($_POST);
-//var_dump($this->user);
-//echo href('tweets/index'); die;
+
+var_dump($_SERVER['PHP_SELF']);
+var_dump($_SERVER['REQUEST_URI']);
+//плюсы и минусы реализвции с помощью JS или CSS?
+$url_array =  explode('/', $_SERVER['REQUEST_URI']) ;
+//    var_dump($url_array); die;
+//
+function active($currect_page){
+//    echo 'BELGO';
+    $url_array =  explode('/', $_SERVER['REQUEST_URI']) ;
+
+    $url = end($url_array);
+    if($currect_page == $url){
+        return 'class="active"'; //class name in css
+    }
+    return '';
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -70,18 +81,18 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="<?php echo $_GET['url'] == 'index' ? 'active' : null; ?>"><a
+                        <li <?php echo active(''); ?>><a
                                 href="<?php echo URL; ?>">Home</a></li>
-                        <li class="<?php echo $_GET['url'] == 'news' ? 'active' : null; ?>"><a
+                        <li <?php echo active('news'); ?>><a
                                 href="<?php echo URL; ?>news">News</a>
                         </li>
-                        <li class="<?php echo $_GET['url'] == 'tweets' ? 'active' : null; ?>"><a
-                                href="<?php echo href('tweets/index'); ?>">Tweets</a></li>
-                        <li class="<?php echo $_GET['url'] == 'rules' ? 'active' : null; ?>"><a
+                        <li <?php echo active('tweets'); ?>><a
+                                href="<?php echo href('tweets'); ?>">Tweets</a></li>
+                        <li <?php echo active('rules'); ?>><a
                                 href="<?php echo URL; ?>rules">Ground Rules</a></li>
-                        <li class="<?php echo $_GET['url'] == 'contacts' ? 'active' : null; ?>"><a
+                        <li <?php echo active('contacts'); ?>><a
                                 href="<?php echo URL; ?>contacts">Contacts</a></li>
-                        <li class="<?php echo $_GET['url'] == 'login' ? 'active' : null; ?>"><a
+                        <li <?php echo active('login'); ?>><a
                                 href="<?php echo URL; ?>login">Login</a></li>
                     </ul>
                     <?php if (Session::get('loggedIn') == TRUE) : ?>
@@ -92,16 +103,17 @@
 
 
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                       aria-haspopup="true" aria-expanded="false">
                                         <?php echo isset($this->user) ? $this->user->get('login') : null; ?>
                                         <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="<?php echo URL;?>profile">Profile</a></li>
+                                        <li><a href="<?php echo URL; ?>profile">Profile</a></li>
                                         <?php
                                         if ($this->user->get('role') == 'default') {
                                             echo '<li><a href="#">Do nothing?</a></li>';
                                         } else {
-                                            echo '<li><a href="'. URL . 'admin">Admin area</a></li>';
+                                            echo '<li><a href="' . URL . 'admin">Admin area</a></li>';
                                         }
                                         ?>
 
@@ -125,7 +137,7 @@
                     <?php endif; ?>
                 </div>
                 <?php
-//                print_r(Message::getMessages());die;
+                //                print_r(Message::getMessages());die;
                 ?>
                 <div class="<?php
                 if ($message = Message::getMessages(false)) {
@@ -140,7 +152,7 @@
                 } ?>" id="mainMessage">
 
                     <?php
-//                                        var_dump(Message::getMessages());die;
+                    //                                        var_dump(Message::getMessages());die;
                     if ($message = Message::getMessages()) {
                         if (isset($message) && is_array($message) && count($message)) {
                             foreach ($message as $text => $type) {
