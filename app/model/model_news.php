@@ -69,16 +69,7 @@ class Model_News extends Model
 
     public function addNews($data, $image = NULL)
     {
-        //var_dump($data);die;
-        $insertData = array(
-            'title' => $data['title'],
-            'body' => $data['body'],
-            'image_name' => $data['image_name'],
-            'thumb' => $data['thumb_name'],
-            'user_id' => $data['user_id'],
-            'created' => $data['created']
 
-        );
         $postData = array('title' => 'title', 'body' => 'body', 'image_name' => 'image_name', 'thumb' => 'thumb',
                             'user_id' => 'user_id', 'created' => 'created', 'updated' => 'updated', 'file_name' => 'file_name');
         $insertData = array();

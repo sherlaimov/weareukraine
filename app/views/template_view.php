@@ -1,7 +1,7 @@
 <?php
 
-var_dump($_SERVER['PHP_SELF']);
-var_dump($_SERVER['REQUEST_URI']);
+//var_dump($_SERVER['PHP_SELF']);
+//var_dump($_SERVER['REQUEST_URI']);
 //плюсы и минусы реализвции с помощью JS или CSS?
 $url_array =  explode('/', $_SERVER['REQUEST_URI']) ;
 //    var_dump($url_array); die;
@@ -35,12 +35,11 @@ function active($currect_page){
     <!-- Bootstrap core CSS -->
     <link href="<?php echo URL; ?>public/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!--    SUMMERNOTE CSS-->
     <link href="<?php echo URL; ?>/public/inspinia/css/plugins/summernote/summernote.css" rel="stylesheet">
     <link href="<?php echo URL; ?>/public/inspinia/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
 
-
+    <script src="<?php echo URL; ?>public/js/jquery-1.11.3.js"></script>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]>
     <script src="<?php echo URL; ?>assets/js/ie8-responsive-file-warning.js"></script>
@@ -54,7 +53,7 @@ function active($currect_page){
     <![endif]-->
 
     <!-- Custom styles for this template -->
-    <link href="<?php echo URL; ?>carousel.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>public/css/carousel.css" rel="stylesheet">
 
 
     <script type="text/javascript">

@@ -1,35 +1,4 @@
-$(document).ready(function () {
-    $('nav ul li').click(function () { //debugger;
-        //remove all current classes
-        $('.active').removeClass('active');
-        $(this).addClass('active');
-    });
 
-    $('button.day').click(function () {
-        $('body').removeClass('night');
-        $('body').addClass('day');
-    });
-
-    $('button.night').click(function () {
-        //var cls= $(this).data('class');
-        //console_log(cls);
-        $('body').removeClass('day');
-        $('body').addClass('night');
-    });
-});
-
-
-
-
-(function () {
-    $('button.night').click(function () {
-        var cls= $(this).data('class');
-        console_log(cls);
-        $('body').removeClass('day');
-        $('body').addClass('night');
-    })
-
-})();
 
 function addNewComment() {
 
@@ -42,7 +11,7 @@ function addNewComment() {
             params,
             function (data, status) {
                 if (data.status == 'ok') {
-                    $("#body").val('');
+                    $("input#body").val('');
                     loadCommentList( $("#news_id").val() );
                 }
             },
@@ -57,7 +26,62 @@ function loadCommentList(newsId) {
     $( ".commentList" ).load( basePath + 'news/loadCommentListAjax/?newsId='+ newsId);
 }
 
+$('.edit-comment').on('click', editComment);
+
 function editComment(commentId) {
+    $this = $(this);
+    $this.hide();
+    var commentBox = $this.parent('.commentBox');
+    var update = commentBox.find('.update-comment');
+    var commentId = update.data('id');
+    var cancel = commentBox.find('.cancel-update-comment');
+    var commentEditBtns = commentBox.find('.comment-edit-buttons-wrapper').show();
+    var contentInput = commentBox.find('.comment-text').attr('contenteditable', true).focus();
+    var commentTextDiv = contentInput.text();
+    console.log(commentBox);
+    console.log(commentId);
+    //console.dir($(this));
+
+
+
+
+    //commentBox.find('a[onclick]').hide();
+
+
+    cancel.on('click', function(e){
+        contentInput.attr('contenteditable', false);
+        commentEditBtns.hide();
+        //commentBox.find('a[onclick]').show();
+        commentBox.find('.edit-comment').show();
+    });
+
+    update.on('click', function(){
+        if ( commentTextDiv === contentInput.text()) {
+            contentInput.attr('contenteditable', false);
+            commentEditBtns.hide();
+            commentBox.find('.edit-comment').show();
+            return;
+        } else {
+            var params = contentInput.text();
+            console.log(params);
+        }
+
+
+    });
+
+    console.log(commentId);
+    //updateComment.on('click', function(commentId){
+    //    var params =  commentBox.find('p').text();
+    //    console.log(params);
+    //});
+
+    //deleteA.replaceWith(saveBtn);
+    //console.log(saveBtn);
+    //console.log(params);
+    //console.log(deleteA);
+}
+
+function cancelEditComment() {
 
 }
 //
