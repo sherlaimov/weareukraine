@@ -221,11 +221,13 @@ class Model
     protected function _prepareQuery()
     {
 //         var_dump($this->_mysql->prepare($this->_query));die;
-//       print_r($this->_query);die;
+
+//        print_r($this->_query);
         if (!$stmt = $this->_mysql->prepare($this->_query)) {
             echo 'Last SQL query was - ' . $this->_query;
             trigger_error('Problem preparing query', E_USER_ERROR);
         }
+
         return $stmt;
     }
 

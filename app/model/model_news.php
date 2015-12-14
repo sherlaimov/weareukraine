@@ -111,7 +111,7 @@ class Model_News extends Model
     {
         $this->where('id', $data['id']);
 
-        if ($data['image_name']) {
+        if (isset($data['image_name'])) {
             $updateData = array(
                 'title' => $data['title'],
                 'body' => $data['body'],

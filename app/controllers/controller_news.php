@@ -41,7 +41,7 @@ class Controller_News extends Controller
 
     public function addComment($news_id)
     {
-        if($this->isPost()) {
+        if ($this->isPost()) {
             $news_id = (int)$news_id;
             $user_id = $this->user->getId();
             $body = htmlspecialchars(trim($_POST['body']));
@@ -55,8 +55,24 @@ class Controller_News extends Controller
         }
     }
 
-    public function editComment($comment_id){
+    public function updateComment($commentId)
+    {
+        $answer = array('status' => 'error', 'text' => '');
 
+        if ($this->isPost()) {
+            if ( ! empty($_POST['newComment'])) {
+                $user_id = $this->user->getId();
+                $news_id =  $_POST['newsId'];
+                $newComment['body'] = $_POST['newComment'];
+                $comment = new Comment();
+                $comment->edit($commentId, $newComment);
+                $answer['status'] = 'ok';
+            } else {
+                $answer['error'] = 'newComment is empty';
+            }
+        }
+        echo json_encode($answer);
+        die;
     }
 
     public function delete($id)
@@ -83,7 +99,7 @@ class Controller_News extends Controller
         $answer = array('status' => 'error', 'text' => '');
 
         if ($this->isPost()) {
-            if ( ! empty( $_POST['body']) ) {
+            if (!empty($_POST['body'])) {
                 $news_id = (int)$_POST['news_id'];
                 $user_id = $this->user->getId();
                 $body = htmlspecialchars(trim($_POST['body']));
@@ -99,9 +115,10 @@ class Controller_News extends Controller
         die;
     }
 
-    public function loadCommentListAjax() {
+    public function loadCommentListAjax()
+    {
 
-        if ( isset($_GET['newsId'])) {
+        if (isset($_GET['newsId'])) {
 
             $this->loadLibrary('htmlelements');
 
@@ -112,7 +129,7 @@ class Controller_News extends Controller
             foreach ($newsComments as $comment) {
 
                 $output = '<li>
-                <div class="commenterImage" id="comment-'.$comment['comment_id'] .'" >';
+                <div class="commenterImage" id="comment-' . $comment['comment_id'] . '" >';
                 $output .= isset($comment['profile_thumb']) ? profileImageThumb($comment['profile_thumb']) :
                     '<img alt="User Pic" src="http://lorempixel.com/50/50/people/9"
                             class="img-circle img-responsive">';
@@ -121,8 +138,8 @@ class Controller_News extends Controller
                 $output .= '<a href="' . href('profile/user', array('user_id' => $comment['user_id'])) . '">' .
                     $comment['first_name'] . ' ' . $comment['last_name'] . '</a>';
                 $output .= '<p class="">' . $comment['body'] . '</p>';
-                $output .= '<a onclick="editComment('.$comment['comment_id'].')" href="javascript:void(0)">Edit</a>';
-                $output .= '<span class="date sub-text">'.$comment['created'];
+                $output .= '<a onclick="editComment(' . $comment['comment_id'] . ')" href="javascript:void(0)">Edit</a>';
+                $output .= '<span class="date sub-text">' . $comment['created'];
                 $output .= '</span></div></li>';
                 echo $output;
             }
@@ -206,7 +223,6 @@ class Controller_News extends Controller
         }
         $this->view->generate_view();
     }
-
 
 
     public function addNews()

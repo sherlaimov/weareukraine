@@ -28,7 +28,7 @@ function loadCommentList(newsId) {
 
 $('.edit-comment').on('click', editComment);
 
-function editComment(commentId) {
+function editComment() {
     $this = $(this);
     $this.hide();
     var commentBox = $this.parent('.commentBox');
@@ -42,11 +42,7 @@ function editComment(commentId) {
     console.log(commentId);
     //console.dir($(this));
 
-
-
-
     //commentBox.find('a[onclick]').hide();
-
 
     cancel.on('click', function(e){
         contentInput.attr('contenteditable', false);
@@ -62,29 +58,48 @@ function editComment(commentId) {
             commentBox.find('.edit-comment').show();
             return;
         } else {
-            var params = contentInput.text();
-            console.log(params);
+            var newComment = {
+                newComment : contentInput.text(),
+                newsId :     $("#news_id").val()
+            }
+
+            //console.log(newComment);
+            updateComment(newComment, commentId, commentBox);
+
         }
-
-
     });
 
-    console.log(commentId);
+    //console.log(targetComment);
     //updateComment.on('click', function(commentId){
     //    var params =  commentBox.find('p').text();
     //    console.log(params);
     //});
 
-    //deleteA.replaceWith(saveBtn);
-    //console.log(saveBtn);
-    //console.log(params);
-    //console.log(deleteA);
 }
 
-function cancelEditComment() {
+function updateComment(newComment, commentId, commentBox) {
 
+    $.post( basePath + 'news/updateComment/' + commentId,
+        newComment,
+        function (data, status) {
+            console.log(data);
+
+            if (data.status == 'ok') {
+                var targetComment = $('#comment-id-' + commentId);
+                targetComment.html(newComment.newComment);
+                console.log(this);
+                commentBox.find('.comment-edit-buttons-wrapper').hide();
+                commentBox.find('.edit-comment').show();
+                commentBox.find('.comment-text').attr('contenteditable', false);
+            }
+        }, 'json').fail(function() {
+            alert('Error occurred');
+        });
 }
-//
-//$(document).ready(function () {
-//   $('#mainMessage').fadeOut(7000);
-//});
+
+function loadOneComment(commentId) {
+    var targetComment = $('#comment-id-' + commentId);
+    targetComment.html('');
+
+    //targetComment.load( basePath + 'news/loadCommentListAjax/?newsId='+ newsId);
+}

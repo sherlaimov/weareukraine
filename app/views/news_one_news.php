@@ -31,7 +31,7 @@ foreach ($data['news'] as $news) {
             foreach ($data['comment'] as $comment) {
 
                 $output = '<li>
-                <div class="commenterImage" id="comment-' . $comment['comment_id'] . '" >';
+                <div class="commenterImage">';
                 $output .= isset($comment['profile_thumb']) ? profileImageThumb($comment['profile_thumb']) :
                     '<img alt="User Pic" src="http://lorempixel.com/50/50/people/9"
                             class="img-circle img-responsive">';
@@ -39,7 +39,7 @@ foreach ($data['news'] as $news) {
 //                $output .= '<a href="/profile/user?user_id=' . $userData['user_id'] . '">' .  $userData['first_name'] . ' ' . $userData['last_name'] . '</a>';
                 $output .= '<a href="' . href('profile/user', array('user_id' => $comment['user_id'])) . '">' .
                     $comment['first_name'] . ' ' . $comment['last_name'] . '</a>';
-                $output .= '<div class="comment-text" contenteditable="false"><p>' . $comment['body'] . '</p></div>';
+                $output .= '<div class="comment-text" contenteditable="false" id="comment-id-' . $comment['comment_id'] . '"><p>' . $comment['body'] . '</p></div>';
                 $output .= '<div class="comment-edit-buttons-wrapper" style="display: none;">
                 <button type="button" class="btn btn-xs btn-outline btn-default cancel-update-comment">Cancel</button>
                 <button type="button" class="btn btn-xs btn-outline btn-primary update-comment" data-id="'. $comment['comment_id'] . '">Save</button>
