@@ -69,12 +69,6 @@ function editComment() {
         }
     });
 
-    //console.log(targetComment);
-    //updateComment.on('click', function(commentId){
-    //    var params =  commentBox.find('p').text();
-    //    console.log(params);
-    //});
-
 }
 
 function updateComment(newComment, commentId, commentBox) {
