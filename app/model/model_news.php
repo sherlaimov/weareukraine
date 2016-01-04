@@ -72,13 +72,13 @@ class Model_News extends Model
 
         $postData = array('title' => 'title', 'body' => 'body', 'image_name' => 'image_name', 'thumb' => 'thumb',
                             'user_id' => 'user_id', 'created' => 'created', 'updated' => 'updated', 'file_name' => 'file_name');
+
         $insertData = array();
         foreach ($postData as $k => $v) {
             if (! empty($data[$v])){
                 $insertData[$k] = $data[$v];
             }
         }
-
         //var_dump($insertData); die;
         //print_r($insertData); die;
         return $this->insert('news', $insertData);

@@ -66,24 +66,19 @@ class Controller_News extends ControllerBackend
             $data['title'] = trim($_POST['title']);
             $data['body'] = trim($_POST['body']);
             $data['created'] = strftime("%Y-%m-%d %H:%M:%S", time());
-            if (isset($_FILES['upload']) && !empty($_FILES['upload']['name'])) {
-                $file = new File($_FILES['upload']);
-                $imageData = $file->getImageInfo();
-                $data = array_merge($data, $imageData);
 
-                if (move_uploaded_file($data['tmp_name'], $data['file_path'])) {
-                    //echo 'BELGO'; die;
-                    if (isset($_POST['width'])) {
-                        $value = $_POST['width'];
-                        if ($file->createThumb($value, $value)) {
-                            $data['thumb_name'] = $file->thumbName;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        $file->createThumb(150, 150);
-                        $data['thumb_name'] = $file->thumbName;
+            if (isset($_FILES['upload']) && !empty($_FILES['upload']['name'])) {
+                if ($_FILES['upload']) {
+
+                    $destination = FS_IMAGES;
+                    try {
+                        $file = new fileWizard(FS_IMAGES);
+                        $file->upload();
+                        $data = array_merge($data, $file->getImageInfo());
+                    } catch (Exception $e) {
+                        Message::add($e->getMessage(), Message::STATUS_ERROR);
                     }
+
                 }
             }
 
@@ -108,8 +103,8 @@ class Controller_News extends ControllerBackend
         $this->loadLibrary('htmlelements');
         if (Session::get('loggedIn') == FALSE || $this->user->get('role') == 'default') {
             Message::add('You have to be authorized to add news', Message::STATUS_WARNING);
-            header('Location: ' . URL . 'login/');
-            exit;
+            redirect_to(href('login'));
+
         }
         if (isset($id)) {
             if ($this->isPost()) {
@@ -122,6 +117,7 @@ class Controller_News extends ControllerBackend
             $this->view->generate_view();
         }
         else {
+            //if no ID came
             if ($_POST) {
                 $this->addNews();
             }
@@ -144,38 +140,31 @@ class Controller_News extends ControllerBackend
 
         if (empty($data['title']) || empty($data['body'])) {
             Message::add('Title and body can not be empty', Message::STATUS_ERROR);
+            return;
             if (count($_POST)) {
                 $this->view->setData('post', $data);
+
                 /// header('Location: ' . URL . 'news/add');
             }
         } else {
             if ($_FILES['upload']) {
-                $file = new File($_FILES['upload']);
-
-                $imageData = $file->getImageInfo();
-                //var_dump($imageData); die;
-                $data = array_merge($data, $imageData);
-                //print_r($data);
-                if (move_uploaded_file($data['tmp_name'], $data['file_path'])) {
-                    //echo 'BELGO'; die;
-                    if (isset($_POST['width'])) {
-                        $value = $_POST['width'];
-                        if ($file->createThumb($value, $value)) {
-                            $data['thumb_name'] = $file->thumbName;
-
-                        } else {
-                            return false;
-                        }
-
+                $destination = FS_IMAGES;
+                try {
+                    $file = new fileWizard($destination);
+                    if ($file->upload()) {
+                        $data = array_merge($data, $file->getImageInfo());
+                        $this->model->addNews($data);
+                        redirect_to(href('news'));
                     } else {
-                        $file->createThumb(150, 150);
-                        $data['thumb_name'] = $file->thumbName;
+                        $this->view->generate_view();
                     }
+
+                } catch (Exception $e) {
+                    Message::add($e->getMessage(), Message::STATUS_ERROR);
                 }
             }
             //var_dump($data); die;
-            $this->model->addNews($data);
-            redirect_to(URL . 'admin/news');
+
         }
     }
 

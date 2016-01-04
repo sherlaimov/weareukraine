@@ -6,6 +6,7 @@ class View
     public $content_view;
     protected $data = array();
     protected $layout = '';
+    public $user;
     function __construct() {
 
 
@@ -42,11 +43,6 @@ class View
         //print_r($this->data); die;
 
         include 'app/views/' . $this->layout . '.php';
-
-    }
-
-    public function setTemplate($template)
-    {
 
     }
 

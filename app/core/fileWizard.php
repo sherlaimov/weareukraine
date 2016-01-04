@@ -4,7 +4,7 @@ class fileWizard
 {
     protected $destination;
     protected $messages = array();
-    protected $maxSize = 512000;
+    protected $maxSize = 5120000;
     protected $permittedTypes = array(
         'image/jpeg',
         'image/pjpeg',
@@ -36,6 +36,8 @@ class fileWizard
     {
         $this->renameDuplicates = $renameDuplicates;
         $uploaded = current($_FILES);
+        //what the hell is name here??!!
+//        var_dump($uploaded); die;
         if (is_array($uploaded['name'])) {
             foreach ($uploaded['name'] as $key => $value) {
                 $currentFile['name'] = $uploaded['name'][$key];
@@ -45,13 +47,13 @@ class fileWizard
                 $currentFile['size'] = $uploaded['size'][$key];
                 if ($this->checkFile($currentFile)) {
                     $this->setNewName($currentFile);
-                    $this->moveFile($currentFile);
+                    return $this->moveFile($currentFile);
                 }
             }
         } else {
             if ($this->checkFile($uploaded)) {
                 $this->setNewName($uploaded);
-                $this->moveFile($uploaded);
+                return $this->moveFile($uploaded);
             }
         }
     }
@@ -105,6 +107,7 @@ class fileWizard
     protected function checkName($file)
     {
         $this->fileName = $file['name'];
+        //why declare this.newName a null here???
         $this->newName = null;
         $nospaces = str_replace(' ', '_', $file['name']);
         if ($nospaces != $file['name']) {
@@ -163,12 +166,15 @@ class fileWizard
                     self::convertFromBytes($this->maxSize) . ').';
                 break;
             case 3:
+                Message::add($file['name'] . ' was only partially uploaded.', Message::STATUS_ERROR);
                 $this->messages[] = $file['name'] . ' was only partially uploaded.';
                 break;
             case 4:
+                Message::add('No file was submitted', Message::STATUS_ERROR);
                 $this->messages[] = 'No file submitted.';
                 break;
             default:
+                Message::add('Sorry, there was a problem uploading ' . $file['name'], Message::STATUS_ERROR);
                 $this->messages[] = 'Sorry, there was a problem uploading ' . $file['name'];
                 break;
         }
@@ -187,9 +193,13 @@ class fileWizard
                 $result .= ', and was renamed ' . $this->newName;
             }
             $result .= '.';
+            Message::add($result, Message::STATUS_SUCCESS);
             $this->messages[] = $result;
+            return true;
         } else {
+            Message::add( 'Could not upload ' . $file['name'], Message::STATUS_ERROR);
             $this->messages[] = 'Could not upload ' . $file['name'];
+            return false;
         }
     }
 

@@ -19,7 +19,7 @@ $news = isset($data['news']) ? array_shift($data['news']) : null;
           action="<?php echo URL; ?>admin/news/add/<?php echo isset($news['id']) ? $news['id'] : null; ?>" method="POST"
           enctype="multipart/form-data">
         <div class="form-group">
-            <input type="hidden" name="MAX_FILE_SIZE" value="51200"/>
+<!--            <input type="hidden" name="MAX_FILE_SIZE" value="51200"/>-->
             <label for="title" class="col-sm-2 control-label">Title</label>
 
             <div class="col-sm-10">
