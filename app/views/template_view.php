@@ -36,8 +36,8 @@ function active($currect_page){
     <link href="<?php echo URL; ?>public/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
     <!--    SUMMERNOTE CSS-->
-    <link href="<?php echo URL; ?>/public/inspinia/css/plugins/summernote/summernote.css" rel="stylesheet">
-    <link href="<?php echo URL; ?>/public/inspinia/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>public/inspinia/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>public/inspinia/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
 
     <script src="<?php echo URL; ?>public/js/jquery-1.11.3.js"></script>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->

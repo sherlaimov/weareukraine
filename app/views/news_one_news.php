@@ -74,11 +74,105 @@ foreach ($data['news'] as $news) {
                 ?>
             </div>
             <div class="form-group">
-                <button onClick="addNewComment();" type="button" class="btn btn-default">Add</button>
+                <button id="add-comment" type="button" class="btn btn-default">Add</button>
             </div>
         </form>
 
     </div>
 </div>
+
+<script src="<?php echo WS_PUBLIC . 'js/'; ?>simple-commonjs.js"></script>
+<script>
+    window.onload = function() {
+        var $ = runScriptSync('https://code.jquery.com/jquery-2.1.4.min.js');        
+        var CommentsController = runScriptSync(basePath + 'public/js/comments-controller.js');
+        var controller = new CommentsController($, basePath);
+        
+        /* добавление обработчиков событий ****************************************************/
+        
+        $('.edit-comment').on('click', function (e) {
+            var commentBox = $(this).hide().parent('.commentBox');
+                          commentBox.find('.comment-text')
+                          .attr('contenteditable', true)
+                          .focus();
+            commentBox.find('.comment-edit-buttons-wrapper').show();
+//            $(this).parent(console.log(this));
+//            console.log(controller);
+        });
+        
+        $('#add-comment').on('click', function (e) {
+            var form = $(this).parent().parent('form');
+//            console.log(form);
+            controller.addNewComment(form)
+                      .done(function (data, status) {
+                    console.log('I AM DONE');
+                          if (data.status == 'ok') {
+                              $("input#body").val('');
+                              controller.loadCommentList($("#news_id").val());
+                          } else {
+                              console.log(data.status);
+
+                          }
+                      });
+        });
+        
+        $('.cancel-update-comment').on('click', function (e) {
+            var commentBox = $(this).parent().parent('.commentBox');
+            console.log(commentBox);
+            commentBox.find('.comment-text').attr('contenteditable', false);
+            commentBox.find('.comment-edit-buttons-wrapper').hide();
+            commentBox.find('.edit-comment').show();
+        });
+        
+        $('.update-comment').on('click', function (e) {
+            var commentBox = $(this).parent().parent('.commentBox');
+            var contentInput = commentBox.find('.comment-text');
+            var originalComment = contentInput.text();
+            if (originalComment === contentInput.text()) {
+                contentInput.attr('contenteditable', false);
+                commentBox.find('.comment-edit-buttons-wrapper').hide();
+                commentBox.find('.edit-comment').show();
+
+            } else {
+                var newComment = {
+                    newComment: contentInput.text(),
+                    newsId: $("#news_id").val()
+                };
+                console.log(controller);
+                controller.updateComment(newComment, commentId)
+                          .done(function (data, status) {
+                        console.log('DONE');
+                            if (data.status == 'ok') {
+                                $('#comment-id-' + commentId).html(newComment.newComment);
+                                commentBox.find('.comment-edit-buttons-wrapper').hide();
+                                commentBox.find('.edit-comment').show();
+                                commentBox.find('.comment-text').attr('contenteditable', false);
+                            }
+                          })
+                          .fail(function (error) {
+                            alert('Error occurred: ' + error);
+                          });
+            }
+        });
+    };
+</script>
+<script>
+    /* это минимум кода необходимый для синхронной подгрузки скрипта, 
+       выполнения его и записи в module.exports публичного содержимого скрипта */
+    function runScriptSync(scriptUrl) {
+        var request = new XMLHttpRequest(),
+            async = false,
+            module = { exports: {} };
+            
+        request.open('GET', scriptUrl, async);
+        request.send(null);
+
+        if(request.readyState == 4 && request.status === 200) {
+            var script = "(function(module, exports) { " + request.responseText + " })(module, module.exports)";
+            eval(script);
+            return module.exports;
+        }
+    };
+</script>
 
 

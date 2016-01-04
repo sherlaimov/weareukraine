@@ -61,45 +61,42 @@
 
             fetch: function () {
                 var self = this;
-                console.log(this);
+                console.dir(this);
 //                debugger;
                 $.getJSON(this.url, function (data) {
                     console.log('I AM HERE');
                     console.log(data);
                     self.tweets = $.map(data, function (tweet, i) {
-//                        (tweet.hasOwnProperty('extended_entities')) ?
-//                            console.log(tweet.extended_entities.media[0].media_url)
-//                            : console.log(null);
-//                        console.log(index);
+
                         return {
                             author: function () {
-                                if (tweet.hasOwnProperty('retweeted_status')) {
+                                if (isRetweeted(tweet)) {
                                     return tweet.retweeted_status.user.name;
                                 }
                                 return tweet.user.name;
                             },
                             thumb: function () {
-                                if (tweet.hasOwnProperty('retweeted_status')) {
+                                if (isRetweeted(tweet)) {
                                     return tweet.retweeted_status.user.profile_image_url;
                                 }
                                 return tweet.user.profile_image_url;
                             },
                             date: function () {
-                                if (tweet.hasOwnProperty('retweeted_status')) {
+                                if (isRetweeted(tweet)) {
                                     return tweet.retweeted_status.created_at;
                                 }
                                 return tweet.created_at;
                             },
                             text: function() {
-                                if (tweet.hasOwnProperty('retweeted_status')) {
-                                    return tweet.retweeted_status.text;
+                                if (isRetweeted(tweet)) {
+                                    return stripOffLinks(tweet.retweeted_status.text);
                                 }
-                              return tweet.text;
+                              return stripOffLinks(tweet.text);
                             },
                             retweetCount: tweet.retweet_count,
                             url: 'https://twitter.com/' + tweet.user.screen_name + '/status/' + tweet.id_str,
                             userLocation: function () {
-                                if (tweet.hasOwnProperty('retweeted_status')) {
+                                if (isRetweeted(tweet)) {
                                     return tweet.retweeted_status.user.location;
                                 }
                                 return tweet.user.location;
@@ -108,6 +105,7 @@
                                 if (tweet.hasOwnProperty('extended_entities')) {
                                     return tweet.extended_entities.media[0].media_url;
                                 }
+//                                return tweet.extended_entities && tweet.extended_entities.media[0].media_url;
                             }
                         };
 
@@ -125,6 +123,15 @@
 
                     }
                 });
+
+                function isRetweeted(obj) {
+                     return !!obj.retweeted_status;
+                }
+
+                function stripOffLinks(string){
+//                    console.log(string.replace(/(ht|f)tps?:.+/g, ""));
+                    return string.replace(/(ht|f)tps?:.+/g, "");
+                }
             }
         };
 

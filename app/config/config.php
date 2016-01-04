@@ -2,7 +2,7 @@
 
 //DB constants
 define('DB_USER', 'root');
-define('DB_PSWD', 'root');
+define('DB_PSWD', '');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'mvc');
 
@@ -26,6 +26,8 @@ define('CORE', 'core/'); //how do I define this correctly?
 define('FS_IMAGES', ROOT . 'public/images' . DS);
 
 define('WS_IMAGES', URL . 'public/images/');
+
+define('WS_PUBLIC', URL . 'public/');
 
 
 define('VIEWS', FS_APP. 'views' . DS);
